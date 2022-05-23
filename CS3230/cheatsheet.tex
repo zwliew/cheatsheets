@@ -1,0 +1,47 @@
+\documentclass[10pt, landscape]{article}
+\usepackage{amsmath}
+\usepackage{multicol}
+\begin{document}
+\section{01. AMORTIZED ANALYSIS}
+
+\begin{itemize}
+	\item $\sum{\text{amortized cost}} \ge \sum{\text{actual cost}}$
+\end{itemize}
+
+\subsection{Types of amortized analysis}
+
+\subsubsection{Aggregate method}
+
+\begin{itemize}
+	\item Add up the cost of all operations and divide by number of operations
+	\item amortized cost per op = $\frac{1}{k} \sum_{i}{\text{cost}(i)}$
+	\item Simple but unable to handle more complex algorithms
+\end{itemize}
+
+\subsubsection{Accounting method}
+
+\begin{itemize}
+	\item Allow an op to charge extra cost to store credit for future use, and allow an op to withdraw credit to pay for its cost
+	\item Charge only if amortized cost $\ge$ actual cost
+	\item Withdraw only if amortized cost $<$ actual cost
+\end{itemize}
+
+\subsubsection{Charging method}
+
+\begin{itemize}
+	\item Allow an op to charge cost retroactively to past ops
+	\item amortized cost of an op = actual cost of this op - total cost charged to past ops + total cost charged by future ops
+\end{itemize}
+
+\subsubsection{Potential method}
+
+\begin{itemize}
+	\item Define a potential function $\phi : \text{DS} \rightarrow \text{value}$
+	\item $\phi$ denotes the total unused credits stored by all past ops
+	\item \textbf{Invariant}: $\phi(n) \ge \phi(0)$ for all $n \ge 0$
+	\item amortized cost of an op = actual cost of this op + $\Delta \phi$
+	\item $\sum{\text{amortized cost}} = \sum{\text{actual cost}} + \phi(\text{final DS}) - \phi(\text{initial DS})$
+	\item Fundamentally equivalent to the accounting method
+\end{itemize}
+
+\end{document}
