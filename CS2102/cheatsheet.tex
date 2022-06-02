@@ -1,0 +1,89 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{multicol}
+\begin{document}
+\section{RELATIONAL ALGEBRA}
+
+\begin{itemize}
+	\item Relations are closed under relational algebra
+\end{itemize}
+
+\subsection{Unary operators}
+
+\subsubsection{Selection}
+
+\begin{itemize}
+	\item $\sigma_{c}(E)$
+\end{itemize}
+
+\subsubsection{Projection}
+
+\begin{itemize}
+	\item $\pi{A_1, A_2, \ldots, A_n}(E)$
+\end{itemize}
+
+\subsubsection{Rename}
+
+\begin{itemize}
+	\item $\rho_{R(A_1, A_2, \ldots, A_n)}(E)$
+\end{itemize}
+
+\subsection{Set operators}
+
+\subsubsection{Cross product}
+
+\begin{itemize}
+	\item $E_1 \times E_2$
+	\item $|E_1 \times E_2| = |E_1| \times |E_2|$
+\end{itemize}
+
+\subsubsection{Difference}
+
+\begin{itemize}
+	\item $E_1 - E_2$
+\end{itemize}
+
+\subsubsection{Union}
+
+\begin{itemize}
+	\item $E_1 \cup E_2$
+	\item $|E_1 \cup E_2| = |E_1| + |E_1 - E_2|$
+\end{itemize}
+
+\subsubsection{Intersection}
+
+\begin{itemize}
+	\item $E_1 \cap E_2 = E_1 - (E_1 - E_2)$
+\end{itemize}
+
+\subsection{Join operators}
+
+\subsubsection{$\theta$-join}
+
+\begin{itemize}
+	\item $E_1 \bowtie_{\theta} E_2 = \sigma_{\theta}{(E_1 \times E_2)}$
+\end{itemize}
+
+\subsubsection{Natural join}
+
+\begin{itemize}
+	\item $E_1 \bowtie E_2 = \pi_{\ell_1}{(E_1 \bowtie_{c} \rho_{\ell_2} (E_2)}$
+\end{itemize}
+
+\subsection{Alternate notations}
+
+\subsubsection{Assignment statements}
+
+\begin{itemize}
+	\item c := E
+	\item Provides a way to modularize an expression
+\end{itemize}
+
+\subsubsection{Expression trees}
+
+\begin{itemize}
+	\item Similar to an AST
+\end{itemize}
+
+\end{document}
+
