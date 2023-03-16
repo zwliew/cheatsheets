@@ -1,0 +1,144 @@
+%!TEX root=./main.tex
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\theoremstyle{lemma}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+\newtheorem{claim}{Claim}
+\newtheorem*{remark}{Remark}
+
+% Labels and references
+\newcommand{\figlabel}[1]{\label{fig:#1}}
+\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\seclabel}[1]{\label{sec:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\chaplabel}[1]{\label{chap:#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{chap:#1}}
+\newcommand{\exlabel}[1]{\label{ex:#1}}
+\newcommand{\exref}[1]{Example~\ref{ex:#1}}
+\newcommand{\deflabel}[1]{\label{def:#1}}
+\newcommand{\defref}[1]{Definition~\ref{def:#1}}
+\newcommand{\problabel}[1]{\label{prob:#1}}
+\newcommand{\probref}[1]{Problem~\ref{prob:#1}}
+\newcommand{\thmlabel}[1]{\label{thm:#1}}
+\newcommand{\thmref}[1]{Theorem~\ref{thm:#1}}
+\newcommand{\proplabel}[1]{\label{prop:#1}}
+\newcommand{\propref}[1]{Proposition~\ref{prop:#1}}
+\newcommand{\lemlabel}[1]{\label{lem:#1}}
+\newcommand{\lemref}[1]{Lemma~\ref{lem:#1}}
+\newcommand{\corlabel}[1]{\label{cor:#1}}
+\newcommand{\corref}[1]{Corollary~\ref{cor:#1}}
+\newcommand{\itmlabel}[1]{\label{itm:#1}}
+\newcommand{\itmref}[1]{\ref{itm:#1}}
+\newcommand{\rulelabel}[1]{\label{rule:#1}}
+\newcommand{\ruleref}[1]{Rule~\ref{rule:#1}}
+\newcommand{\equlabel}[1]{\label{eq:#1}}
+\newcommand{\equref}[1]{Equation~(\ref{eq:#1})}
+\newcommand{\applabel}[1]{\label{app:#1}}
+\newcommand{\appref}[1]{Appendix~\ref{app:#1}}
+% \newcommand{\appref}[1]{ the Appendix}
+\newcommand{\algolabel}[1]{\label{algo:#1}}
+\newcommand{\algoref}[1]{Algorithm~\ref{algo:#1}}
+\newcommand{\linlabel}[1]{\label{line:#1}}
+\newcommand{\linref}[1]{Line~\ref{line:#1}}
+\newcommand{\linrangeref}[2]{Lines~\ref{line:#1}-\ref{line:#2}}
+\newcommand{\secrangeref}[2]{Sections~\ref{sec:#1}-\ref{sec:#2}}
+\newcommand{\tablabel}[1]{\label{tab:#1}}
+\newcommand{\tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\remlabel}[1]{\label{rem:#1}}
+\newcommand{\remref}[1]{Remark~\ref{rem:#1}}
+\newcommand{\obslabel}[1]{\label{obs:#1}}
+\newcommand{\obsref}[1]{Observation~\ref{obs:#1}}
+\newcommand{\claimlabel}[1]{\label{claim:#1}}
+\newcommand{\claimref}[1]{Claim~\ref{claim:#1}}
+
+%% Colors
+\definecolor{LightRed}{rgb}{1, 0.9, 0.9}
+\definecolor{LightGreen}{rgb}{0.98, 1.0, 0.98}
+\definecolor{DarkGreen}{rgb}{0.5, 0.7, 0.5}
+
+%% Environments
+\newcounter{questionCounter}
+\setcounter{questionCounter}{0}
+\newcommand{\question}{\addtocounter{questionCounter}{1}\fcolorbox{DarkGreen}{LightGreen}{\textbf{Question} \thequestionCounter.}}
+\newcommand{\questionopt}{\addtocounter{questionCounter}{1}\fcolorbox{DarkGreen}{LightGreen}{\textbf{Question} \thequestionCounter. (Extra Credit)}}
+\newcommand\hcancel[2][black]{\setbox0=\hbox{$#2$}%
+\rlap{\raisebox{.45\ht0}{\textcolor{#1}{\rule{\wd0}{1pt}}}}#2} 
+
+% \newenvironment{Solution}[3]{        % Riddle environment
+%   \begin{center}                   % Centering minipage
+%     \colorbox[HTML]{#1} {          % Set's the color of minipage
+%       \begin{minipage}[b]{380px}   % Starts minipage
+%    \textbf{#2}\\ \textit{#3}       % Set's title and starts italic for text
+%   \end{minipage} }                 % End minipage
+% }{\end{center}}
+
+% \newenvironment{soln}
+%   {\par\medskip
+%    \color{red}%
+%    \begin{framed}
+%    \textbf{I say: }\ignorespaces}
+%  {\end{framed}
+%   \medskip}
+
+\newenvironment{Solution}
+  {
+  % \par\medskip
+   \color{red}%
+   \begin{mdframed}[linecolor=OliveGreen,%
+	backgroundcolor=Yellow!2]
+   \noindent\textbf{Solution}.\\\\}
+ {\end{mdframed}
+  \medskip}
+% \begin{mdframed}[backgroundcolor=blue!20] 
+%         In any right triangle, the area of the square whose side is the hypotenuse is equal to the sum of the areas of the squares whose sides are the two legs.
+%     \end{mdframed}
+
+\newenvironment{Question}
+{\begin{description}
+	\item[\question]
+}
+{\end{description}
+\medskip}
+
+\newenvironment{QuestionOpt}
+{\begin{description}
+  \item[\questionopt]
+}
+{\end{description}
+\medskip}
+
+
+
+%% Math
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\setpred}[2]{\{#1 \,|\, #2\}}
+\newcommand{\arity}[1]{\mathsf{arity}(f)}
+\newcommand{\powerset}[1]{\mathscr{P}(#1)}
+\renewcommand{\emptyset}{\varnothing}
+
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\complexnum}{\mathbb{C}}
+\newcommand{\reals}{\mathbb{R}}
+
+%% Logic
+\newcommand{\props}{\euscr{P}}
+\newcommand{\conn}{\euscr{C}}
+\newcommand{\operators}{\euscr{O}}
+\newcommand{\wff}{\mathsf{FORM}}
+\newcommand{\indwff}{\mathsf{INDFORM}}
+\newcommand{\wffalt}{\mathsf{AltFORM}}
+\newcommand{\indwffalt}{\mathsf{AltINDFORM}}
+\newcommand{\truVal}{\texttt{true}}
+\newcommand{\flsVal}{\texttt{false}}
+\newcommand{\entails}{\vdash}
+
+
+%% Graphs
+\newcommand{\succr}[1]{\mathsf{succ}(#1)}
+\newcommand{\pred}[1]{\mathsf{pred}(#1)}
+\newcommand{\indeg}[1]{\mathsf{inDegree}(#1)}
+\newcommand{\outdeg}[1]{\mathsf{outDegree}(#1)}

@@ -1,0 +1,408 @@
+\documentclass[11pt,usenames, dvipsnames]{article}
+
+
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\usepackage[bitstream-charter]{mathdesign}
+\usepackage[scaled=.96,osf,sups]{XCharter}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{mdframed}
+
+% \usepackage{newproof}
+% \usepackage{handout}
+
+\usepackage{fancyhdr}
+% \let\proof\relax
+% \let\endproof\relax
+\usepackage{amsmath,comment,amsthm}
+\usepackage{cancel}
+
+\usepackage{graphicx}
+\usepackage[margin=1.5in]{geometry}
+\usepackage[inline]{enumitem}
+\usepackage{tikz}
+
+\usepackage{proof}
+
+% \usepackage[usenames, dvipsnames]{xcolor}
+
+
+% \let\mathcal\undefined
+% \DeclareMathAlphabet{\mathcal}{OMS}{cmsy}{m}{n}
+\DeclareRobustCommand{\euscr}[1]{%
+  \text{\usefont{U}{eus}{m}{n}#1}%
+}
+
+% \newcommand\hmmax{0}
+% \newcommand\bmmax{0}
+
+% \usepackage{calrsfs}
+% \DeclareMathAlphabet{\pazocal}{OMS}{zplm}{m}{n}
+
+\input{../macros}
+
+% \pagestyle{fancy}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Do your customization here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\masunitnumber}{CS 4269/5469}
+\newcommand{\examdate}{\today}
+\newcommand{\academicyear}{2022-2023}
+\newcommand{\semester}{II}
+\newcommand{\coursename}{Fundamentals of Logic In Computer Science}
+\newcommand{\numberofhours}{2}
+
+%\DeclareMathOperator{\diam}{diam}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Don't touch anything from here till instructions
+% to candidates
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\lhead{}
+\rhead{}
+\chead{{\bf NATIONAL UNIVERSITY OF SINGAPORE}}
+\lfoot{}
+\rfoot{}
+\cfoot{}
+\begin{document}
+\setlength{\headsep}{5truemm}
+\setlength{\headheight}{14.5truemm}
+\setlength{\voffset}{-0.45truein}
+\renewcommand{\headrulewidth}{0.0pt}
+
+\begin{center}
+{\Large \bf \masunitnumber -- \coursename}
+\end{center}
+
+\begin{center}
+SEMESTER \semester, \academicyear
+\end{center}
+
+\begin{center}
+\underline{Overall Notes}\\
+\end{center}
+
+\vspace{5truemm}
+\hrule
+
+\section*{\large \centering Primer on Countability}
+\noindent
+
+\begin{definition}[Injection]
+  A function $f \colon A \to B$ is said to be \emph{injective} if for all $a_1, a_2 \in A$, if $f(a_1) = f(a_2)$, then $a_1 = a_2$.
+\end{definition}
+
+We aim to represent cardinality of sets in terms of injections.
+
+\begin{definition}[Countable set]
+  A set $S$ is said to be \emph{countable} if there exists an injection $f \colon S \to \mathbb{N}$.
+\end{definition}
+
+Notice that if a set is countable, then one can assign indices which are natural numbers to the elements of the set such that no two elements of $S$ get the same index.
+
+This is analogous to the idea of "enumerating" the elements of $S$.
+
+\begin{claim}[Finite sets are countable]
+  \claimlabel{finite-countable}
+  A finite set is countable.
+\end{claim}
+
+\begin{proof}[Proof sketch]
+  Let $e$ be an arbitary enumeration of $S$. Consider the function $f \colon S \to \nats$ defined by $f(a) = i$ such that $i \in \nats$ is the index of $a$ in $e$; that is, $f(a) = e_i$. We can show that this is an injection
+\end{proof}
+
+To formally prove \claimref{finite-countable}, we will have to come up with an injective function from any finite set to the natural numbers. We will omit the proof here.
+
+A more crucial observation is the following theorem.
+
+\begin{theorem}
+  \claimlabel{uncountable-exist}
+  There are sets that are not countable; that is, they are \emph{uncountable}.
+\end{theorem}
+
+\begin{remark}
+  Some examples of \claimref{uncountable-exist} are the set of real numbers $\reals$ and the powerset of the natural numbers $\powerset{\nats}$.
+\end{remark}
+
+Next, we will state a straightforward claim.
+
+\begin{claim}
+  The set of natural numbers $\nats$ is countable.
+\end{claim}
+
+\begin{proof}[Proof sketch]
+  Consider the function $f \colon \nats \to \nats$ defined by $f(n) = n$. We can show that this is an injection.
+\end{proof}
+
+Another simple observation is the following.
+
+\begin{claim}
+  \claimlabel{subset-countable}
+  Let $S$ be a set and $S' \subseteq S$. If $S$ is countable, then $S'$ is countable.
+\end{claim}
+
+\begin{proof}[Proof sketch]
+  Consider an injection $f \colon S \to \nats$. We can extend $f$ to an injection $g \colon S' \to \nats$ by defining $g(s) = f(s)$ for all $s \in S'$.
+\end{proof}
+
+\begin{remark}
+  As a result of \claimref{subset-countable}, some other examples of countable sets are: the set of even numbers, the set of odd numbers, and the set of prime numbers. These are all subsets of the natural numbers.
+\end{remark}
+
+Notice that while there is an injection from the set of even numbers to the set of naturals, there is also an injection from the set of naturals to the set of even numbers. We will formalise this notion in the following claim.
+
+\begin{claim}
+  If $A$ and $B$ are countably infinite sets, then there is a bijection between $A$ and $B$. Thus, $|A| = |B|$.
+\end{claim}
+
+An even more important result is the following claim:
+
+\begin{claim}
+  \claimlabel{cartesian-countable}
+  Let $A$ and $B$ be countably infinite sets. Then, $A \times B = \{(a, b) \mid a \in A, b \in B\}$ is countable.
+\end{claim}
+
+The idea of a proof for \claimref{cartesian-countable} is to draw a grid and list the elements of $A$ along the rows and the elements of $B$ along the columns. Numbering the elements along the diagonals of the grid, we can then define an injection from $A \times B$ to $\nats$.
+
+\claimref{cartesian-countable} yields the following corollaries:
+
+\begin{corollary}
+  \corlabel{cartesian-nats-countable}
+  $\nats \times \nats$ is countable.
+\end{corollary}
+
+\begin{corollary}
+  $\rationals$ is countable.
+\end{corollary}
+
+\begin{proof}[Proof sketch]
+  Every rational $r \in \rationals$ is of the form $p/q$ where $p, q \in \nats$. Thus, $r$ can be represented as a pair $(p, q) \in \nats \times \nats$ and so $\rationals$ is isomorphic to a subset of $\nats \times \nats$. By \corref{cartesian-nats-countable} and \claimref{subset-countable}, $\rationals$ is countable.
+\end{proof}
+
+\begin{corollary}
+  $\integers$ is countable.
+\end{corollary}
+
+\begin{proof}[Proof sketch]
+  For every integer $i$, we can write it as either $(0, i)$ or $(-1, i)$. Thus, $\integers$ is isomorphic to a subset of $\nats \times \nats$. By \corref{cartesian-nats-countable} and \claimref{subset-countable}, $\rationals$ is countable.
+\end{proof}
+
+\begin{theorem}
+  \thmlabel{uncountable-countable}
+  There is a collection $\conn$ of countable sets such that $\conn$ is uncountable.
+\end{theorem}
+
+\begin{remark}
+  An example of \thmref{uncountable-countable} is the powerset of the natural numbers $\powerset{\nats}$.
+\end{remark}
+
+Next, we state a more important observation:
+
+\begin{theorem}
+  Let $\conn$ be a collection of countable sets such that $\conn$ is countable. Then, $\euscr{I} = \bigcup_{S \in \conn}{S}$ is countable.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  We can write each element $c \in \euscr{I}$ as $(i, j)$ where $i$ is the index of the set $S \in \conn$ and $j$ is the index of the element $x \in S$. Thus, $\euscr{I}$ is isomorphic to some subset of $\nats \times \nats$. By \corref{cartesian-nats-countable} and \claimref{subset-countable}, $\rationals$ is countable.
+\end{proof}
+
+Finally, we arrive at one of the most important theorems in countability.
+
+\begin{theorem}[Uncountability of reals]
+  \thmlabel{uncountable-reals}
+  $\reals$ is uncountable.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  The proof is by Cantor's diagonal argument.
+\end{proof}
+
+\begin{theorem}[Uncountability of powerset of naturals]
+  $\powerset{\nats}$ is uncountable.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  For any set $S \in \powerset{\nats}$, we can associate a unique real number $r$ to $S$ where $r = 0.\ldots$ where the $i^{th}$ decimal place is $1$ if the $i^{th}$ natural number is in $S$ and $0$ otherwise. Hence, $\powerset{\nats}$ is isomorphic to $\reals$. By \thmref{uncountable-reals}, $\powerset{\nats}$ is uncountable.
+\end{proof}
+
+Next, let's look at alphabets, strings, and languages.
+
+\begin{theorem}
+  Let $\Sigma$ be some countable alphabet (or set). $\Sigma^*$ is countable, where $\Sigma^*$ denotes the set of all finite strings over $\Sigma$.
+\end{theorem}
+
+\begin{theorem}
+  If $S$ be a countable set, then the set $\mathscr{P}_{\text{fin}}{(S)}$ of finite subsets of $S$ is countable.
+\end{theorem}
+
+We have previously seen that every set of strings on a countable alphabet is countable. But what about the set of all languages?
+
+\begin{question}
+  Let $\Sigma$ be a countable alphabet. A language $L$ over $\Sigma$ is a subset of $\Sigma^*$. Is the collection of all languages over $\Sigma$ countable? What if $\Sigma$ is finite?
+\end{question}
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section*{\large \centering Motivations behind the Study of Logic}
+\noindent
+
+Professor Mathur's research interest is in the space of formal program verification. Formal program verification is the problem of determining if a program $P$ meets a specification $\Phi$; that is, $P \vDash \Phi$. This is a more complete way of verifying the correctness of programs compared to software engineering-style testing, but requires a background in mathematical logic.
+
+Another motivation is in the realm of databases. We can model a query as a first-order logic formula, such as the formula $\phi \equiv \mathsf{Friends}(p_1, p_2)$ where the interpretation of $\mathsf{Friends}$ is $I(\mathsf{Friends}) = \{(p_1, p_2), (p_2, p_3), \ldots \}$ and the universe $U$ is the set of all persons.
+
+Yet another motivation is in the study of complexity theory, which discusses whether polynomial-time algorithms exist to solve a problem and what the best algorithm to solve a problem is. If we were able to encode a computational problem as a logic formulae, then determining whether the problem is solvable in polynomial time could be equivalent to determining the satisfiability of the formula.
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section*{\large \centering Primer on Computability Theory}
+\noindent
+
+Computability Theory asks questions like "what is the complexity of solving a problem?", or more generally, "is the problem solvable?". We will study computability theory in the context of first-order logic (FOL), by modelling computational problems as formulae and determining if such formulae are satisfiable in polynomial time.
+
+Here's an exercise: write a program $P$ that takes
+\begin{enumerate}
+  \item a program $Q$ as input,
+  \item and an input $I$ to $Q$ as input.
+\end{enumerate}
+such that $P$ outputs "yes" if $Q$ on input $I$ prints "hello" as the first 5 characters, and "no" otherwise.
+
+It turns out that it is impossible to write such a program.
+
+\begin{claim}
+  There is no program $P$ that takes as input (1) a program $Q$ and (2) an input $I$ to $Q$ such that $P$ outputs "yes" if $Q$ on input $I$ prints "hello" as the first 5 characters, and "no" otherwise.
+\end{claim}
+
+\begin{proof}
+  Suppose, on the contrary, that there exists such a program $P$. Then, we can write a program $P'$ which takes in a program $Q$ and runs $P(Q, Q)$, then outputs "no" if $P(Q, Q)$ outputs "yes" else it outputs "no".
+
+  Now, suppose we execute $P'(P')$. If it outputs "no", then $P(P', P')$ outputs "yes", which means that $P'(P')$ outputs "hello". This is a contradiction. Otherwise, if $P'(P')$ outputs "hello", then $P(P', P')$ outputs "no", which means that $P'(P')$ does not output "hello". This is also a contradiction.
+
+  In either case, we arrive at a contradiction. Therefore, there is no such program $P$.
+\end{proof}
+
+The previous claim shows that certain computational problems that are unsolvable. Another well-known unsolvable problem is the Halting problem, which is the problem of determining whether a given program will terminate on a given input.
+
+\section*{\large \centering Turing Machines}
+\noindent
+
+We use Turing machines as our main model of computation. Input that is fed into a Turing machine can be modelled as strings over an alphabet. We will define some terms and notation before proceeding.
+
+\begin{definition}[Turing machine]
+  A \emph{Turing machine} is a tuple $M = (Q, q_0, q\textsubscript{acc}, q\textsubscript{rej}, k, \delta, \Sigma)$ where
+  \begin{enumerate}
+    \item $Q$ is a finite set of control states
+    \item $\Sigma$ is the alphabet of tape symbols
+    \item $q_0 \in Q$ is the initial state
+    \item $q\textsubscript{acc} \in Q$ is the accepting state
+    \item $q\textsubscript{rej} \in Q$ is the rejecting state
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[Configuration]
+  A \emph{configuration} $C$ of a Turing machine $M$ is $C = (q, w\textsubscript{inp} \uparrow w'\textsubscript{inp}, w_{\text{WT}_1} \uparrow w'_{\text{WT}_1}, \ldots, w_{\text{WT}_k} \uparrow w'_{\text{WT}_k}, w\textsubscript{out} \uparrow w'\textsubscript{out})$ where $w_x$ are finite strings over $\Sigma$ representing the finite contents of the unbounded tape and $\uparrow$ refers to the pointer of the input tape, work tapes, and output tapes.
+\end{definition}
+
+\begin{definition}[Run/Computation]
+  A \emph{run/computation} of Turing machine $M$ on input $w \in \Sigma^*$ is $\pi = c_0, c_1, \ldots, c_m$ such that $c_0$ is the initial configuration and, for each $i$, $c_{i+1}$ follows from $c_i$ using $\delta$.
+\end{definition}
+
+\begin{definition}[Accepting Run/Acceptance]
+  A run $\pi$ is an \emph{accepting run} if there is a configuration $c$ in the run such that $c = (q\textsubscript{acc}, \ldots)$ and $q\textsubscript{rej}$ is not reached before $c$. The input $w$ is \emph{accepted} by $M$ iff the run $\pi$ on $M$ is an accepting run. Otherwise, $w$ is rejected.
+\end{definition}
+
+\begin{definition}[Language of a Turing Machine]
+  The \emph{language} of a Turing machine $M$ is $L(M) = \{w \in \Sigma^* \mid w \text{ is accepted by $M$}\}$. A language $A \subseteq \Sigma^*$ is \emph{recognized/accepted} by $M$ if $A = L(M)$.
+\end{definition}
+
+\begin{definition}[Halting]
+  A Turing machine $M$ \emph{halts} on input $w$ if there is a computation $\pi = c_0, c_1, \ldots, c_m$ such that $c_m = (q\textsubscript{acc}, \ldots)$ or $c_m = (q\textsubscript{rej}, \ldots)$. The run $\pi$ is called a \emph{halting run}.
+\end{definition}
+
+For a list of objects $O_1, O_2, \ldots, O_k$, we will use $\langle O_1, O_2, \ldots, O_k \rangle$ to denote their binary encoding. In particular, for a Turing machine $M$, $\langle M \rangle$ is its encoding as a binary string. We may then define the language $L\textsubscript{Halt} = \{\langle M, w \rangle \mid w \text{ on } M \text{ halts}\}$ Is there a Turing machine $H$ such that $L(H) = L\textsubscript{Halt}$?
+
+The answer is yes: just simulate $M$ on $w$. This Turing machine is known as a \emph{universal Turing machine} since it can simulate the specification of an arbitrary Turing machine on arbitrary input.
+
+\section*{\large \centering Recursive and Recursively Enumerable Languages}
+\noindent
+
+Recall that there are $3$ possible outcomes when a Turing machine $M$ runs on an input string $w$ --- $M$ may halt and accept $w$, $M$ may halt and reject $w$, or $M$ may not halt on $w$. Depending on how a Turing machine behaves,  we can define two different classes of problems solvable on a Turing machine.
+
+\begin{definition}[Recursively Enumerable]
+  A language $A$ is \emph{recursively enumerable/semi-decidable} if there is a Turing machine $M$ such that $A = L(M)$. We denote the set of all recursively enumerable languages as $\textsf{RE}$.
+\end{definition}
+
+\begin{remark}
+  $L\textsubscript{Halt} \in \textsf{RE}$.
+\end{remark}
+
+\begin{definition}[Recursive/Decidable]
+  A language $A$ is \emph{recursive/decidable} if there is a Turing machine $M$ that halts on \emph{all} inputs and $A = L(M)$. We denote the set of all recursive languages as $\textsf{REC}$.
+\end{definition}
+
+As an example, consider the language $L\textsubscript{Sorted} = \{\langle l \rangle \mid l \text{ is a sorted list}\}$.
+
+\begin{remark}
+  $L\textsubscript{Sorted} \in \textsf{REC}$ but $L\textsubscript{Halt} \not\in \textsf{REC}$.
+\end{remark}
+
+Observe that a problem that is recursive is solvable by an algorithm that always halts. Thus, by definition, recursive languages are also recursively enumerable. This observation is equivalent to the following lemma:
+
+\begin{lemma}[Recursive Implies Recursively Enumerable]
+  \lemlabel{rec-implies-re}
+  \textsf{REC} $\subseteq$ \textsf{RE}.
+\end{lemma}
+
+We also define the complement of a language.
+
+\begin{definition}[Complement of a Language]
+  The complement of a language $L$ is $\overline{L} = \Sigma^* \setminus L$.
+\end{definition}
+
+\begin{theorem}[Complement of Recursive is Recursive]
+  If $L \in \textsf{REC}$, then $\overline{L} \in \textsf{REC}$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  Take the Turing machine $M$ that accepts $L$ and let $M'$ be the Turing machine $M$ with the only difference being that the accepting and rejecting states are swapped. Then, $\overline{L} = L(M')$ and $M'$ halts on every input. Thus, $\overline{L} \in \textsf{REC}$.
+\end{proof}
+
+The following theorem is a useful way to prove that a problem is recursive.
+
+\begin{theorem}
+  \thmlabel{re-rec-link}
+  $L$ is recursive iff $L$ and $\overline{L}$ are recursively enumerable. That is, $L \in \textsf{REC}$ iff $L \in \textsf{RE}$ and $\overline{L} \in \textsf{RE}$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+  The (easy) forward direction uses \lemref{rec-implies-re}.
+  
+  The reverse direction uses a technique called \emph{dovetailing}. Suppose that $L$ and $\overline{L}$ are recognized by $M$ and $\overline{M}$ respectively. Then, construct $M'$ by running both $M$ and $\overline{M}$ simultaneously on an input $w$, and accept if $M$ accepts or reject if $\overline{M}$ accepts. Since $w$ belongs to either $L$ or $\overline{L}$, $M'$ halts on all inputs and $L = L(M')$. Thus, $L \in \textsf{REC}$.
+\end{proof}
+
+Not every decision problem is recursively enumerable.
+
+\begin{theorem}[Language outside \textsf{RE}]
+  There is a language $L$ that is not recursively enumerable. That is, $L \not\in \textsf{RE}$.
+\end{theorem}
+
+\begin{proof}
+  Since $L\textsubscript{Halt} \not\in \textsf{REC}$ but $L\textsubscript{Halt} \in \textsf{RE}$, by \thmref{re-rec-link}, $\overline{L\textsubscript{Halt}} \not\in \textsf{RE}$.
+
+  Alternatively, note that there are uncountably many languages yet countably many Turing machines.
+\end{proof}
+
+Next, consider the language $K = \{\langle M \rangle \mid \langle M \rangle \in L(M)\}$. Using Cantor's diagonalization technique, we can establish that the complement $\overline{K}$ is not recursively enumerable.
+
+\begin{theorem}
+  The language $\overline{K} = \{\langle M \rangle \mid \langle M \rangle \not\in L(M)\}$ is not recursively enumerable. That is, $\overline{K} \notin \textsf{RE}$.
+\end{theorem}
+
+\begin{proof}
+  Suppose to the contrary that $\overline{K} = L(M)$ for some Turing machine $M$. If $\langle M \rangle \in \overline{K}$, then $\langle M \rangle \not\in L(M) = \overline{K}$, which is a contradiction. Otherwise, if $\langle M \rangle \not\in \overline{K}$, then $\langle M \rangle \in L(M) = \overline{K}$, which is also a contradiction. Therefore, $\overline{K} \ne L(M)$ for any Turing machine $M$ and so $\overline{K} \notin \textsf{RE}$.
+\end{proof}
+
+\end{document}
