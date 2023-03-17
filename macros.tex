@@ -8,6 +8,8 @@
 \newtheorem{corollary}{Corollary}
 \newtheorem{claim}{Claim}
 \newtheorem*{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem*{example}{Example}
 
 % Labels and references
 \newcommand{\figlabel}[1]{\label{fig:#1}}
@@ -115,7 +117,7 @@
 %% Math
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\setpred}[2]{\{#1 \,|\, #2\}}
-\newcommand{\arity}[1]{\mathsf{arity}(f)}
+\newcommand{\arity}[1]{\mathsf{arity}(#1)}
 \newcommand{\powerset}[1]{\mathscr{P}(#1)}
 \renewcommand{\emptyset}{\varnothing}
 
@@ -123,11 +125,19 @@
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\complexnum}{\mathbb{C}}
 \newcommand{\reals}{\mathbb{R}}
+\newcommand{\rationals}{\mathbb{Q}}
 
 %% Logic
 \newcommand{\props}{\euscr{P}}
 \newcommand{\conn}{\euscr{C}}
 \newcommand{\operators}{\euscr{O}}
+\newcommand{\func}{\euscr{F}}
+\newcommand{\reln}{\euscr{R}}
+\newcommand{\vars}{\euscr{V}}
+\newcommand{\struct}{\euscr{A}}
+\newcommand{\fvar}[1]{\mathsf{FVar}(#1)}
+\newcommand{\terms}{\mathsf{Terms}}
+\newcommand{\val}[2]{\mathsf{val}_{#1}(#2)}
 \newcommand{\wff}{\mathsf{FORM}}
 \newcommand{\indwff}{\mathsf{INDFORM}}
 \newcommand{\wffalt}{\mathsf{AltFORM}}

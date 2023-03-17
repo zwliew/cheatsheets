@@ -8,6 +8,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{hyperref}
 \usepackage{mdframed}
+\usepackage{amsfonts}
 
 % \usepackage{newproof}
 % \usepackage{handout}
@@ -84,6 +85,347 @@ SEMESTER \semester, \academicyear
 
 \vspace{5truemm}
 \hrule
+\hrule
+
+\section*{\large \centering First-Order Logic}
+\noindent
+
+First-order Logic (FOL) is a formal language to describe and reason about \emph{predicates} rather than propositions. A predicate is a proposition that depends on the value of some variables. To do this, first-order logic builds upon propositional logic with functions, variables, and quantification.
+
+\section*{\large \centering Motivation behind FOL}
+\noindent
+
+First-order logic grew out of the desire to study the foundations of mathematics in number theory and set theory. To illustrate the need for FOL, recall that we can represent the following statements as propositions in propositional logic:
+\begin{align*}
+  s &= \text{"Greeks are humans."}
+  \\
+  r &= \text{"Humans are mortals."}
+  \\
+  p &= \text{"Greeks are mortals."}
+\end{align*}
+
+However, the limited expressiveness of propositional logic prevents us from reasoning about the elements in a universe. Thus, propositional logic cannot properly encode the following statements:
+\begin{align*}
+  s_1 &= \text{"If a person is a Greek, then he is a human." or } \forall x \ldotp G(x) \rightarrow H(x).
+  \\
+  s_2 &= \text{"There is a Greek." or } \exists x \ldotp G(x).
+  \\
+  s_3 &= \text{"There is a human." or } \exists x \ldotp H(x).
+\end{align*}
+
+Here, $G$ and $H$ are \emph{predicates} where $G(x)$ means $x$ is a Greek and $H(x)$ means $x$ is a human. 
+
+\subsection*{\large \centering Syntax of FOL}
+\noindent
+
+We start by defining the syntax of first-order logic. First-order logic formulae are defined over a signature that identifies non-logical symbols, namely, the predicates, constants, and functions that can be used in formulae.
+
+\begin{definition}[Signature]
+  A \emph{signature} or \emph{vocabulary} is $\Sigma = (\conn, \func, \reln)$ where
+  \begin{enumerate}
+    \item $\conn = \{c_1, c_2, \ldots \}$ is a set of \emph{constant symbols}.
+    \item $\func = \{f_1, f_2, \ldots\}$ is a set of \emph{function symbols}. Each $f \in \func$ has an associated arity, denoted $\arity{f} \in \mathbb{N}_{\ge 0}$.
+    \item $\reln = \{R_1, R_2, \ldots\}$ is a set of \emph{relation symbols}. Each $R \in \reln$ has an associated arity, denoted $\arity{R} \in \mathbb{N}_{> 0}$.
+  \end{enumerate}
+\end{definition}
+
+Besides the signature, we also need a set $\vars = \{x_1, x_2, \ldots\}$ of variables. We typically consider signatures $\Sigma$ and variables $\vars$ that are countable. Lastly, we also inherit the propositional connectives $\vee$ and $\neg$.
+
+Now, we can define the set of \emph{terms} in first-order logic.
+
+\begin{definition}[Terms]
+  A \emph{terms} over a signature $\Sigma = (\conn, \func, \reln)$ and variables $\vars$ is given by the following BNF grammar:
+  $$
+  t := x \mid c \mid f(t, t, \ldots, t)
+  $$
+  where $x \in \vars$, $c \in \conn$, and $f \in \func$. The number of terms in a function $f$ is determined by $\arity{f}$.
+\end{definition}
+
+Having defined terms, we can use them to define well-formed formulae (wff) or formulae for short.
+
+\begin{definition}[Formulae]
+  A \emph{well-formed formula (wff)} over a signature $\Sigma = (\conn, \func, \reln)$ and variables $\vars$ is given by the following BNF grammar:
+  $$
+  \varphi := t = t \mid R(t, t, \ldots, t) \mid (\neg \varphi) \mid (\varphi \vee \varphi) \mid (\exists x \ldotp \varphi)
+  $$
+  Here, $t$ is a term, $x \in \vars$ is a variable, and $R \in \reln$ is a relation. The number of terms in a relation $R$ is determined by $\arity{R}$.
+\end{definition}
+
+We will additionally use the derived operators "$\wedge$", "$\rightarrow$" and the derived \emph{universal} quantifier "$\forall$" which are obtained as follows:
+\begin{enumerate}
+  \item $\varphi_1 \wedge \varphi_2 \equiv \neg((\neg \varphi_1) \vee (\neg \varphi_2))$
+  \item $\varphi_1 \rightarrow \varphi_2 \equiv (\neg \varphi_1) \vee \varphi_2$
+  \item $\forall x \ldotp \varphi \equiv \neg(\exists x \ldotp (\neg \varphi))$
+\end{enumerate}
+
+From here on, when we say \emph{formulae}, we really mean \emph{well-formed formulae} in first-order logic. Furthermore, we will omit parantheses where the order of operations is clear. For example, we will write $\neg \varphi \vee \varphi_2$ instead of $(\neg \varphi) \vee \varphi_2$.
+
+A formula $\varphi$ is an \emph{atomic formula} if it does not have any logical operators; that is, it is of the form $t_1 = t_2$ or $R(t_1, t_2, \ldots, t_k)$. Lastly, a \emph{literal} is a formula that is either atomic or the negation of an atomic formula.
+
+\begin{example}
+  Consider the signature $\Sigma = (\{c\}, \{f^1\}, \{<^2\})$ where $f$ has arity $1$ and $<$ has arity $2$. Furthermore, suppose that $\vars = \{x, y\}$. Then, the following are formulae:
+  \begin{enumerate}
+    \item $\exists x \ldotp \forall y \ldotp <(x, y) \vee x = y$
+    \item $\forall x \ldotp \forall y \ldotp x = y$
+    \item $\forall x \ldotp x = f(c)$
+    \item $x = f(c)$
+  \end{enumerate}
+\end{example}
+
+Note that in formula $4$, the variable $x$ is not quantified. In this case, $x$ is known as a \emph{free variable}. On the other hand, all of the variables in formula $1$ to $3$ are quantified and thus, they are \emph{bound variables}. Formulae with no free variables are known as \emph{sentences}.
+
+\section*{\large \centering Semantics of FOL}
+\noindent
+
+The semantics of formulae in any logic is defined with respect to a \emph{model}. In propositional logic, models were truth assignments to the propositions. For first-order logic, models are known as \emph{structures} that help identify the interpretation of symbols in the signature.
+
+\begin{definition}[Structure]
+  Given a signature $\Sigma = (\conn, \func, \reln)$, a \emph{structure} $\euscr{A}$ over $\Sigma$ is a tuple $(U, I)$ where:
+  \begin{itemize}
+    \item $U$ is a non-empty set known as the \emph{universe/domain} of the structure,
+    \item For each constant symbol $c \in \conn$, $I(c) \in U$ is its interpretation,
+    \item For each function symbol $f \in \func$, $I(f) \colon U^{\arity{f}} \rightarrow U$ is its interpretation, and
+    \item For each relation symbol $R \in \reln$, $I(R) \subseteq U^{\arity{R}}$ is its interpretation.
+  \end{itemize}
+
+  The structure is \emph{finite} if the universe $U$ is finite.
+\end{definition}
+
+\begin{example}
+  Consider the signature $\Sigma = (\{0\}, \{S^1\}, \{<^2\})$. Then, we have a $\Sigma$-structure $\euscr{A} = (U, I)$ given by:
+  \begin{itemize}
+    \item $U = \mathbb{N}$,
+    \item $I(0) = 0$,
+    \item $I(s)(x) = x + 1$ for all $x \in U$, and
+    \item $I(<) = \{(a, b) \mid a < b \text{ in the usual sense}\}$.
+  \end{itemize}
+
+  Now, consider the following formulae:
+  \begin{enumerate}
+    \item $\varphi_1 \equiv \exists x \ldotp <(0, x)$
+    \item $\varphi_2 \equiv <(0, x)$
+  \end{enumerate}
+
+  As intuition leads, $\varphi_1$ is always true in $\euscr{A}$. On the other hand, the truthiness of $\varphi_2$ depends on the \emph{assignment} of $x$. This leads to following definition of assignments.
+\end{example}
+
+\begin{definition}[Assignment]
+  For a $\Sigma$-structure $\euscr{A}$, an \emph{assignment} over $\euscr{A}$ is a function $\alpha \colon \vars \to U$ that assigns every variable $x \in \vars$ a value $\alpha(x) \in U$.
+\end{definition}
+
+We can then extend our choice of $\Sigma$-structure and assignment to a \emph{valuation} function over the set of $\Sigma$-terms. A valuation gives an interpretation to the terms in the language.
+
+\begin{definition}[Valuation]
+  For a $\Sigma$-structure $\euscr{A}$ and an assignment $\alpha$ over $\euscr{A}$, a \emph{valuation} $\textsf{val}_{\euscr{A}, \alpha} \colon \textsf{Terms} \to U$ is defined inductively as follows:
+  \begin{itemize}
+    \item For any variable $x \in \vars$, $\mathsf{val}_{\euscr{A}, \alpha}(x) = \alpha(x)$
+    \item For any constant $c \in \conn$, $\mathsf{val}_{\euscr{A}, \alpha}(c) = I(c)$, and
+    \item For any function $f^k \in \func$ where $k = \arity{f}$, we have
+    $$
+    \mathsf{val}_{\euscr{A}, \alpha}(f(t_1, t_2, \ldots, t_k)) = I(f)(\mathsf{val}_{\euscr{A}, \alpha}(t_1), \mathsf{val}_{\euscr{A}, \alpha}(t_2), \ldots, \mathsf{val}_{\euscr{A}, \alpha}(t_k))$$
+  \end{itemize}
+\end{definition}
+
+Before we finally define the entailment rules for formulae, we have to first define a new shorthand notation for \emph{reassignment}. This helps us define the semantics of quantifiers.
+
+\begin{definition}[Reassignment]
+  For an assignment $\alpha \colon \vars \to U$ over a $\Sigma$-structure $\euscr{A} = (U, I)$, $\alpha[x \mapsto e]$ is the assignment
+  $$
+  \alpha[x \mapsto u](y) = \begin{cases}
+    \alpha(y) & \text{if } y \ne x \\
+    u & \text{otherwise.}
+  \end{cases}
+  $$
+\end{definition}
+
+Finally, we can define the semantics of FOL formulae.
+
+\begin{definition}[Satisfaction]
+  Given a $\Sigma$-structure $\euscr{A}$ and an assignment $\alpha$, the \emph{satisfaction} relation is a ternary relation $\models$. We write $\euscr{A}, \alpha \models \varphi$ to mean that "$\varphi$ holds in $\euscr{A}$ under assignment $\alpha$. We also write $\euscr{A}, \alpha \not\models \varphi$ to mean that $\euscr{A}, \alpha \models \varphi$ does not hold.
+  
+  The satisfaction relation $\models$ is inductively defined as follows:
+  \begin{itemize}
+    \item \makebox[4cm][l]{$\euscr{A}, \alpha \models t_1 = t_2$} iff $\mathsf{val}_{\euscr{A}, \alpha}(t_1) = \mathsf{val}_{\euscr{A}, \alpha}(t_2)$
+    \item \makebox[4cm][l]{$\euscr{A}, \alpha \models R(t_1, \ldots, t_k)$} iff $(\mathsf{val}_{\euscr{A}, \alpha}(t_1), \ldots, \mathsf{val}_{\euscr{A}, \alpha}(t_k)) \in I(R)$ where $k = \arity{R}$
+    \item \makebox[4cm][l]{$\euscr{A}, \alpha \models \neg \varphi$} iff $\euscr{A}, \alpha \not\models \varphi$
+    \item \makebox[4cm][l]{$\euscr{A}, \alpha \models \varphi \lor \psi$} iff $\euscr{A}, \alpha \models \varphi$ or $\euscr{A}, \alpha \models \psi$
+    \item \makebox[4cm][l]{$\euscr{A}, \alpha \models \exists x \ldotp \varphi$} iff there exists $u \in U$ such that $\euscr{A}, \alpha[x \mapsto u] \models \varphi$
+  \end{itemize}
+\end{definition}
+
+We will now more formally define \emph{bound} and \emph{free} variables in a formula. We start by defining the \emph{scope} of a quantifier.
+
+\begin{definition}[Scope]
+  Given a formula $\varphi = \exists x \ldotp \psi$, $\psi$ is said to be the \emph{scope} of the quantifier $\exists x$.
+\end{definition}
+
+\begin{definition}[Bound and Free Variables]
+  Every occurrence of the variable $x$ in $\varphi = \exists x \ldotp \psi$ is called a \emph{bound occurrence} of $x$ in $\psi$. Any occurrence of $x$ which is not bound is called a \emph{free occurrence} of $x$ in $\psi$.
+
+  The free variables in $\varphi$ is denoted by $\mathsf{FVar}(\varphi)$. We go with the convention that a free variable of $\varphi$ must occur in $\varphi$ and thus $|\mathsf{FVar}(\varphi)|$ is bounded by the size of the formula $\varphi$.
+
+  The set of bound and free occurrences of a variable $x \in \vars$ in a formula can be defined formally using induction on the structure of the formula, but is skipped here.
+\end{definition}
+
+Notice that a variable may occur both bound and free. For example, in the formula $\varphi_1 \equiv R(\mathbf{x}) \to \forall x \ldotp T(\underline{x}, f(\underline{x}))$, the bolded variable is free but the underlined variables are bound. We can \emph{rename} bound variables such that (a) bound variables are disjoint from free variables and (b) two bound occurrences of a variable refer to the same quantifier.
+
+\begin{claim}
+  For every formula $\varphi$, there is an equivalent formula $\psi$ such that the bound and free variables of $\psi$ are disjoint and every bound variable is in the scope of a unique quantifier.
+\end{claim}
+
+\begin{example}
+  The formula $\varphi_2 \equiv R(\mathbf{x}) \to \forall y \ldotp T(\underline{y}, f(\underline{y}))$ is equivalent to $\varphi_1$.
+\end{example}
+
+\begin{definition}[Sentence]
+  A \emph{sentence} is a formula $\varphi$ that has no free variables (i.e. $\mathsf{FVar}(\varphi) = \emptyset$).
+\end{definition}
+
+An analogous notion of the Relevance Lemma for FOL is the observation that the satisfaction of a formula depends only on the values that $\alpha$ assigns to the free variables of $\varphi$; the values assigned to bound variables are irrelevant. Before we prove the Relenvace Lemma for FOL, we first prove a related result on terms.
+
+\begin{lemma}[Relevance Lemma on Terms]
+  Let $t$ be a term and let $\struct = (U, I)$ be a structure. If assignments $\alpha_1$ and $\alpha_2$ are such that $\alpha_1(x) = \alpha_2(x)$ for each variable $x$ occurring in $t$, then $\val{\struct, \alpha_1}{t} = \val{\struct, \alpha_2}{t}$.
+\end{lemma}
+
+\begin{proof}[Proof]
+  We will prove by induction on the structure of $t$ that if $\alpha_1(x) = \alpha_2(x)$ for each variable $x$ occurring in $t$, then $\val{\struct, \alpha_1}{t} = \val{\struct, \alpha_2}{t}$.
+
+  \begin{description}
+    \item[Base Case 1.] For any constant symbol $c \in \conn$, $\val{\struct, \alpha_1}{c} = I(c) = \val{\struct, \alpha_2}{c}$ by definition.
+
+    \item[Base Case 2.] For any variable $x \in \vars$, $\val{\struct, \alpha_1}{x} = \alpha_1(x) = \alpha_2(x) = \val{\struct, \alpha_2}{x}$ by the assumption. 
+
+    \item[Inductive Step.] Assume that the inductive hypothesis holds for some terms $t_1, \ldots t_k$ for some $k \in \nats$. Consider any function symbol $f^k \in \func$ where $k = \arity{f}$. Then, we have:
+    \begin{align*}
+    \val{\struct, \alpha_1}{f(t_1, \ldots, t_k)} &= I(f)(\val{\struct, \alpha_1}{t_1}, \ldots, \val{\struct, \alpha_1}{t_k}) &&\text{(by definition)}
+    \\
+    &= I(f)(\val{\struct, \alpha_2}{t_1}, \ldots, \val{\struct, \alpha_2}{t_k}) &&\text{(by inductive hypothesis)}
+    \\
+    &= \val{\struct, \alpha_2}{f(t_1, \ldots, t_k)} &&\text{(by definition)}
+    \end{align*}
+  \end{description}
+  Thus, the inductive hypothesis holds for all terms $t$.
+\end{proof}
+
+Now, we can use the previous result to prove the Relevance Lemma on FOL formulae.
+
+\begin{lemma}[Relevance Lemma on Formulae]
+  Let $\varphi$ be a FOL formula and let $\struct$ be a structure. If assignments $\alpha_1$ and $\alpha_2$ are such that $\alpha_1(x) = \alpha_2(x)$ for every $x \in \fvar{\varphi}$, then $\struct, \alpha_1 \models \varphi$ iff $\struct, \alpha_2 \models \varphi$.
+\end{lemma}
+
+\begin{proof}
+  Without loss of generality, suppose that $\struct, \alpha_1 \models \varphi$. We want to show that $\struct, \alpha_2 \models \varphi$. Once we have shown this, then by swapping $\alpha_1$ and $\alpha_2$ in our argument, we will have also proven that if $\struct, \alpha_2 \models \varphi$ then $\struct, \alpha_1 \models \varphi$.
+
+  So, to proceed, we will prove by induction on the structure of $\varphi$ that if $\alpha_1(x) = \alpha_2(x)$ for every $x \in \fvar{\varphi}$, and $\struct, \alpha_1 \models \varphi$, then $\struct, \alpha_2 \models \varphi$.
+
+  \begin{description}
+    \item[Base Case 1.] For any atomic formula of the form $\varphi \equiv t_1 = t_2$ for some terms $t_1$ and $t_2$, we have:
+    \begin{align*}
+      \struct, \alpha_1 &\models \varphi &&\text{(by assumption)}
+      \\
+      \val{\struct, \alpha_1}{t_1} &= \val{\struct, \alpha_1}{t_2} &&\text{(since $\struct, \alpha_1 \models \varphi$)}
+      \\
+      \val{\struct, \alpha_2}{t_1} &= \val{\struct, \alpha_2}{t_2} &&\text{(by the previous lemma)}
+      \\
+      \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
+    \end{align*}
+
+    \item[Base Case 2.] For any atomic formula of the form $\varphi \equiv R(t_1, \ldots, t_k)$ for some terms $t_1, \ldots, t_k$ where $k = \arity{R}$, we have:
+    \begin{align*}
+      \struct, \alpha_1 &\models \varphi &&\text{(by assumption)}
+      \\
+      (\val{\struct, \alpha_1}{t_1}, \ldots, \val{\struct, \alpha_1}{t_k}) &\in I(R) &&\text{(by definition)}
+      \\
+      (\val{\struct, \alpha_2}{t_1}, \ldots, \val{\struct, \alpha_2}{t_k}) &\in I(R) &&\text{(by the previous lemma)}
+      \\
+      \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
+    \end{align*}
+
+    \item[Inductive Step 1.] Assume that the inductive hypothesis holds for some formula $\psi$. Consider the formula $\varphi \equiv \neg \psi$. Then, we have:
+    \begin{align*}
+      \struct, \alpha_1 &\models \varphi &&\text{(by assumption)}
+      \\
+      \struct, \alpha_1 &\not\models \psi &&\text{(by definition)}
+      \\
+      \struct, \alpha_2 &\not\models \psi &&\text{(by the inductive hypothesis)}
+      \\
+      \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
+    \end{align*}
+
+    \item[Inductive Step 2.] Assume that the inductive hypothesis holds for some formulae $\psi_1$ and $\psi_2$. Consider the formula $\varphi \equiv \psi_1 \lor \psi_2$. Then, we have:
+    \begin{align*}
+      \struct, \alpha_1 &\models \varphi &&\text{(by assumption)}
+      \\
+      \struct, \alpha_1 &\models \psi_1 \lor \psi_2 &&\text{(by definition)}
+      \\
+      \struct, \alpha_1 &\models \psi_1 \text{ or } \struct, \alpha_1 \models \psi_2 &&\text{(by definition)}
+      \\
+      \struct, \alpha_2 &\models \psi_1 \text{ or } \struct, \alpha_2 \models \psi_2 &&\text{(by the inductive hypothesis)}
+      \\
+      \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
+    \end{align*}
+
+    \item[Inductive Step 3.] Assume that the inductive hypothesis holds for some formula $\psi$. Consider the formula $\varphi \equiv \exists x \ldotp \psi$. Then, we have:
+    \begin{align*}
+      \struct, \alpha_1 &\models \varphi &&\text{(by assumption)}
+      \\
+      \struct, \alpha_1 &\models \exists x \ldotp \psi &&\text{(by definition)}
+      \\
+      \exists u \in U \ldotp \ \struct, \alpha_1[x \to u] &\models \psi &&\text{(by definition)}
+      \\
+      \exists u \in U \ldotp \ \struct, \alpha_2[x \to u] &\models \psi &&\text{(by the inductive hypothesis)}
+      \\
+      \struct, \alpha_2 &\models \exists x \ldotp \varphi &&\text{(by definition)}
+      \\
+      \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
+    \end{align*}
+  \end{description}
+
+  Hence, we have proven that if $\struct, \alpha_1 \models \varphi$, then $\struct, \alpha_2 \models \varphi$. Since our argument does not assume any additional property about $\alpha_1$ or $\alpha_2$, by swapping $\alpha_1$ and $\alpha_2$ in our argument, we can conclude that if $\struct, \alpha_2 \models \varphi$, then $\struct, \alpha_1 \models \varphi$.
+
+  Therefore, we have proven that, assuming that $\alpha_1(x) = \alpha_2(x)$ for every $x \in \fvar{\varphi}$, then $\struct, \alpha_1 \models \varphi$ iff $\struct, \alpha_2 \models \varphi$.
+\end{proof}
+
+It follows from the Relevance Lemma that if $\varphi$ is a sentence, then all variable assignments are equivalent with respect to satisfiability. Hence, for any sentence $\varphi$, we simply write $\struct \models \varphi$ whenever $\struct, \alpha \models \varphi$ for some assignment $\alpha$.
+
+\begin{corollary}
+  For any sentence $\varphi$ and assignments $\alpha_1$ and $\alpha_2$, $\struct, \alpha_1 \models \varphi$ iff $\struct, \alpha_2 \models \varphi$.
+\end{corollary}
+
+\section*{\large \centering Satisfiability and Validity of FOL Formulae}
+\noindent
+
+We can define the satisfiability and validity of FOL formulae similar to the way we defined them for propositional logic.
+
+\begin{definition}[Satisfiability]
+  A FOL formula $\varphi$ over signature $\Sigma$ is \emph{satisfiable} if there is some structure $\struct$ and assignment $\alpha$ such that $\struct, \alpha \models \varphi$. Otherwise, $\varphi$ is \emph{unsatisfiable}.
+\end{definition}
+
+\begin{definition}[Satisfiability of a Set]
+  A set of FOL formulae $\Gamma$ is \emph{satisfiable} if there is a structure $\struct$ and assignment $\alpha$ such that $\struct, \alpha \models \varphi$ for every $\varphi \in \Gamma$. Equivalently, we write $\struct, \alpha \models \Gamma$.
+\end{definition}
+
+\begin{definition}[Validity]
+  A FOL formula $\varphi$ is said to be \emph{valid} if for every structure $\struct$ and assignment $\alpha$, $\struct, \alpha \models \varphi$.
+\end{definition}
+
+\begin{definition}[Logical Consequence]
+  A formula $\varphi$ is a \emph{logical consequence} of a set of formulae $\Gamma$ if for each structure $\struct$ and assignment $\alpha$, $\struct, \alpha \models \Gamma$ implies that $\struct, \alpha \models \varphi$.
+
+  As a shorthand, when $\emptyset \models \varphi$, we write $\models \varphi$.
+\end{definition}
+
+\begin{definition}[Logical Equivalence]
+  Two formulae $\varphi_1$ and $\varphi_2$ are \emph{logically equivalent} if for every structure $\struct$ and assignment $\alpha$, $\struct, \alpha \models \varphi_1$ iff $\struct, \alpha \models \varphi_2$.
+\end{definition}
+
+\begin{definition}[Equisatisfiability]
+  Two formulae $\varphi_1$ and $\varphi_2$ are \emph{equisatisfiable} when $\varphi_1$ and $\varphi_2$ are both satisfiable or both unsatisfiable.
+\end{definition}
+
+\vspace{5truemm}
+\hrule
+\hrule
 
 \section*{\large \centering Primer on Countability}
 \noindent
@@ -120,9 +462,9 @@ A more crucial observation is the following theorem.
   There are sets that are not countable; that is, they are \emph{uncountable}.
 \end{theorem}
 
-\begin{remark}
-  Some examples of \claimref{uncountable-exist} are the set of real numbers $\reals$ and the powerset of the natural numbers $\powerset{\nats}$.
-\end{remark}
+\begin{example}
+  The set of real numbers $\reals$ and the powerset of the natural numbers $\powerset{\nats}$ are uncountable.
+\end{example}
 
 Next, we will state a straightforward claim.
 
@@ -145,9 +487,9 @@ Another simple observation is the following.
   Consider an injection $f \colon S \to \nats$. We can extend $f$ to an injection $g \colon S' \to \nats$ by defining $g(s) = f(s)$ for all $s \in S'$.
 \end{proof}
 
-\begin{remark}
-  As a result of \claimref{subset-countable}, some other examples of countable sets are: the set of even numbers, the set of odd numbers, and the set of prime numbers. These are all subsets of the natural numbers.
-\end{remark}
+\begin{example}
+  Some other examples of countable sets are: the set of even numbers, odd numbers, and prime numbers. These are all subsets of the natural numbers.
+\end{example}
 
 Notice that while there is an injection from the set of even numbers to the set of naturals, there is also an injection from the set of naturals to the set of even numbers. We will formalise this notion in the following claim.
 
@@ -192,9 +534,9 @@ The idea of a proof for \claimref{cartesian-countable} is to draw a grid and lis
   There is a collection $\conn$ of countable sets such that $\conn$ is uncountable.
 \end{theorem}
 
-\begin{remark}
-  An example of \thmref{uncountable-countable} is the powerset of the natural numbers $\powerset{\nats}$.
-\end{remark}
+\begin{example}
+  The powerset of the natural numbers $\powerset{\nats}$ is an uncountable collection of countable sets.
+\end{example}
 
 Next, we state a more important observation:
 
@@ -248,7 +590,7 @@ We have previously seen that every set of strings on a countable alphabet is cou
 \section*{\large \centering Motivations behind the Study of Logic}
 \noindent
 
-Professor Mathur's research interest is in the space of formal program verification. Formal program verification is the problem of determining if a program $P$ meets a specification $\Phi$; that is, $P \vDash \Phi$. This is a more complete way of verifying the correctness of programs compared to software engineering-style testing, but requires a background in mathematical logic.
+Professor Mathur's research interest is in the space of formal program verification. Formal program verification is the problem of determining if a program $P$ meets a specification $\Phi$; that is, $P \models \Phi$. This is a more complete way of verifying the correctness of programs compared to software engineering-style testing, but requires a background in mathematical logic.
 
 Another motivation is in the realm of databases. We can model a query as a first-order logic formula, such as the formula $\phi \equiv \mathsf{Friends}(p_1, p_2)$ where the interpretation of $\mathsf{Friends}$ is $I(\mathsf{Friends}) = \{(p_1, p_2), (p_2, p_3), \ldots \}$ and the universe $U$ is the set of all persons.
 
@@ -335,9 +677,9 @@ Recall that there are $3$ possible outcomes when a Turing machine $M$ runs on an
   A language $A$ is \emph{recursively enumerable/semi-decidable} if there is a Turing machine $M$ such that $A = L(M)$. We denote the set of all recursively enumerable languages as $\textsf{RE}$.
 \end{definition}
 
-\begin{remark}
-  $L\textsubscript{Halt} \in \textsf{RE}$.
-\end{remark}
+\begin{example}
+  $L\textsubscript{Halt}$ is recursively enumerable. That is, $L\textsubscript{Halt} \in \textsf{RE}$.
+\end{example}
 
 \begin{definition}[Recursive/Decidable]
   A language $A$ is \emph{recursive/decidable} if there is a Turing machine $M$ that halts on \emph{all} inputs and $A = L(M)$. We denote the set of all recursive languages as $\textsf{REC}$.
@@ -345,9 +687,9 @@ Recall that there are $3$ possible outcomes when a Turing machine $M$ runs on an
 
 As an example, consider the language $L\textsubscript{Sorted} = \{\langle l \rangle \mid l \text{ is a sorted list}\}$.
 
-\begin{remark}
+\begin{example}
   $L\textsubscript{Sorted} \in \textsf{REC}$ but $L\textsubscript{Halt} \not\in \textsf{REC}$.
-\end{remark}
+\end{example}
 
 Observe that a problem that is recursive is solvable by an algorithm that always halts. Thus, by definition, recursive languages are also recursively enumerable. This observation is equivalent to the following lemma:
 
@@ -406,3 +748,4 @@ Next, consider the language $K = \{\langle M \rangle \mid \langle M \rangle \in 
 \end{proof}
 
 \end{document}
+
