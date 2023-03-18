@@ -11,6 +11,13 @@
 \theoremstyle{definition}
 \newtheorem*{example}{Example}
 
+\newenvironment{subproof}[1][\proofname]{%
+  \renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
+  \begin{proof}[#1]%
+}{%
+  \end{proof}%
+}
+
 % Labels and references
 \newcommand{\figlabel}[1]{\label{fig:#1}}
 \newcommand{\figref}[1]{Figure~\ref{fig:#1}}
@@ -145,6 +152,7 @@
 \newcommand{\truVal}{\texttt{true}}
 \newcommand{\flsVal}{\texttt{false}}
 \newcommand{\entails}{\vdash}
+\newcommand{\grmodels}{\models\textsubscript{Gr}\ }
 
 
 %% Graphs

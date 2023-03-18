@@ -87,6 +87,37 @@ SEMESTER \semester, \academicyear
 \hrule
 \hrule
 
+\section*{\large \centering Motivating the Study of Logic}
+\noindent
+
+Professor Mathur's research interest is in the space of formal program verification. Formal program verification is the problem of determining if a program $P$ meets a specification $\Phi$; that is, $P \models \Phi$. This is a more complete way of verifying the correctness of programs compared to software engineering-style testing, but requires a background in mathematical logic.
+
+Another motivation is in the realm of databases. We can model a query as a first-order logic formula, such as the formula $\phi \equiv \mathsf{Friends}(p_1, p_2)$ where the interpretation of $\mathsf{Friends}$ is $I(\mathsf{Friends}) = \{(p_1, p_2), (p_2, p_3), \ldots \}$ and the universe $U$ is the set of all persons.
+
+Yet another motivation is in the study of complexity theory, which discusses whether polynomial-time algorithms exist to solve a problem and what the best algorithm to solve a problem is. If we were able to encode a computational problem as a logic formulae, then determining whether the problem is solvable in polynomial time could be equivalent to determining the satisfiability of the formula.
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section*{\large \centering Proof Systems for Propositional Logic}
+\noindent
+
+A proof system provides a mechanical procedure for establishing a logical inference. They are a sequence of statements where each statement in the sequence is either a self-evident truth, or logically follows from previous observations. We will look at two different types of proof systems for porpositional logic: the \emph{Hilbert-style/Frege} proof system and the \emph{Resolution} proof system.
+
+\section*{\large \centering Hilbert-style/Frege Proof System}
+\noindent
+
+The \emph{Hilbert-style} proof system provides a mechanical procedure for establishing new valid formulae.
+
+\section*{\large \centering Resolution Proof System}
+\noindent
+
+
+\vspace{5truemm}
+\hrule
+\hrule
+
 \section*{\large \centering First-Order Logic}
 \noindent
 
@@ -113,7 +144,11 @@ However, the limited expressiveness of propositional logic prevents us from reas
   s_3 &= \text{"There is a human." or } \exists x \ldotp H(x).
 \end{align*}
 
-Here, $G$ and $H$ are \emph{predicates} where $G(x)$ means $x$ is a Greek and $H(x)$ means $x$ is a human. 
+Here, $G$ and $H$ are \emph{predicates} where $G(x)$ means $x$ is a Greek and $H(x)$ means $x$ is a human.
+
+\vspace{5truemm}
+\hrule
+\hrule
 
 \subsection*{\large \centering Syntax of FOL}
 \noindent
@@ -173,6 +208,10 @@ A formula $\varphi$ is an \emph{atomic formula} if it does not have any logical 
 \end{example}
 
 Note that in formula $4$, the variable $x$ is not quantified. In this case, $x$ is known as a \emph{free variable}. On the other hand, all of the variables in formula $1$ to $3$ are quantified and thus, they are \emph{bound variables}. Formulae with no free variables are known as \emph{sentences}.
+
+\vspace{5truemm}
+\hrule
+\hrule
 
 \section*{\large \centering Semantics of FOL}
 \noindent
@@ -352,6 +391,8 @@ Now, we can use the previous result to prove the Relevance Lemma on FOL formulae
       \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
     \end{align*}
 
+    Note that $\fvar{\varphi} = \fvar{\psi}$ by definition, so we can invoke the inductive hypothesis in the third step.
+
     \item[Inductive Step 2.] Assume that the inductive hypothesis holds for some formulae $\psi_1$ and $\psi_2$. Consider the formula $\varphi \equiv \psi_1 \lor \psi_2$. Then, we have:
     \begin{align*}
       \struct, \alpha_1 &\models \varphi &&\text{(by assumption)}
@@ -365,6 +406,8 @@ Now, we can use the previous result to prove the Relevance Lemma on FOL formulae
       \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
     \end{align*}
 
+    Note that any free variable $x$ in $\psi_1$ or $\psi_2$ is also free in $\varphi$. Hence, we can invoke the inductive hypothesis in the fourth step.
+
     \item[Inductive Step 3.] Assume that the inductive hypothesis holds for some formula $\psi$. Consider the formula $\varphi \equiv \exists x \ldotp \psi$. Then, we have:
     \begin{align*}
       \struct, \alpha_1 &\models \varphi &&\text{(by assumption)}
@@ -375,10 +418,12 @@ Now, we can use the previous result to prove the Relevance Lemma on FOL formulae
       \\
       \exists u \in U \ldotp \ \struct, \alpha_2[x \to u] &\models \psi &&\text{(by the inductive hypothesis)}
       \\
-      \struct, \alpha_2 &\models \exists x \ldotp \varphi &&\text{(by definition)}
+      \struct, \alpha_2 &\models \exists x \ldotp \psi &&\text{(by definition)}
       \\
       \struct, \alpha_2 &\models \varphi &&\text{(by definition)}
     \end{align*}
+
+    Note that any free variable in $\psi$ is either free in $\exists x \ldotp \psi$ or bound to $x$. In either case, $\alpha_1[x \to u]$ and $\alpha_2[x \to u]$ agree on all free variables in $\psi$, and so we can invoke the inductive hypothesis in the fourth step.
   \end{description}
 
   Hence, we have proven that if $\struct, \alpha_1 \models \varphi$, then $\struct, \alpha_2 \models \varphi$. Since our argument does not assume any additional property about $\alpha_1$ or $\alpha_2$, by swapping $\alpha_1$ and $\alpha_2$ in our argument, we can conclude that if $\struct, \alpha_2 \models \varphi$, then $\struct, \alpha_1 \models \varphi$.
@@ -386,11 +431,11 @@ Now, we can use the previous result to prove the Relevance Lemma on FOL formulae
   Therefore, we have proven that, assuming that $\alpha_1(x) = \alpha_2(x)$ for every $x \in \fvar{\varphi}$, then $\struct, \alpha_1 \models \varphi$ iff $\struct, \alpha_2 \models \varphi$.
 \end{proof}
 
-It follows from the Relevance Lemma that if $\varphi$ is a sentence, then all variable assignments are equivalent with respect to satisfiability. Hence, for any sentence $\varphi$, we simply write $\struct \models \varphi$ whenever $\struct, \alpha \models \varphi$ for some assignment $\alpha$.
-
 \begin{corollary}
   For any sentence $\varphi$ and assignments $\alpha_1$ and $\alpha_2$, $\struct, \alpha_1 \models \varphi$ iff $\struct, \alpha_2 \models \varphi$.
 \end{corollary}
+
+It follows from the Relevance Lemma that if $\varphi$ is a sentence, then all variable assignments are equivalent with respect to satisfiability. Hence, for any sentence $\varphi$, we simply write $\struct \models \varphi$ whenever $\struct, \alpha \models \varphi$ for some assignment $\alpha$.
 
 \section*{\large \centering Satisfiability and Validity of FOL Formulae}
 \noindent
@@ -422,6 +467,217 @@ We can define the satisfiability and validity of FOL formulae similar to the way
 \begin{definition}[Equisatisfiability]
   Two formulae $\varphi_1$ and $\varphi_2$ are \emph{equisatisfiable} when $\varphi_1$ and $\varphi_2$ are both satisfiable or both unsatisfiable.
 \end{definition}
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section*{\large \centering Normalization and Skolemization}
+\noindent
+
+Similar to how propositional formulae in conjunctive normal form are easier to process, FOL formulae in \emph{prenex normal form} are also easier for automated theorem provers to process.
+
+\begin{definition}[Prenex Normal Form]
+  A formula is in \emph{prenex normal form} if it is of the form $\varphi \equiv Q_1x_1 \cdot Q_2x_2 \cdots Q_kx_k \cdot \psi$ where $Q_1, \ldots, Q_k \in \{ \forall, \exists \}$ are quantifiers, $x_1, \ldots, x_k \in \vars$ and $\psi$ is quantifier-free. $\psi$ is called the \emph{matrix} of the prenex normal formula formula $\varphi$.
+\end{definition}
+
+\begin{claim}
+  Every FOL formula is logically equivalent to a formula in prenex normal form.
+\end{claim}
+
+One can go even further and eliminate existential quantifiers from a formula in prenex normal form via a process called \emph{Skolemization}. This results in an equisatisfiable formula.
+
+\begin{definition}[Skolem Normal Form]
+  A formula is in \emph{Skolem normal form} if it is in prenex normal form with only universal quantifiers (i.e. $\forall$).
+\end{definition}
+
+\begin{claim}[Skolemization]
+  Every FOL formula is equisatisfiable with a formula in Skolem normal form. This equisatisfiable formula can be obtained via \emph{Skolemization}.
+\end{claim}
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section*{\large \centering Herbrand's Theorem for FOL}
+\noindent
+
+Herbrand's Theorem relates satisfiability of a set of FOL sentences to their propositional satisfiability. Before we state the theorem, we first state some new definitions.
+
+\begin{definition}[Ground Term]
+  A term over a signature $\Sigma$ is a \emph{ground term} if it does not contain any variables. The set of all ground terms over $\Sigma$ is denoted by $\terms_{\Sigma}$.
+\end{definition}
+
+\begin{definition}[Ground Formula]  
+  A formula is a \emph{ground formula} if it contains no variables (and thus, also no quantifiers). The set of ground formulae over the signature $\Sigma$ is denoted by $\wff_{\Sigma}$.
+\end{definition}
+  
+\begin{definition}[Ground Atom]
+  A formula is a \emph{ground atom} if it is both a ground formula and an atomic formula. The set of ground atoms over the signature $\Sigma$ is denoted by $\mathsf{Atoms}_{\Sigma}$.
+\end{definition}
+
+\begin{definition}[Ground Instantiation]
+  Let $\varphi \equiv \forall x_1 \forall x_2 \ldots \forall x_n \psi$ be a universally quantified FOL sentence over $\Sigma$ and $\vars$ in prenex normal form. A ground instantiation of $\varphi$ is a formula $\phi$ obtained by replacing, for every $1 \le i \le n$, each occurrence of $x_i$ in $\psi$ by some ground term $t_i$. That is, there is a mapping $T \colon \vars \to \terms_{\Sigma}$ such that $\phi \equiv \psi[x_1 \to T(x_1)]\ldots[x_n \to T(x_n)]$.
+  
+  We use $\mathsf{Ground}(\varphi)$ to denote the set $\{\psi[x_1 \to T(x_1)]\ldots[x_n \to T(x_n)] \mid T \colon \vars \to \terms_{\Sigma}\}$ of all ground instantiations of $\varphi$. For a set $\Gamma$ of universally quantified FOL sentences over $\Sigma$ and $\vars$, we denote $\mathsf{Ground}(\Gamma) = \bigcup\limits_{\varphi \in \Gamma}\mathsf{Ground}(\varphi)$.
+\end{definition}
+
+\begin{definition}[Propositional Satisfiability]
+  A \emph{ground atomic valuation} over $\Sigma$ is a mapping $\tau \colon \mathsf{Atoms}_{\Sigma} \to \{ \truVal, \flsVal \}$. Such a valuation can be extended to ground formulae in the natural manner given by the relation $\grmodels$:
+  \begin{align*}
+    \tau &\grmodels \psi &&\text{iff $\tau(\psi) = \truVal$} &&\text{if } \psi \in \mathsf{Atoms}_{\Sigma} \\
+    \tau &\grmodels (\neg \varphi) &&\text{iff $\tau \not\grmodels \varphi$} && \text{if $\varphi$ is ground} \\
+    \tau &\grmodels (\varphi_1 \lor \varphi_2) &&\text{iff $\tau \grmodels \varphi_1$ or $\tau \grmodels \varphi_2$} && \text{if $\varphi_1, \varphi_2$ are ground}
+  \end{align*}
+
+  A set of ground FOL formulae $\Gamma$ is \emph{propositionally satisfiable} if there is a ground atomic valuation $\tau$ such that $\tau \grmodels \varphi$ for every $\varphi \in \Gamma$.
+\end{definition}
+
+We can begin discussing Herbrand's Theorem. As a start, we will only consider FOL formulae that are universally quantified sentences that do not have the symbol "=". We will refer to them as \emph{formulae without equality}.
+
+\begin{theorem}[Herbrand's Theorem without Equality]
+  Let $\Sigma$ be a signature with at least one constant. Let $\Gamma$ be a set of universally quantified FOL sentences without equality in prenex normal form. $\Gamma$ is satisfiable iff $\mathsf{Ground}(\Gamma)$ is propositionally satisfiable.
+\end{theorem}
+
+We shall prove this theorem in two directions. The first direction is easier, and the second direction is more difficult. We first prove the easier direction:
+
+\begin{lemma}[Easier direction of Herbrand's Theorem without Equality]
+  Let $\Sigma$ be a signature with at least one constant. Let $\Gamma$ be a set of universally quantified FOL sentences without equality in prenex normal form. If $\Gamma$ is satisfiable, then $\mathsf{Ground}(\Gamma)$ is propositionally satisfiable.
+\end{lemma}
+
+\begin{proof}
+  Consider a structure $\struct$ such that $\struct \models \Gamma$. Let $\tau_\struct \colon \mathsf{Atoms}_\Sigma \to \{\truVal, \flsVal\}$ be the ground atomic valuation defined as follows:
+  $$
+  \tau_\struct(\varphi) = \begin{cases}
+    \truVal &\text{if } \struct \models \varphi \\
+    \flsVal &\text{otherwise}
+  \end{cases}
+  $$
+
+  We will first prove the following property about $\tau_\struct$ that we will later use in our proof of the lemma: 
+  \begin{claim}
+    For any ground formula $\varphi$, $\struct \models \varphi$ iff $\tau_\struct \grmodels \varphi$.
+  \end{claim}
+
+  \begin{subproof}[Subproof.]
+    We will prove, by structural induction on $\varphi$, that $\struct \models \varphi$ iff $\tau_\struct \grmodels \varphi$.
+
+    \begin{description}
+      \item[Base Case.] Consider a ground atom $\varphi$. If $\struct \models \varphi$, then $\tau_\struct(\varphi) = \truVal$ by definition, and so $\tau_\struct \grmodels \varphi$. Conversely, if $\struct \not\models \varphi$, then $\tau_\struct(\varphi) = \flsVal$ by definition, and so $\tau_\struct \not\grmodels \varphi$.
+
+      \item[Inductive Case 1.] Assume the inductive hypothesis holds for some ground formula $\psi$. Consider the ground formula $\varphi \equiv (\neg \psi)$.
+      
+      If $\struct \models \varphi$, then $\struct \not\models \psi$ by definition. Then, by the inductive hypothesis, $\tau_\struct \not\grmodels \psi$ and so $\tau_\struct \grmodels \varphi$ by definition.
+      
+      Conversely, if $\struct \not\models \varphi$, then $\struct \models \psi$ by definition. Then, by the inductive hypothesis, $\tau_\struct \grmodels \psi$ and so $\tau_\struct \not\grmodels \varphi$ by definition.
+
+      \item[Inductive Case 2.] Assume the inductive hypothesis holds for some ground formulae $\psi_1$ and $\psi_2$. Consider the ground formula $\varphi \equiv (\psi_1 \lor \psi_2)$.
+      
+      If $\struct \models \varphi$, then $\struct \models \psi_1$ or $\struct \models \psi_2$ by definition. Then, by the inductive hypothesis, $\tau_\struct \grmodels \psi_1$ or $\tau_\struct \grmodels \psi_2$ and so $\tau_\struct \grmodels \varphi$ by definition.
+
+      Conversely, if $\struct \not\models \varphi$, then $\struct \not\models \psi_1$ and $\struct \not\models \psi_2$. Then, by the inductive hypothesis, $\tau_\struct \not\grmodels \psi_1$ and $\tau_\struct \not\grmodels \psi_2$ and so $\tau_\struct \not\grmodels \varphi$ by definition.
+    \end{description}
+
+    Hence, we have shown that $\struct \models \varphi$ iff $\tau_\struct \grmodels \varphi$.
+  \end{subproof}
+
+  Now, using the aforementioned claim, we will prove that $\mathsf{Ground}(\Gamma)$ is propositionally satisfiable.
+  
+  Consider any ground formula $\varphi \in \mathsf{Ground}(\Gamma)$. $\varphi$ must have been instantiated from a universally quantified sentence $\varphi' \in \Gamma$. Since $\struct \models \varphi'$, we must have $\struct \models \varphi$. Hence, by the aforementioned lemma, $\tau_\struct \grmodels \varphi$. Thus, $\mathsf{Ground}(\Gamma)$ is propositionally satisfiable.
+\end{proof}
+
+Now, we can progress towards proving the opposite direction. The proof of the opposite direction relies on the observation that a special simple structure, called the \emph{Herbrand structure}, satisfies $\Gamma$. We first define the Herbrand structure.
+
+\begin{definition}[Herbrand Structure]
+  Let $\Sigma$ be a signature with at least one constant symbol. A $\Sigma$-Herbrand-structure is a structure $\struct_\Sigma = (U_\Sigma, I_\Sigma)$ defined as follows:
+  \begin{itemize}
+    \item $U_\Sigma = \mathsf{Terms}_\Sigma$ is the set of all ground terms in $\Sigma$. It is also called the \emph{Herbrand universe}.
+    \item $I_\Sigma$ assigns the unique "natural" interpretation to the constant and function symbols in $\Sigma$ (also called the \emph{Herbrand interpretation}). That is,
+    \begin{itemize}
+      \item For every constant symbol $c \in \conn$, $I_\Sigma(c) = c$.
+      \item For every $k$-ary function symbol $f \in \func$ and for all ground terms $t_1, \ldots, t_k \in U_\Sigma$, $I_\Sigma(f)(t_1, \ldots, t_k) = f(t_1, \ldots, t_k)$.
+    \end{itemize}
+  \end{itemize}
+
+  Thus, a Herbrand structure is built from syntax, with terms and function symbols being interpreted "as themselves".
+
+  Observe that $I_\Sigma$ does not restrict what interpretations must be given to the relation symbols, and any meaning for symbols in $\reln$ can be picked as part of $I_\Sigma$.
+\end{definition}
+
+Now, we can prove the opposite direction of Herbrand's theorem without equality.
+
+\begin{lemma}[Harder direction of Herbrand's theorem without Equality]
+  Let $\Sigma$ be a signature with at least one constant symbol. Let $\Gamma$ be a set of universally quantified FOL sentences without equality in prenex normal form. If $\mathsf{Ground}(\Gamma)$ is propositionally satisfiable, then $\Gamma$ is satisfiable.
+\end{lemma}
+
+\begin{proof}
+  Consider a ground atomic valuation $\tau$ such that $\tau \grmodels \mathsf{\psi}$ for every ground formula $\psi \in \mathsf{Ground}(\Gamma)$. Construct the Herbrand structure $\struct_\Sigma^\tau$ such that for every $k$-ary relation symbol $R \in \reln$, $I(R) = \{(t_1, \ldots, t_k) \mid t_1, \ldots, t_k \in \mathsf{Terms}_\Sigma \text{ and } \tau(R(t_1, \ldots, t_k)) = \truVal\}$.
+  
+  We will first prove properties about $\struct_\Sigma^\tau$ that we will later use in our proof of the lemma:
+  \begin{claim}
+    Let $\varphi \in \Gamma$ be a ground formula without equality. If $\tau \grmodels \varphi$, then $\struct_\Sigma^\tau \models \varphi$.
+  \end{claim}
+
+  \begin{subproof}[Subproof.]
+    We will prove, by structural induction on $\varphi$, that if $\tau \grmodels \varphi$, then $\struct_\Sigma^\tau \models \varphi$.
+
+    \begin{description}
+      \item[Base Case.] Consider $\varphi \equiv R(t_1, \ldots, t_k)$ for some $k$-ary relation $R \in \reln$ and terms $t_1, \ldots, t_k$. Note that $\varphi$ is a ground atom and $t_1, \ldots, t_k$ are ground terms. If $\tau \grmodels \varphi$, then $\tau(\varphi) = \truVal$ and so $(t_1, \ldots, t_k) \in I(R)$. Hence, by definition, $\struct_\Sigma^\tau \models \varphi$.
+
+      \item[Inductive Case 1.] Assume the inductive hypothesis for some ground formula $\psi$. Consider $\varphi \equiv (\neg \psi)$. Note that $\varphi$ is still a ground formula. If $\tau \grmodels \varphi$, this means that $\tau \not\grmodels \psi$. Then, by the inductive hypothesis, $\struct_\Sigma^\tau \not\models \psi$. Hence, by definition, $\struct_\Sigma^\tau \models \varphi$. 
+      
+      \item[Inductive Case 2.] Assume the inductive hypothesis for some ground formulae $\psi_1$ and $\psi_2$. Consider $\varphi \equiv (\psi_1 \lor \psi_2)$. Note that $\varphi$ is still a ground formula. If $\tau \grmodels \varphi$, then $\tau \grmodels \psi_1$ or $\tau \grmodels \psi_2$ by definition. By the inductive hypothesis, $\struct_\Sigma^\tau \models \psi_1$ or $\struct_\Sigma^\tau \models \psi_2$. Hence, by definition, $\struct_\Sigma^\tau \models \varphi$.
+    \end{description}
+
+    Thus, we have proven that, for every ground formula $\varphi$, $\struct_\Sigma^\tau \models \varphi$ if $\tau \grmodels \varphi$.
+  \end{subproof}
+
+  Next, we'll prove a stronger version of the claim that will be useful in our proof of the lemma.
+
+  \begin{claim}
+    Let $\varphi \equiv \forall x_1 \ldots \forall x_k \ldotp \psi$ in $\Gamma$ be a sentence without equality in prenex normal form. If $\tau$ propositionally satisfies $\mathsf{Ground}(\varphi)$, then $\struct_\Sigma^\tau \models \varphi$.
+  \end{claim}
+
+  \begin{subproof}[Subproof.]
+    We will prove, by structural induction on the number of quantifiers $k$ in $\varphi$, that if $\tau$ propositionally satisfies $\mathsf{Ground}(\varphi)$, then $\struct_\Sigma^\tau \models \varphi$.
+
+    \begin{description}
+      \item[Base Case.] Consider the case $k = 0$. This means that $\varphi \equiv \psi$ where $\psi$ is a matrix. Since $\varphi$ is a ground formula, $\varphi \in \mathsf{Ground}(\varphi)$. If $\tau$ satisfies $\mathsf{Ground}(\varphi)$, $\tau \grmodels \varphi$. By the previous claim, we can conclude that $\struct_\Sigma^\tau \models \varphi$.
+      
+      \item[Inductive Case.] Assume the inductive hypothesis holds for some $k \in \nats$. Consider $\varphi \equiv \forall x_1 \ldots \forall x_{k+1} \ldotp \psi$ where $\psi$ is a matrix. If $\tau$ satisfies $\mathsf{Ground}(\varphi)$, then in particular $\tau$ satisfies $\mathsf{Ground}(\forall x_2 \ldots \forall x_{k+1} \ldotp \psi [x_1 \to t])$ for every ground term $t \in \terms_\Sigma$. By the inductive hypothesis, for every ground term $t \in \terms_\Sigma$, $\struct_\Sigma^\tau \models \forall x_2 \ldots \forall x_{k+1} \ldotp \psi [x_1 \to t]$. Equivalently, there is no $t \in \terms_\Sigma$ such that $\struct_\Sigma^\tau \not\models \forall x_2 \ldots \forall x_{k+1} \ldotp \psi [x_1 \to t]$. Hence, by definition, $\struct_\Sigma^\tau \models \varphi$.
+    \end{description}
+
+    Thus, we have proven that, for every sentence $\varphi$ in prenex normal form, $\struct_\Sigma^\tau \models \varphi$ if $\tau$ propositionally satisfies $\mathsf{Ground}(\varphi)$.
+  \end{subproof}
+
+  Now, we finally complete the proof of the lemma. Consider any sentence $\varphi$ in $\Gamma$. By the assumption and by definition of $\mathsf{Ground}(\Gamma)$, $\tau \grmodels \mathsf{Ground}(\varphi)$. Then, by the previous claim, $\struct_\Sigma^\tau \models \varphi$. Hence, $\struct_\Sigma^\tau \models \Gamma$.
+\end{proof}
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section*{\large \centering Implications of Herbrand's Theorem}
+\noindent
+
+The proof of Herbrand's Theorem highlights some interesting \emph{model-theoretic} observations. We go through them in this section.
+
+First, the proof illustrates that whenever there is a model $\struct$ for a set $\Gamma$ of universally quantified FOL sentences without equality, there is a model which is not \emph{too large}. This is known as the \emph{Downward Löwenheim-Skolem Theorem}.
+
+\begin{theorem}[Downward Löwenheim-Skolem Theorem]
+  Let $\Sigma$ be a countable signature and let $\Gamma$ be a set of universally quantified FOL sentences without equality. If $\Gamma$ is satisfiable, then there is a countable structure $\struct$ such that $\struct \models \Gamma$.
+\end{theorem}
+
+\begin{proof}
+  Since $\Gamma$ is satisfiable, $\mathsf{Ground}(\Gamma)$ is propositionally satisfiable. By the proof of Herbrand's Theorem, there is a Herbrand structure $\struct_\Sigma^\tau$ that satisfies $\Gamma$. We will show that $\struct_\Sigma^\tau$ is countable, which will then imply the Downward Löwenheim-Skolem Theorem.
+
+  It suffices to show that $U_\Sigma = \terms_\Sigma$ is countable. By assumption, $\Sigma$ is countable and so for any natural number $k \in \nats$, the set of all ground terms of length $k$ is countable (since it is isomorphic to some subset of $\mathbb{N}^k$, which is countable). Then, $\terms_\Sigma = \bigcup\limits_{k \in \nats}\{\text{all ground terms of length } k\}$ is a countable union of countable sets and so, it is also countable. Hence, the Herbrand structure $\struct_\Sigma^\tau$ is countable.
+\end{proof}
+
+\section*{\large \centering Herbrand's Theorem with Equality}
+\noindent
+
+We have seen that in the absence of equality, a ground atomic valuation that makes all of $\mathsf{Ground}(\Gamma)$ propositionally satisfiable guarantees the existence of a structure that satisfies $\Gamma$. In the presence of equality, this is not true.
 
 \vspace{5truemm}
 \hrule
@@ -587,19 +843,6 @@ We have previously seen that every set of strings on a countable alphabet is cou
 \hrule
 \hrule
 
-\section*{\large \centering Motivations behind the Study of Logic}
-\noindent
-
-Professor Mathur's research interest is in the space of formal program verification. Formal program verification is the problem of determining if a program $P$ meets a specification $\Phi$; that is, $P \models \Phi$. This is a more complete way of verifying the correctness of programs compared to software engineering-style testing, but requires a background in mathematical logic.
-
-Another motivation is in the realm of databases. We can model a query as a first-order logic formula, such as the formula $\phi \equiv \mathsf{Friends}(p_1, p_2)$ where the interpretation of $\mathsf{Friends}$ is $I(\mathsf{Friends}) = \{(p_1, p_2), (p_2, p_3), \ldots \}$ and the universe $U$ is the set of all persons.
-
-Yet another motivation is in the study of complexity theory, which discusses whether polynomial-time algorithms exist to solve a problem and what the best algorithm to solve a problem is. If we were able to encode a computational problem as a logic formulae, then determining whether the problem is solvable in polynomial time could be equivalent to determining the satisfiability of the formula.
-
-\vspace{5truemm}
-\hrule
-\hrule
-
 \section*{\large \centering Primer on Computability Theory}
 \noindent
 
@@ -627,6 +870,10 @@ It turns out that it is impossible to write such a program.
 \end{proof}
 
 The previous claim shows that certain computational problems that are unsolvable. Another well-known unsolvable problem is the Halting problem, which is the problem of determining whether a given program will terminate on a given input.
+
+\vspace{5truemm}
+\hrule
+\hrule
 
 \section*{\large \centering Turing Machines}
 \noindent
@@ -748,4 +995,3 @@ Next, consider the language $K = \{\langle M \rangle \mid \langle M \rangle \in 
 \end{proof}
 
 \end{document}
-
