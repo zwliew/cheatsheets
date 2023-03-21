@@ -87,7 +87,7 @@ SEMESTER \semester, \academicyear
 \hrule
 \hrule
 
-\section*{\large \centering Motivating the Study of Logic}
+\section{\large \centering Motivating the Study of Logic}
 \noindent
 
 Professor Mathur's research interest is in the space of formal program verification. Formal program verification is the problem of determining if a program $P$ meets a specification $\Phi$; that is, $P \models \Phi$. This is a more complete way of verifying the correctness of programs compared to software engineering-style testing, but requires a background in mathematical logic.
@@ -100,30 +100,368 @@ Yet another motivation is in the study of complexity theory, which discusses whe
 \hrule
 \hrule
 
-\section*{\large \centering Proof Systems for Propositional Logic}
+\section{\large \centering Propositional Logic}
 \noindent
 
-A proof system provides a mechanical procedure for establishing a logical inference. They are a sequence of statements where each statement in the sequence is either a self-evident truth, or logically follows from previous observations. We will look at two different types of proof systems for porpositional logic: the \emph{Hilbert-style/Frege} proof system and the \emph{Resolution} proof system.
+\begin{lemma}[Relevance Lemma]
+  Let $\phi \in \wff$ be a well-formed formula and $v_1$ and $v_2$ be valuations. If for every $p \in \mathsf{occurs}(\phi)$, $v_1(p) = v_2(p)$, then $v_1 \models \phi$ iff $v_2 \models \phi$.
+\end{lemma}
 
-\section*{\large \centering Hilbert-style/Frege Proof System}
-\noindent
+\begin{proof}[Proof sketch.]
+  Use structural induction on $\phi$.
+\end{proof}
 
-The \emph{Hilbert-style} proof system provides a mechanical procedure for establishing new valid formulae.
+We will establish some definitions and results to prove the Compactnes theorem. Assume that $\Gamma$ is a set of propositional logic formulae over $(\props, \conn)$.
 
-\section*{\large \centering Resolution Proof System}
-\noindent
+\begin{definition}[Satisfiability]
+  A set $\Gamma$ of propositional logic formulae over $(\props, \conn)$ is \emph{satisfiable} if there is a valuation $v$ such that $v \models \Gamma$.
+\end{definition}
 
+\begin{definition}[Finite Satisfiability]
+  A set $\Gamma$ of propositional logic formulae over $(\props, \conn)$ is \emph{finitely satisfiable} if every finite subset of $\Gamma$ is satisfiable.
+\end{definition}
+
+\begin{definition}[$\props$-completeness]
+  $\Gamma$ is \emph{$\props$-complete} if for every proposition $p \in \props$, either $p \in \Gamma$ or $\neg p \in \Gamma$.
+\end{definition}
+
+\begin{definition}[$\props$-consistency]
+  $\Gamma$ is \emph{$\props$-consistent} if for every proposition $p \in \props$, either $p \not\in \Gamma$ or $\neg p \not\in \Gamma$.
+\end{definition}
+
+\begin{lemma}
+  If $\Gamma$ is finitely satisfiable, then it is also $\props$-consistent.
+\end{lemma}
+
+\begin{lemma}
+  If $\Gamma$ is finitely satisfiable and $\Gamma$ is $\props-complete$, then $\Gamma$ is satisfiable.
+\end{lemma}
+
+\begin{lemma}
+  If $\Gamma$ is finitely satisfiable, then one of $\Gamma \cup \{\varphi\}$ or $\Gamma \cup \{\neg\varphi\}$ is finitely satisfiable.
+\end{lemma}
+
+\begin{theorem}[Compactness of Propositional Logic]
+  Let $\Gamma$ be a set of propositional logic formulae over $(\props, \conn)$. $\Gamma$ is satisfiable iff $\Gamma$ is finitely satisfiable.
+\end{theorem}
+
+\begin{proof}[Proof sketch.]
+  Inductively define a set that is a superset of $\Gamma$ and for every proposition $p$, either $p$ or $\neg p$ is in the set depending on which makes the $i$\textsuperscript{th} set finitely satisfiable. Prove that it is finitely satisfiable.
+\end{proof}
 
 \vspace{5truemm}
 \hrule
 \hrule
 
-\section*{\large \centering First-Order Logic}
+\subsection{\large \centering Modelling Computational Problems with Propositional Logic}
+\noindent
+
+\begin{claim}
+  For any graph $G = (V, E)$, there is a set of formulae $\Gamma_{G, k}$ such that $G$ is \emph{$k$-colorable} iff $\Gamma_{G, k}$ is satisfiable.
+\end{claim}
+
+\begin{claim}
+  For any graph $G = (V, E)$, there is a set of formulae $\Gamma_{G, k}$ such that $G$ is has a vertex cover of size at most $k$ iff $\Gamma_{G, k}$ is satisfiable.
+\end{claim}
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\subsection{\large \centering Interpolation Theorem}
+\noindent
+
+\begin{enumerate}
+\item Add the $0$-place connectives $\top$, $\bot$ to our language. For each wff $\varphi$ and sentence symbol $A$, let $\varphi_\top^A$ be the wff obtained from $\varphi$ by replacing $A$ by $\top$. Similarly for $\varphi_\bot^A$. Then let $\varphi_*^A = (\varphi_\top^A \vee \varphi_\bot^A)$. Prove the following:
+
+(a) $\varphi \vDash \varphi_*^A$.
+
+(b) If $\varphi \vDash \psi$ and $A$ does not appear in $\psi$, then $\varphi_*^A \vDash \psi$.
+
+(c) The formula $\varphi$ is satisfiable iff $\varphi_*^A$ is satisfiable.
+
+\textit{Remarks}: We can think of $\varphi_*^A$ as trying to say everything $\varphi$ says, but without being able to use the symbol $A$. Parts (a) and (b) state that $\varphi_*^A$ is the strongest $A$-free consequence of $\varphi$. The formulas $\varphi$ and $\varphi_*^A$ are not tautologically equivalent in general, but they are "equally satisfiable" by part (c). The operation of forming $\varphi_*^A$ from $\varphi$ is (in another context) called \textit{resolution} on $A$.
+
+\item (Interpolation theorem) If $a \vDash \beta$, then there is some $\gamma$ all of whose sentence symbols occur both in $\alpha$ and in $\beta$ and such that $a \vDash \gamma \vDash \beta$. \textit{Suggestion}: Use the preceding exercise.
+\end{enumerate}
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section{\large \centering Proof Systems for Propositional Logic}
+\noindent
+
+A proof system provides a mechanical procedure for establishing a logical inference. We will look at two different types of proof systems for porpositional logic: the \emph{Hilbert-style/Frege} proof system and the \emph{Resolution} proof system.
+
+\subsection{\large \centering Hilbert-style/Frege Proof System}
+\noindent
+
+The \emph{Hilbert-style} proof system (also known as \emph{Frege} proof system) allows one to establish new valid formulae. It assumes that formulae are written using just implication and $\bot$. One can prove that all propositional logic formulae can be expressed as a combination of those two operators.
+
+The Hilbert-style proof system comprises 3 \emph{axiom schemas} and one inference rule called \emph{modus ponens}.
+
+\begin{definition}[Axiom Schemas]
+  \begin{align*}
+  &\frac{}{\varphi \to (\psi \to \varphi)} &&\text{(Axiom Schema 1)}
+  \\
+  &\frac{}{(\varphi \to (\psi \to \rho)) \to ((\varphi \to \psi) \to (\varphi \to \rho))} &&\text{(Axiom Schema 2)}
+  \\
+  &\frac{}{((\varphi \to \bot) \to \bot) \to \varphi} &&\text{(Axiom Schema 3)}
+  \\
+  &\frac{\makebox[1.5cm][l]{$\varphi$} \varphi \to \psi}{\psi} &&\text{(Modus Ponens)}
+  \end{align*}
+\end{definition}
+
+An \emph{instantiation} of an axiom schema is a formula obtained by substituting the variables $\varphi$, $\psi$, and $\rho$ by some propositional logic formulae. For example, the instantiation of Axiom Schema 1 with $\varphi = (p \to q)$, $\psi = q$, and $\rho = r$ is $(p \to q) \to (q \to (p \to q))$.
+
+Proofs in Hilbert-style proof systems are similar to proofs in usual mathematics.
+
+\begin{definition}[Proof in Hilbert-style Proof System]
+  A \emph{proof} of a formula $\varphi$, starting from a set of formulae $\Gamma$ (also known as \emph{assumptions} or \emph{hypotheses}) is a finite sequence $\pi = \phi_1, \phi_2, \ldots, \phi_n$ such that $\phi_n = \varphi$, and for every $i \in \{1, 2, \ldots, n\}$, either
+  \begin{itemize}
+    \item $\phi_i$ is an assumption (i.e. $\phi_i \in \Gamma$), or
+    \item $\phi_i$ is an instantiation of an axiom schema, or
+    \item $\phi_i$ follows from previous formulae $\phi_j$ and $\phi_k$, with $j, k < i$, by modus ponens
+  \end{itemize}
+
+  If there is a proof of $\varphi$ from $\Gamma$, we write $\Gamma \entails \varphi$. In particular, when $\Gamma = \emptyset$, we write $\entails \varphi$.
+\end{definition}
+
+In general, there is no semantic meaning behind these axioms. That said, we can attempt to give an intuitive meaning to them:
+\begin{itemize}
+  \item Axiom Schema 1: if we have proven $\varphi$, we can prove that anything else implies $\varphi$.
+  \item Axiom Schema 2: if we have proven that $\varphi$ and $\psi$ implies $\rho$, we can prove that if $\varphi$ implies $\psi$, then $\varphi$ also implies $\rho$. This is similar to \emph{transitivity}.
+  \item Axiom Schema 3: if we have proven that $\neg \varphi$ leads to a contradiction, then we can prove $\varphi$.
+\end{itemize}
+
+From here on, we will use $\Gamma$ to denote a set of assumptions (i.e. propositional logic formulae), and $\varphi$ and $\psi$ to denote a some propositional logic formulae.
+
+Derivations are tedious and typically difficult to find, but the following theorem makes it easier to show that certain derivations exist. Before present it, we first state a simple observation.
+
+\begin{claim}
+  \claimlabel{hilbert-subset-proof}
+  If $\Gamma \entails \varphi$ and $\Gamma \subseteq \Gamma'$, then $\Gamma' \entails \varphi$.
+\end{claim}
+
+\begin{proof}[Proof sketch.]
+  There is a proof $\pi = \phi_1, \phi_2, \ldots, \phi_n$ for $\Gamma \entails \varphi$. It is also a proof for $\Gamma' \entails \varphi$. We can establish this by structural induction on each $\phi_1, \ldots, \phi_i$.
+\end{proof}
+
+Now, we present the \emph{Deduction Theorem} which makes it easier to come up with new derivations.
+
+\begin{theorem}[Deduction Theorem]
+  Let $\Gamma$ be a set of assumptions. $\Gamma \entails (\varphi \to \psi)$ iff $\Gamma \cup \{\varphi\} \entails \psi$.
+\end{theorem}
+
+\begin{proof}[Proof sketch.]
+  We first prove the easier forward direction. Consider the proof $\pi$ of $\Gamma \entails (\varphi \to \psi)$. $\pi$ is also a proof of $\Gamma \cup \{\varphi\} \entails (\varphi \to \psi)$ by \claimref{hilbert-subset-proof}. Then, $\pi \cdot \varphi \cdot \psi$ is a proof of $\Gamma \cup \{\varphi\} \entails \psi$ by modus ponens.
+
+  Next, we prove the converse, which is more difficult. Consider a proof $\pi = \psi_1, \psi_2, \ldots, \psi_n$ of $\psi$ from $\Gamma \cup \{\varphi\}$. We can inductively show that for every $1 \le i \le n$, $\Gamma \entails (\varphi \to \psi_i)$.
+\end{proof}
+
+Next, we state some syntactic entailments. The proof of each entailment is left as an exercise.
+
+\begin{itemize}
+  \item $\entails \varphi \to \varphi$.
+  \item $\entails ((\varphi \to \bot) \to \varphi) \to \varphi$.
+  \item $\{\bot\} \entails \varphi$.
+  \item $\entails (\varphi \to \bot) \to (\varphi \to \rho)$.
+\end{itemize}
+
+\subsubsection{\large \centering Soundness and Completeness}
+\noindent
+
+Two important properties of a proof system are \emph{soundness} and \emph{completeness}. A proof system is \emph{sound} if every valid formula is provable. A proof system is \emph{complete} if every provable formula is valid. The formal definitions are as follows.
+
+\begin{definition}[Soundness]
+  A proof system is \emph{sound} if $\Gamma \entails \varphi$ implies $\Gamma \models \varphi$.
+\end{definition}
+
+\begin{definition}[Completeness]
+  A proof system is \emph{complete} if $\Gamma \models \varphi$ implies $\Gamma \entails \varphi$.
+\end{definition}
+
+Of course, the Hilbert-style proof system is sound and complete. It is typically easier to prove soundness, so we first prove that it is sound.
+
+\begin{theorem}[Soundness of Hilbert-style Proof System]
+  \thmlabel{hilbert-sound}
+  Let $\Gamma$ be a set of assumptions and $\varphi$ be a formula. If $\Gamma \entails \varphi$, then $\Gamma \models \varphi$.
+\end{theorem}
+
+\begin{proof}[Proof sketch.]
+  Let $\pi = \psi_1, \psi_2, \ldots, \psi_n$ be a proof of $\varphi$ from $\Gamma$. We can prove that $\Gamma \models \varphi$ by induction on $i \in [1, n]$. For the base case, we have to prove that $\Gamma \models \psi_1$ when either $\psi_1 \in \Gamma$ or when $\psi_1$ is an axiom instance. For the inductive step, we have to prove that $\Gamma \models \psi_i$ either when $\psi_i \in \Gamma$ or when $\psi_i$ is an axiom instance or when $\psi_i$ follows from modus ponens.
+\end{proof}
+
+Next, we want to prove that the Hilbert-style proof system is complete. However, to establish this difficult theorem, we first establish some intermediate results.
+
+\begin{definition}[Consistent and Inconsistent Sets]
+  A set of formulae $\Gamma$ is \emph{inconsistent} if there is some formula $\varphi$ such that $\Gamma \entails \varphi$ and $\Gamma \entails (\varphi \to \bot)$. $\Gamma$ is \emph{consistent} if it is not inconsistent.
+\end{definition}
+
+\begin{claim}
+  $\Gamma$ is inconsistent iff for every formula $\rho$, $\Gamma \entails \rho$.
+\end{claim}
+
+\begin{proof}[Proof sketch.]
+  For the forward direction, use Modus Ponens with the proofs of $\varphi$ and $(\varphi \to \bot)$ to get a proof of $\bot$, then use one of the previous syntactic entailments to get a proof of $\rho$.
+
+  For the other direction, simply use the definition of inconsistency.
+\end{proof}
+
+Now, we establish some properties about inconsistent sets.
+
+\begin{lemma}
+  If $\Gamma \cup \{\varphi \to \bot\}$ is inconsistent, then $\Gamma \entails \varphi$.
+\end{lemma}
+
+\begin{proof}[Proof sketch.]
+  Use a combination of the definition of inconsistency, the Deduction theorem, one of the syntactic entailments mentioned earlier, \claimref{hilbert-subset-proof}, and Modus Ponens.
+\end{proof}
+
+\begin{lemma}
+  If $\Gamma \cup \{\varphi\}$ is inconsistent, then $\Gamma \entails (\varphi \to \bot)$.
+\end{lemma}
+
+\begin{proof}[Proof sketch.]
+  Use a combination of the definition of inconsistency and the Deduction theorem.
+\end{proof}
+
+\begin{corollary}
+  If $\Gamma$ is consistent, then at least one of $\Gamma \cup \{\varphi\}$ or $\Gamma \cup \{\varphi \to \bot\}$ is consistent.
+\end{corollary}
+
+\begin{claim}
+  Suppose $\Gamma \subseteq \Gamma'$. If $\Gamma'$ is consistent, then so is $\Gamma$.
+\end{claim}
+
+\begin{lemma}
+  If $\Gamma$ is inconsistent, then there is a finite subset $\Gamma' \subseteq\textsubscript{fin} \Gamma$ of $\Gamma$ such that $\Gamma'$ is also inconsistent.
+\end{lemma}
+
+\begin{proof}[Proof sketch.]
+  Consider the proofs $\pi$ and $\pi'$ of $\Gamma \entails \varphi$ and $\Gamma \entails (\varphi \to \bot)$ respectively. Proofs are finite sequences of formulae. Construct $\Gamma'$ from the set of assumptions in $\pi$ and $\pi$'. Then, prove inductively that $\pi$ and $\pi'$ are proofs of $\Gamma' \entails \varphi$ and $\Gamma' \entails (\varphi \to \bot)$ respectively.
+\end{proof}
+
+\begin{definition}
+  A set of formulae $\Gamma$ is \emph{negation-complete} if for every formula $\varphi$, $\Gamma \entails \varphi$ iff $\Gamma \entails (\varphi \to \bot)$.
+\end{definition}
+
+Now, we prove a \emph{weaker} version of completeness that talks about one specific set of assumptions, the empty set $\emptyset$.
+
+\begin{theorem}[Weak Completeness of Hilbert-style Proof System]
+  \thmlabel{weak-completeness-hilbert}
+  Let $\varphi$ be a formula. If $\models \varphi$, then $\entails \varphi$.
+\end{theorem}
+
+\begin{proof}[Proof sketch.]
+  We can prove the contrapositive; that is, if $\not\entails \varphi$ then $\not\models \varphi$. Assume that there is no proof for $\varphi$, then show that there is some valuation $v$ such that $v \models (\varphi \to \bot)$. To do so, we inductively define a set of formulae $\Delta$ and prove, with induction, that it is consistent and negation-complete. With this, we can construct the natural valuation $v$ and prove that $v \models (\varphi \to \bot)$.
+\end{proof}
+
+Now, we can prove the original (stronger) version of completeness.
+
+\begin{theorem}[Completeness of Hilbert-style Proof System]
+  Let $\Gamma$ be a set of assumptions and $\varphi$ be a formula. If $\Gamma \models \varphi$, then $\Gamma \entails \varphi$.
+\end{theorem}
+
+\begin{proof}[Proof sketch.]
+  Use the Compactness theorem, \thmref{weak-completeness-hilbert}, and repeated use of the Deduction theorem.
+\end{proof}
+
+
+\subsection{\large \centering Resolution Proof System}
+\noindent
+
+Notice that the proofs in the Hilbert-style proof system are mechanical and symbolic --- proofs are constructed simply based on the patterns of formulae. However, mechanization of proofs in that proof system is difficult as there are infinitely many choices for each step of the proof. In contrast, the \emph{Resolution proof system} has a constrained number of choices at each step of the proof, making it amenable to mechanization.
+
+The Resolution proof system is used to establish unsatisfiability of a set of clauses. Thus, unlike the Hilbert-style proof system which proves the validity of a formula directly, the Resolution proof system proves that the negation of the formula is unsatisfiable.
+
+\begin{definition}[Literals and Clauses]
+  A \emph{literal} $\ell$ is either a proposition or its negation. That is, $\ell = p$ or $\ell = \neg p$ for some proposition $p \in \props$.
+
+  A \emph{clause} is a disjunction of literals, represented as a finite set $C = \{\ell_1, \ell_2, \ldots, \ell_k\}$. Note that clauses could contain both $p$ and $\neg p$.
+\end{definition}
+
+For proofs in the Resolution proof system, we will work only with formulae in \emph{conjunctive normal form} (CNF). This is fine as every propositional logic formula has a logically equivalent formula in CNF.
+
+\begin{definition}[Conjunctive Normal Form]
+  A formula is in \emph{Conjunctive Normal Form} (CNF) if it is a conjunction of clauses. That is, $\varphi = \bigwedge_{i=1}^n C_i$ where each $C_i = \bigvee_{j=1}^{k_i} \phi_{ij}$ is a clause and $\phi_{ij}$ is a literal. We think of a CNF formula as a set of clauses.
+\end{definition}
+
+\begin{definition}[Satisfiability]
+  A clause $C$ (in our set form) is \emph{satisfiable} if there is a valuation $v$ such that $v \models \ell$ for some literal $\ell \in C$.
+
+  A formula in CNF is satisfiable if there is a valuation $v$ that satisfies every clause in the formula.
+\end{definition}
+
+\begin{remark}
+  The empty clause is unsatisfiable.
+\end{remark}
+
+The only rule in the Resolution proof system is as follows.
+
+\begin{definition}[Resolvent]
+  Given two clauses $C' = C \uplus \{p\}$ and $D' = D \uplus \{\neg p\}$, the \emph{resolvent} of $C'$ and $D'$ with respect to proposition $p$ is the clause $C \cup D$.
+\end{definition}
+
+\begin{definition}[Refutation/Resolution Proof]
+  A \emph{refutation} (i.e. resolution proof) of a set of clauses $\Gamma$ is a finite sequence of clauses $\pi = C_1, C_2, \ldots, C_n$ such that $C_n = \{\}$ and each clause $C_i$ is either in $\Gamma$ or a resolvent of two clauses $C_j$ and $C_k$ ($j, k < i$).
+\end{definition}
+
+Now, we begin to prove the soundness and completeness of the Resolution proof system.
+
+\begin{theorem}[Soundness of Resolution]
+  Let $\Gamma$ be a set of clauses over propositions $\props$. If there is a resolution proof of $\Gamma$, then $\Gamma$ is unsatisfiable.
+\end{theorem}
+
+\begin{proof}[Proof sketch.]
+  Consider a resolution proof $C_1, C_2, \ldots, C_n$ of $\Gamma$. Prove, by induction, that if a valuation $v$ is such that $v \models \Gamma$, then $v \models C_i$. 
+\end{proof}
+
+Before we begin to prove the completeness of the Resolution proof system, we first establish some results.
+
+\begin{claim}
+  Let $\Gamma$ be an unsatisfiable set of \underline{clauses}. Show that, if $\Gamma$ is unsatisfiable, then there is a finite set $\Gamma_0 \subseteq\textsubscript{fin} \Gamma$ such that $\Gamma_0$ is unsatisfiable.
+\end{claim}
+
+\begin{proof}[Proof sketch.]
+  Convert $\Gamma$ to a set of formulae (from a set of set of literals) using the natural interpretation. Then, invoke the Compactness theorem.
+\end{proof}
+
+\begin{claim}
+  Let $\Gamma_1$ and $\Gamma_2$ be sets of clauses such that $\Gamma_1 \subseteq \Gamma_2$. If there is a resolution proof of $\Gamma_1$, then there is a resolution proof of $\Gamma_2$.
+\end{claim}
+
+\begin{theorem}[Completeness of Resolution]
+  Let $\Gamma$ be a set of clauses (over propositions $\props$). If $\Gamma$ is unsatisfiable, then there is a resolution proof of $\Gamma$.
+\end{theorem}
+
+\subsection{\large \centering Compactness vs Completeness}
+
+The Compactness theorem played a crucial role in establishing the completeness of the aforementioned proof systems. It turns out that the soundness and completeness of these proof systems can be used to establish the Compactness theorem.
+
+\begin{claim}
+  Given that the Hilbert-style proof system is sound and complete, the Compactness theorem holds.
+\end{claim}
+
+\begin{claim}
+  Given that the Resolution proof system is sound and complete, the Compactness theorem holds.
+\end{claim}
+
+\begin{proof}[Proof sketch.]
+  One direction of the Compactness theorem is straightforward. For the other direction, consider a proof $\pi$ in either of the proof systems for a set of formulae $\Gamma$. Construct a set of formulae $\Gamma_0 \subseteq\textsubscript{fin} \Gamma$ containing the formulae that are in $\Gamma$ and in $\pi$. By soundness and/or completeness, show that $\Gamma_0$ is satisfiable/unsatisfiable.
+\end{proof}
+
+\vspace{5truemm}
+\hrule
+\hrule
+
+\section{\large \centering First-Order Logic}
 \noindent
 
 First-order Logic (FOL) is a formal language to describe and reason about \emph{predicates} rather than propositions. A predicate is a proposition that depends on the value of some variables. To do this, first-order logic builds upon propositional logic with functions, variables, and quantification.
 
-\section*{\large \centering Motivation behind FOL}
+\subsection{\large \centering Motivation behind FOL}
 \noindent
 
 First-order logic grew out of the desire to study the foundations of mathematics in number theory and set theory. To illustrate the need for FOL, recall that we can represent the following statements as propositions in propositional logic:
@@ -150,7 +488,7 @@ Here, $G$ and $H$ are \emph{predicates} where $G(x)$ means $x$ is a Greek and $H
 \hrule
 \hrule
 
-\subsection*{\large \centering Syntax of FOL}
+\subsection{\large \centering Syntax of FOL}
 \noindent
 
 We start by defining the syntax of first-order logic. First-order logic formulae are defined over a signature that identifies non-logical symbols, namely, the predicates, constants, and functions that can be used in formulae.
@@ -213,7 +551,7 @@ Note that in formula $4$, the variable $x$ is not quantified. In this case, $x$ 
 \hrule
 \hrule
 
-\section*{\large \centering Semantics of FOL}
+\subsection{\large \centering Semantics of FOL}
 \noindent
 
 The semantics of formulae in any logic is defined with respect to a \emph{model}. In propositional logic, models were truth assignments to the propositions. For first-order logic, models are known as \emph{structures} that help identify the interpretation of symbols in the signature.
@@ -437,7 +775,7 @@ Now, we can use the previous result to prove the Relevance Lemma on FOL formulae
 
 It follows from the Relevance Lemma that if $\varphi$ is a sentence, then all variable assignments are equivalent with respect to satisfiability. Hence, for any sentence $\varphi$, we simply write $\struct \models \varphi$ whenever $\struct, \alpha \models \varphi$ for some assignment $\alpha$.
 
-\section*{\large \centering Satisfiability and Validity of FOL Formulae}
+\subsection{\large \centering Satisfiability and Validity of FOL Formulae}
 \noindent
 
 We can define the satisfiability and validity of FOL formulae similar to the way we defined them for propositional logic.
@@ -472,7 +810,7 @@ We can define the satisfiability and validity of FOL formulae similar to the way
 \hrule
 \hrule
 
-\section*{\large \centering Normalization and Skolemization}
+\subsection{\large \centering Normalization and Skolemization}
 \noindent
 
 Similar to how propositional formulae in conjunctive normal form are easier to process, FOL formulae in \emph{prenex normal form} are also easier for automated theorem provers to process.
@@ -499,7 +837,7 @@ One can go even further and eliminate existential quantifiers from a formula in 
 \hrule
 \hrule
 
-\section*{\large \centering Herbrand's Theorem for FOL}
+\subsection{\large \centering Herbrand's Theorem for FOL}
 \noindent
 
 Herbrand's Theorem relates satisfiability of a set of FOL sentences to their propositional satisfiability. Before we state the theorem, we first state some new definitions.
@@ -657,7 +995,7 @@ Now, we can prove the opposite direction of Herbrand's theorem without equality.
 \hrule
 \hrule
 
-\section*{\large \centering Implications of Herbrand's Theorem}
+\subsection{\large \centering Implications of Herbrand's Theorem}
 \noindent
 
 The proof of Herbrand's Theorem highlights some interesting \emph{model-theoretic} observations. We go through them in this section.
@@ -674,16 +1012,20 @@ First, the proof illustrates that whenever there is a model $\struct$ for a set 
   It suffices to show that $U_\Sigma = \terms_\Sigma$ is countable. By assumption, $\Sigma$ is countable and so for any natural number $k \in \nats$, the set of all ground terms of length $k$ is countable (since it is isomorphic to some subset of $\mathbb{N}^k$, which is countable). Then, $\terms_\Sigma = \bigcup\limits_{k \in \nats}\{\text{all ground terms of length } k\}$ is a countable union of countable sets and so, it is also countable. Hence, the Herbrand structure $\struct_\Sigma^\tau$ is countable.
 \end{proof}
 
-\section*{\large \centering Herbrand's Theorem with Equality}
+\subsection{\large \centering Herbrand's Theorem with Equality}
 \noindent
 
 We have seen that in the absence of equality, a ground atomic valuation that makes all of $\mathsf{Ground}(\Gamma)$ propositionally satisfiable guarantees the existence of a structure that satisfies $\Gamma$. In the presence of equality, this is not true.
+
+We need to convert equality to a form that is correctly interpretable. To do so, we replace any set of FOL $\Gamma$ with $\Gamma^* = \mathsf{eq}(\Gamma) \cup \mathcal{E}$. We replace all instances of $x = y$ to $\mathsf{EQ}(x, y)$, thereby transforming equality into a relation symbol.
+
+We define $\mathcal{E} = \bigcup\limits_{i = 1}^5 \mathcal{E}_i$. $\mathcal{E}_1$ represents reflexivity, $\mathcal{E}_2$ represents symmetry, $\mathcal{E}_3$ represents transitivity, $\mathcal{E}_4$ represents preservation of equality under function application, $\mathcal{E}_5$ represents preservation of equality with respect to relations.
 
 \vspace{5truemm}
 \hrule
 \hrule
 
-\section*{\large \centering Primer on Countability}
+\section{\large \centering Primer on Countability}
 \noindent
 
 \begin{definition}[Injection]
@@ -843,7 +1185,7 @@ We have previously seen that every set of strings on a countable alphabet is cou
 \hrule
 \hrule
 
-\section*{\large \centering Primer on Computability Theory}
+\section{\large \centering Primer on Computability Theory}
 \noindent
 
 Computability Theory asks questions like "what is the complexity of solving a problem?", or more generally, "is the problem solvable?". We will study computability theory in the context of first-order logic (FOL), by modelling computational problems as formulae and determining if such formulae are satisfiable in polynomial time.
@@ -875,7 +1217,7 @@ The previous claim shows that certain computational problems that are unsolvable
 \hrule
 \hrule
 
-\section*{\large \centering Turing Machines}
+\subsection{\large \centering Turing Machines}
 \noindent
 
 We use Turing machines as our main model of computation. Input that is fed into a Turing machine can be modelled as strings over an alphabet. We will define some terms and notation before proceeding.
@@ -915,7 +1257,7 @@ For a list of objects $O_1, O_2, \ldots, O_k$, we will use $\langle O_1, O_2, \l
 
 The answer is yes: just simulate $M$ on $w$. This Turing machine is known as a \emph{universal Turing machine} since it can simulate the specification of an arbitrary Turing machine on arbitrary input.
 
-\section*{\large \centering Recursive and Recursively Enumerable Languages}
+\subsection{\large \centering Recursive and Recursively Enumerable Languages}
 \noindent
 
 Recall that there are $3$ possible outcomes when a Turing machine $M$ runs on an input string $w$ --- $M$ may halt and accept $w$, $M$ may halt and reject $w$, or $M$ may not halt on $w$. Depending on how a Turing machine behaves,  we can define two different classes of problems solvable on a Turing machine.
