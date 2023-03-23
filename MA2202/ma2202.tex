@@ -1,0 +1,127 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{MA2202 --- Algebra I}
+\author{Liew Zhao Wei}
+\date{Semester 2, 2022-2023}
+
+\begin{document}
+\maketitle
+\hrule
+
+\section{Symmetric Groups}
+
+\subsection{Symmetric Groups}
+
+\begin{definition}[Permutation]
+  A \emph{permutation} of a set $S$ is a bijective map $p$ from $S$ to itself. That is, $p \colon S \to S$.
+\end{definition}
+
+\begin{definition}
+  The set of all permutations of the indices $\{1, 2, \ldots, n\}$ is called the \emph{symmetric group} on $n$ elements, denoted by $S_n$.
+\end{definition}
+
+\begin{definition}
+  Let $X$ be a set. The set of all permutations of $X$ is called the \emph{symmetric group} on $X$, denoted by $S_X$.
+\end{definition}
+
+\begin{proposition}
+  $(S_n, \circ)$ and $(S_X, \circ)$ are isomorphic groups.
+\end{proposition}
+
+\subsection{Permutation Matrices}
+
+A \emph{permutation matrix} is associated to any permutation.
+
+\begin{definition}[Permutation matrix]
+  An $n \times n$ permutation matrix is an $n \times n$ matrix $P$ whose columns are a permutation of the standard basis $e_1, e_2, \ldots, e_n$.
+\end{definition}
+
+\begin{proposition}
+  Let $S_n^{''}$ denote the set of all $n \times n$ permutation matrices. Let $\times$ denote matrix multiplication. Then, $(S_n^{''}, \times)$ is a group and is isomorphic to $(S_n, \circ)$.
+\end{proposition}
+
+\subsection{Cyclic Notations}
+
+We can express permutations as a product of disjoint cycles. This notation is called the \emph{cyclic notation} and is more compact compared to the tabular notation.
+
+\begin{example}
+  The permutation $p = (34)(12) \in S_4$ contains the following disjoint cycles: $1 \mapsto 2$, $2 \mapsto 1$, $3 \mapsto 4$, $4 \mapsto 3$, and $5 \mapsto 5$.
+\end{example}
+
+In fact, we can think of a cycle as a permutation.
+
+\begin{definition}
+  Consider a permutation $p \in S_n$ with a cycle ($x_1 x_2 \cdots x_r$). The cycle is a permutation $h \in S_n$ such that $h(x_1) = x_2, h(x_2) = x_3, \ldots, h(x_r) = h(x_1)$ and $h(y) = y$ for any $y$ not in the cycle.
+\end{definition}
+
+Then, a product of disjoint cycles simply refers to the composition of the corresponding permutations.
+
+\begin{proposition}
+  Every permutation can be factorized into a product of disjoint cycles. The factorization is unique up to an ordering of the product of cycles.
+\end{proposition}
+
+\subsection{Transpositions}
+
+\begin{definition}
+  A \emph{transposition} is a cycle of the form $h = (ij)$.
+\end{definition}
+
+\begin{proposition}
+  Any cycle can be written as a product of transpositions.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+  Let $h = (i_1, \ldots, i_r)$. Then, $(i_1 i_r)(i_1 i_{r-1})\cdots(i_1 i_2)$ is an equivalent permutation.
+\end{proof}
+
+Since any permutation can be expressed as a product of disjoint cycles, we can also express any permutation as a product of transpositions.
+
+\begin{proposition}
+  Every permutation can be expressed as a product of transpositions.
+\end{proposition}
+
+\subsection{The Sign Character}
+
+\begin{lemma}
+  For any permutation matrices $F$ and $H$ in $S_n^{''}$, we have $\det(FH) = \det(F)\det(H)$ and $\det(F) = \pm 1$.
+\end{lemma}
+
+Since permutations in $S_n$ are isomorphic to permutation matrices in $S_n^{''}$, observe the \emph{sign} of a permutation is equivalent to the determinant of its corresponding permutation matrix.
+
+\begin{example}[Sign of a Permutation]
+  Let $p$ be a permutation in $S_n$ and $\varphi$ be an isomorphism between $S_n$ and $S_n^{''}$. Then, the \emph{sign} of $p$ is $\mathsf{sgn}(p) = \det(\varphi(p))$.
+\end{example}
+
+However, the determinant of a matrix is typically defined in terms of its sign, so we define the sign in an alternative fashion.
+
+\begin{definition}
+  Let $\mathbf{x} = (x_1, x_2, \ldots, x_n)$ be $n$ variables.
+  
+  Define $P(\mathbf{x}) = P(x_1, \ldots, x_n) = \prod\limits_{1 \le i < j \le n}(x_i - x_j)$.
+  
+  Then, for each permutation $f \in S_n$, define $P_f(x_1, \ldots, x_n) = P(x_{f(1)}, x_{f(2)}, \ldots, x_{f(n)}) = \prod\limits_{1 \le i < j \le n}(x_{f(i)} - x_{f(j)})$.
+\end{definition}
+
+\begin{proposition}
+  For any permutation $f \in S_n$, $P_f(x_1, \ldots, x_n) = \pm P(x_1, \ldots, x_n)$. We call the sign of $P_f$ the \emph{sign character} of $f$.
+\end{proposition}
+
+\begin{proposition}
+  For any permutations $f, h \in S_n$, $\mathsf{sgn}(f \circ h) = \mathsf{sgn}(f) \mathsf{sgn}(h)$.
+\end{proposition}
+
+\begin{definition}
+  A permutation $f \in S_n$ is \emph{even} if $\mathsf{sgn}(f) = 1$. Otherwise, it is \emph{odd}.
+\end{definition}
+
+\begin{theorem}
+  Let $f \in S_n$ be a permutation. $f$ is even iff $f$ is a product of an even number of transpositions.
+\end{theorem}
+
+\begin{proposition}
+  The set of all even permutations in $S_n$ is a subgroup of $S_n$.
+\end{proposition}
+
+\end{document}

@@ -1,0 +1,82 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{EL1101E - The Nature of Language}
+\author{Liew Zhao Wei}
+\date{Semester 2, 2022-2023}
+
+\begin{document}
+\maketitle
+\hrule
+
+\section{Semantics}
+
+Semantics is the study of meaning in language.
+
+First, we define some terms related to \emph{entailment}.
+
+\begin{definition}[Entailment]
+  Let $A$ and $B$ be sentences. $A$ \textbf{entails} $B$ if whenever $A$ is true, then $B$ must be true.
+\end{definition}
+
+\begin{example}
+  Let $A$ be the sentence "She has a poodle" and $B$ be the sentence "She has a dog". Then, $A$ entails $B$.
+\end{example}
+
+Note that the converse may not hold. That is, $B$ may not entail $A$ even if $A$ entails $B$. However, if the converse is true, then we have a \emph{paraphase}.
+
+\begin{definition}[Paraphrase]
+  Let $A$ and $B$ be sentences. $A$ and $B$ are \textbf{paraphrases} of each other if $A$ entails $B$ and $B$ entails $A$.
+\end{definition}
+
+\begin{remark}
+  Paraphrases are not to be confused with synonyms. Synonyms are pairs of \textbf{words} with the same meaning. Paraphrases are \textbf{sentences} that entail each other.
+\end{remark}
+
+\begin{definition}[Contradiction]
+  Let $A$ and $B$ be sentences. $A$ \textbf{contradicts} $B$ if whenever $A$ is true, then $B$ must be false.
+\end{definition}
+
+Observe that contradiction is a symmetric relation. That is, if $A$ contradicts $B$, then $B$ contradicts $A$.
+
+\subsection{Presuppositions}
+
+Notice that a pair of contradictary sentences may still share some backgrounded and implicit assumptions. We call these \emph{presuppositions}.
+
+\begin{definition}[Presupposition]
+  Let $A$ be a sentence. A \textbf{presupposition} is a background assumption in $A$ that holds even $A$ is negated.
+\end{definition}
+
+\begin{example}
+  Consider the sentence "He is the current Prime Minister" and its negation "He is not the current Prime Minister". In both sentences, the implicit assumption "There is a Prime Minister" holds and thus, is a presupposition.
+\end{example}
+
+Observe that presuppositions are entailed by both a sentence and its negation. This means that we can determine if a sentence is a presupposition or an entailment using a \emph{negation test}.
+
+\begin{example}[Negation Test]
+  Let $A$ and $B$ be sentences such that $A$ entails $B$. Consider the negation $A'$. If $A'$ entails $B$, then $B$ is a presupposition of $A$. Otherwise, $B$ is an entailment of $A$.
+\end{example}
+
+There are various constructions (i.e. words or syntactic patterns) that \emph{trigger} certain presuppositions.
+
+\begin{example}[Factive Verb]
+  Consider the sentence "I realized she was a doctor". The \textbf{factive verb} "realized" triggers the presupposition "She was a doctor".
+\end{example}
+
+\begin{example}[Cleft]
+  Consider the sentence "It was my phone that burst into flames". The \textbf{cleft} triggers the presupposition "something burst into flames".
+\end{example}
+
+\begin{example}[Temporal Clause]
+  Consider the sentence "She called me before she went to dinner". The \textbf{temporal clause} "before" triggers the presupposition "She went to dinner".
+\end{example}
+
+\begin{example}[Change of State]
+  Consider the sentence "It has stopped raining". The sentence implies \textbf{change of state} and triggers a presupposition "It was raining at some point before".
+\end{example}
+
+The study of presuppositions and what trigger them is part of \emph{pragmatics} which is covered in a later section.
+
+
+\end{document}

@@ -1,3 +1,6 @@
 # College Cheatsheets
 
-Made for personal use at college. Based on Jovyn's [excellent cheatsheets](https://github.com/jovyntls/cheatsheets).
+## Courses
+* [CS4269 - Fundamentals of Logic in Computer Science](./CS4269/)
+* [MA2202 - Algebra I](./MA2202/)
+* [EL1101E - The Nature of Language](./EL1101E/)
