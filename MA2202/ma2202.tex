@@ -124,4 +124,29 @@ However, the determinant of a matrix is typically defined in terms of its sign, 
   The set of all even permutations in $S_n$ is a subgroup of $S_n$.
 \end{proposition}
 
+\section{Cayley's Theorem}
+
+\begin{theorem}[Cayley's Theorem]
+  Every finite group of order $n$ is isomorphic to a subgroup of the symmetric group $S_n$.
+\end{theorem}
+
+Cayley's Theorem gives a way of realizing an abstract group as a subgroup of a more concrete group $S_n$. However, it is difficult to use in practice because the order of $S_n$ is usually too large in comparison to $n$. If $|G| = n$, then $|S_n| = n!$.
+
+\section{Cosets}
+
+\begin{definition}[Coset]
+  Let $H$ be a subgroup of $G$ and $g \in G$ be an element of $G$. Then, a \textbf{left coset} is the subset
+  $$
+  gH = \{gh \mid h \in H\}
+  $$
+  A \textbf{right coset} is the subset
+  $$
+  Hg = \{hg \mid h \in H\}.
+  $$
+\end{definition}
+
+Note that $eH = He = H$.
+
+
+
 \end{document}

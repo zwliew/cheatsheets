@@ -74,3 +74,13 @@
 \declaretheorem[style = plain, name = Claim, numbered = no]{claim*}
 
 \declaretheorem[style=plain, name=Remark, sibling=theorem]{remark}
+
+\newenvironment{subproof}[1][\proofname]{%
+  \renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
+  \begin{proof}[#1]%
+}{%
+  \end{proof}%
+}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\setpred}[2]{\{#1 \,|\, #2\}}
