@@ -12,10 +12,65 @@
 
 \section{Probability and Bounds}
 
+\begin{lemma}[Union Bound]
+  For a countable set of events $A_1, A_2, \ldots$, we have
+  \begin{align}
+    \Pr\left[\bigcup_{i=1}^\infty A_i\right] \le \sum_{i=1}^\infty \Pr[A_i]
+  \end{align}
+\end{lemma}
+
+\begin{lemma}[Linearity of Expectation]
+  For any random variables $X_1, X_2, \ldots, X_n$, we have
+  \begin{align}
+    \Exp\left[\sum_{i=1}^n X_i\right] = \sum_{i=1}^n \Exp[X_i]
+  \end{align}
+\end{lemma}
+
+\begin{lemma}[Markov's Inequality]
+  For any \emph{non-negative} random variable $X$ and $t > 0$, we have
+  \begin{align}
+    \Pr[X \ge t] \le \frac{\Exp[X]}{t}
+  \end{align}
+\end{lemma}
+
+\begin{lemma}[Chebyshev's Inequality]
+  For any random variable $X$ with mean $\mu$ and variance $\sigma^2$, we have
+  \begin{align}
+    \Pr[|X - \mu| \ge t] \le \frac{\sigma^2}{t^2}
+  \end{align}
+  In fact, this holds for any moment $p$ instead of $2$.
+\end{lemma}
+
+\begin{lemma}[Chernoff-Hoeffding Bounds]
+  Suppose $X_1, \ldots, X_n$ are \emph{independent} random variables with $X_i \in [0, 1]$.
+  Let $X = \sum_{i=1}^n X_i$ and $\mu = \Exp[X]$ such that $\mu_L \leq \mu \leq \mu_H$.
+  Then, for any $0 \leq \delta \leq 1$,
+  \begin{align}
+    \Pr[X \geq (1 + \delta)\mu] \le \exp{-\frac{\delta^2\mu}{3}}
+    \\
+    \Pr[X \leq (1 - \delta)\mu] \le \exp{-\frac{\delta^2\mu}{2}}
+    \\
+    \Pr \left[ |X - \mu| \geq \delta \mu \right] \le 2 \exp{-\frac{\delta^2\mu}{3}}
+    \\
+  \end{align}
+  For any $\delta \geq 0$,
+  \begin{align}
+    \Pr[X \geq \mu + \delta] \le \exp{-\frac{2\delta^2}{n}}
+    \\
+    \Pr[X \leq \mu - \delta] \le \exp{-\frac{2\delta^2}{n}}
+    \\
+    \Pr \left[ |X - \mu| \geq \delta \right] \le 2 \exp{-\frac{2\delta^2}{n}}
+  \end{align}
+  More generally, if $a_i \leq X_i \leq b_i$, then
+  \begin{align}
+    \Pr[X \geq \mu + \delta] \le \exp{-\frac{2\delta^2}{\sum_{i=1}^n (b_i - a_i)^2}}
+    \\
+    \Pr[X \leq \mu - \delta] \le \exp{-\frac{2\delta^2}{\sum_{i=1}^n (b_i - a_i)^2}}
+  \end{align}
+\end{lemma}
+
 WIP.
 
-1. Union bound, linearity of expectation
-2. Markov, Chebyshev, Chernoff, Hoeffding
 3. k-universal hash family (include space analysis)
 
 \section{Simple Techniques}
