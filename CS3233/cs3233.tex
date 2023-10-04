@@ -1,0 +1,91 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{CS3233 - Competitive Programming}
+\author{Liew Zhao Wei}
+\date{Semester 2, 2022-2023}
+
+\begin{document}
+\maketitle
+\hrule
+
+\section{Geometry}
+
+\subsection{Dot Product}
+
+The dot product of two vectors $\vb{a} \cdot \vb{b}$ is defined geometrically as the product of the magnitude of $\vb{a}$ and the magnitude of the projection of $\vb{b}$ onto $\vb{a}$. That is,
+$$
+\vb{a} \cdot \vb{b} = |\vb{a}| |\vb{b}|\cos{\theta}
+$$
+ where $\theta$ is the angle between $\vb{a}$ and $\vb{b}$.
+
+The dot product is also defined algebraically as the sum of the products of the corresponding components of $\vb{a}$ and $\vb{b}$. That is,
+$$
+\vb{a} \cdot \vb{b} = \sum\limits_{i=1}^n a_i b_i
+$$
+
+We can prove that these two definitions are equivalent by using the cosine rule. This is left as an exercise.
+
+Here are some properties of the dot product:
+\begin{enumerate}
+  \item $\vb{a} \cdot \vb{b} = \vb{b} \cdot \vb{a}$
+  \item $(\alpha \cdot \vb{a}) \cdot \vb{b} = \alpha \cdot (\vb{a} \cdot \vb{b})$
+  \item $(\vb{a} + \vb{b}) \cdot \vb{c} = \vb{a} \cdot \vb{c} + \vb{b} \cdot \vb{c}$
+\end{enumerate}
+
+Observe that the sign of the dot product solely depends on the angle between the two vectors. This means that its sign determines the direction of the vectors. We can think of this in three cases.
+\begin{enumerate}
+  \item If $\vb{a} \cdot \vb{b} > 0$, then $\vb{b}$ is in the same direction as $\vb{a}$.
+  \item If $\vb{a} \cdot \vb{b} < 0$, then $\vb{b}$ is in the opposite direction as $\vb{a}$. 
+  \item If $\vb{a} \cdot \vb{b} = 0$, then $\vb{b}$ is perpendicular to $\vb{a}$.
+\end{enumerate}
+
+\subsection{Cross Product}
+
+The \textbf{cross product} of two vectors $\vb{a} \times \vb{b}$ is defined geometrically as the vector orthogonal to both $\vb{a}$ and $\vb{b}$, with magnitude equal to the area of the parallelogram formed by $\vb{a}$ and $\vb{b}$. The magnitude of the cross product is
+$$
+|\vb{a} \times \vb{b}| = |\vb{a}||\vb{b}|\sin{\theta}
+$$
+
+Here are some properties of the cross product:
+\begin{enumerate}
+  \item $\vb{a} \times \vb{b} = -\vb{b} \times \vb{a}$
+  \item $(\alpha \cdot \vb{a}) \times \vb{b} = \alpha \cdot (\vb{a} \times \vb{b})$
+  \item $(\vb{a} + \vb{b}) \times \vb{c} = \vb{a} \times \vb{c} + \vb{b} \times \vb{c}$
+\end{enumerate}
+
+The sign of the magnitude of the cross product also solely depends on the angle between the two vectors.
+
+\subsection{Lines}
+
+We can represent a line in the 2D-plane using the standard form:
+$$
+ax + by + c = 0
+$$
+where $(a, b)$ is a vector perpendicular to the line and $c$ is the distance of the line from the origin.
+
+\subsection{Triangles}
+
+\subsubsection{Area of a Triangle}
+
+\textbf{Heron's formula} states that the area of the triangle is
+$$
+A = \sqrt{s(s-a)(s-b)(s-c)}
+$$
+where $a$, $b$, and $c$ are the lengths of the triangle's sides and $s = \frac{a+b+c}{2}$.
+
+\subsection{Polygons}
+
+\subsubsection{Area of a Polygon}
+
+A general formula for the area of a polygon is
+$$
+A = \frac{1}{2} \sum\limits_{i=1}^n (x_i y_{i+1} - x_{i+1} y_i)
+$$
+where $(x_i, y_i)$ is the coordinate of the $i$\textsuperscript{th} vertex of the polygon. Note that we take $x_{n+1} = x_1$ and $y_{n+1} = y_1$.
+
+\section{Number Theory}
+
+
+\end{document}
