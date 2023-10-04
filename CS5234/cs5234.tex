@@ -12,6 +12,8 @@
 
 \section{Probability and Bounds}
 
+We start by stating some crucial probability results that will be used throughout the course.
+
 \begin{lemma}[Union Bound]
   For a countable set of events $A_1, A_2, \ldots$, we have
   \begin{align}
@@ -44,7 +46,8 @@
 \begin{lemma}[Chernoff-Hoeffding Bounds]
   Suppose $X_1, \ldots, X_n$ are \emph{independent} random variables with $X_i \in [0, 1]$.
   Let $X = \sum_{i=1}^n X_i$ and $\mu = \Exp[X]$ such that $\mu_L \leq \mu \leq \mu_H$.
-  Then, for any $0 \leq \delta \leq 1$,
+
+\textbf{(Chernoff)} For any $0 \leq \delta \leq 1$,
   \begin{align}
     \Pr[X \geq (1 + \delta)\mu] \le \exp{-\frac{\delta^2\mu}{3}}
     \\
@@ -53,7 +56,7 @@
     \Pr \left[ |X - \mu| \geq \delta \mu \right] \le 2 \exp{-\frac{\delta^2\mu}{3}}
     \\
   \end{align}
-  For any $\delta \geq 0$,
+\textbf{(Hoeffding)} For any $\delta \geq 0$,
   \begin{align}
     \Pr[X \geq \mu + \delta] \le \exp{-\frac{2\delta^2}{n}}
     \\
@@ -69,17 +72,71 @@
   \end{align}
 \end{lemma}
 
-WIP.
+\begin{definition}[$k$-Universal Hash]
+  A hash family $\mathcal{H} = \set{h \colon \mathcal{U} \to S}$ is \emph{$k$-universal} if for any distinct $k$ elements $x_1, \ldots, x_k \in \mathcal{U}$ and any $k$ elements $y_1, \ldots, y_k \in S$, we have
+  \begin{align}
+    \Pr_{h \in_R \mathcal{H}}[h(x_1) = y_1 \land \ldots \land h(x_k) = y_k] = \frac{1}{|S|^k}
+  \end{align}
+  Such a hash family is also called a \emph{$k$-wise independent hash family}.
+  There are constructions of $k$-universal hash families from $[n]$ to $[n]$ that take $O(k \log n)$ space.
+\end{definition}
 
-3. k-universal hash family (include space analysis)
+\pagebreak
 
 \section{Simple Techniques}
 
-WIP.
-1. Reservoir sampling
-2. Mean trick to drive down variance
-3. Median trick to boost success Probability
-4. Median of mean trick (2 and 3) to bound concetration
+\subsection{Reservoir Sampling}
+
+We can use \emph{reservoir sampling} to uniformly sample an element from a stream without having to store the stream in advance.
+
+\begin{algorithm}
+  \caption{Reservoir Sampling algorithm}
+  \begin{algorithmic}[1]
+    \Procedure{ReservoirSampling}{stream $s$}
+    \For{i = 1, 2, \ldots}
+    \State Flip a coin with probability $1/i$
+    \If{coin was heads}
+    \State $x \leftarrow s_i$
+    \EndIf
+    \EndFor
+    \State \Return $x$
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+By a simple proof by induction, we can show that the probability of any element $x$ being sampled is $1/n$.
+
+\subsection{Mean Trick to Reduce Variance}
+
+We can take the average of multiple independent estimators to reduce the variance of the final estimator.
+This is useful when the variance of the single basic estimator is too large to apply concetration bounds.
+
+\begin{lemma}[Reduce Variance by Taking Mean of $k$ Samples]
+  Let $X = \frac{1}{k} \sum_{i = 1}^{k} X_i$ where each $X_i$ has mean $\mu$ and variance $\sigma^2$.
+  Then, $\Exp[X] = \mu$ and $\Var[X] = \sigma^2 / k$.
+\end{lemma}
+
+\subsection{Median Trick to Amplify Success Probability}
+
+We can use the median of multiple independent estimators to reduce the probability of the final estimator being far from the true value (typically by Chernoff-Hoeffding bounds).
+
+\begin{algorithm}
+  \caption{Median Trick for Amplifying Sucess Probability}
+  \begin{algorithmic}[1]
+    \Procedure{AmplifyByMedian}{algorithm $\mathcal{A}$, integer $\ell$}
+    \For{i = 1, \ldots, $\ell$}
+    \State Let $Z_i$ be the output of $\mathcal{A}$ with new independent random values
+    \EndFor
+    \State \Return $\text{Median}(Z_1, \ldots, Z_\ell)$
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+We commonly combine both the Mean and the Median tricks to form the Median of Means trick.
+
+A slightly different version of the Mean Trick is the Min Trick, where we take the minimum instead of the median.
+This is useful when there is only one-sided error -- think of the median as a two-sided error version of the min trick.
+An example of this is the \emph{Count-Min-Sketch} data structure.
 
 \section{Sketches}
 
