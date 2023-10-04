@@ -4,6 +4,7 @@
 \usepackage[left=0.8in, top=1.6cm, bottom=2.4cm, right=0.8in]{geometry}
 
 \usepackage{amsmath,amsthm,amssymb}
+\usepackage{mathtools}
 \usepackage{tikz}
 \usepackage{graphicx}
 \usepackage{enumitem}
@@ -77,11 +78,17 @@
 \declaretheorem[style=plain, name=Remark, sibling=theorem]{remark}
 
 \newenvironment{subproof}[1][\proofname]{%
-  \renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
-  \begin{proof}[#1]%
+\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
+\begin{proof}[#1]%
 }{%
-  \end{proof}%
+\end{proof}%
 }
 
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\setpred}[2]{\{#1 \,|\, #2\}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\summ}[2]{\sum\limits^{#1}_{#2}}
+
+\let\bvec\mathbf

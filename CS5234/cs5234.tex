@@ -1,0 +1,67 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{CS5234 - Algorithms at Scale}
+\author{Liew Zhao Wei}
+\date{Semester 1, 2023-2024}
+
+\begin{document}
+\maketitle
+\hrule
+
+\section{Probability and Bounds}
+
+WIP.
+
+1. Union bound, linearity of expectation
+2. Markov, Chebyshev, Chernoff, Hoeffding
+3. k-universal hash family (include space analysis)
+
+\section{Simple Techniques}
+
+WIP.
+1. Reservoir sampling
+2. Mean trick to drive down variance
+3. Median trick to boost success Probability
+4. Median of mean trick (2 and 3) to bound concetration
+
+\section{Sketches}
+
+1. combining sketches, linear sketches
+2. Misra-Gries
+3. Count-Min-Sketch and Count-Sketch
+
+\section{Dimensions and Distances}
+
+\begin{lemma}[Johnson-Lindenstrauss Lemma]
+For any set $S \subseteq \reals^d$ of $n$-points, there is an embedding $f \colon \reals^d \to \reals^m$ for $m = O(\epsilon^{-2} \log n)$ such that
+\begin{align}
+  \forall u, v \in S \quad (1 - \epsilon) \|u - v\|_2^2 \le \|f(u) - f(v)\|_2^2 \le (1 + \epsilon) \|u - v\|_2^2
+\end{align}
+\end{lemma}
+In other words, we can embed $S$ into a lower-dimensional space while approximately preserving $\ell_2$ norms.
+
+Some observations:
+\begin{itemize}
+  \item The embedding has only a logarithmic dependence on $n$ and \emph{no} dependence on $d$.
+  \item The embedding is can be generated using a Gaussian distribution.
+  \item The embedding can be represented as a linear transformation, or in other words, a matrix.
+\end{itemize}
+
+\begin{definition}[Locality Sensitive Hash]
+  A hash family $\mathcal{H} = \set{h \colon \mathcal{U} \to S}$ is a $(r_1, r_2, p_1, p_2)$-locally sensitive if for all points $p, p' \in \mathcal{U}$,
+
+  \begin{enumerate}
+    \item if $d(p, p') \le r_1$, then $\Pr_{h \in \mathcal{H}}[h(p) = h(p')] \ge p_1$,
+    \item if $d(p, p') > r_2$, then $\Pr_{h \in \mathcal{H}}[h(p) = h(p')] \le p_2$.
+  \end{enumerate}
+
+\end{definition}
+In other words, a \emph{locality sensitive hash} (LSH) is a hash family where similar items are more likely to collide.
+Note that the definition makes sense only if $r_1 < r_2$ and $p_1 > p_2$.
+
+WIP.
+1. ANN, PLEB, how to solve them
+
+\end{document}

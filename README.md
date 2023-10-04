@@ -5,3 +5,4 @@
 * [MA2202 - Algebra I](./MA2202/)
 * [EL1101E - The Nature of Language](./EL1101E/)
 * [CS3233 - Competitive Programming](./CS3233/)
+* [CS5234 - Algorithms at Scale](./CS5234/)
