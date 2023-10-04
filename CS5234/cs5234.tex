@@ -158,16 +158,16 @@ An example of this is the \emph{Count-Min-Sketch} data structure.
 
 \subsection{Misra-Gries}
 
-The \emph{Misra-Gries} algorithm solves the heavy hitters problem:
+The \emph{Misra-Gries} algorithm solves the $k$-heavy hitters problem:
 \begin{itemize}
-  \item If $x$ is a heavy hitter, then $x$ must be in the output.
-  \item If $x$ is not a heavy hitter, then $x$ may or may not be in the output.
+\item If $x$ is a $k$-heavy hitter, then $x$ must be in the output.
+\item If $x$ is not a $k$-heavy hitter, then $x$ may or may not be in the output.
 \end{itemize}
 
 \begin{algorithm}
   \caption{Misra-Gries heavy hitters algorithm}
   \begin{algorithmic}[1]
-    \Procedure{MisraGries}{stream $s$}
+\Procedure{MisraGries}{stream $s$, integer $k$}
     \State Let $C$ be an empty hash table
     \For{i = 1, \ldots, $m$}
     \If {$a_i \in C$}
@@ -193,9 +193,12 @@ The \emph{Misra-Gries} algorithm solves the heavy hitters problem:
   \end{align}
 \end{lemma}
 
+As expected of a sketch, two Misra-Gries sketches can be combined by adding the counts of the same keys, sorting the counts in descending order to form a new stream of counts, and re-running the algorithm on the combined sketch.
+
 \subsection{Count-Min-Sketch}
 
 The \emph{Count-Min-Sketch} data structure solves the frequency estimation problem.
+It takes $O(\epsilon^{-1} \log (1 / \delta) \cdot (\log m + \log n))$ space and provides, for any token $j$, an estimate $\hat{f}_j$ satisfying $f_a \leq \hat{f}_a \leq \epsilon || f_{-a} ||$ with probability at least $1 - \delta$.
 
 \begin{algorithm}
   \caption{Count-Min-Sketch frequency estimation algorithm}
@@ -214,8 +217,6 @@ The \emph{Count-Min-Sketch} data structure solves the frequency estimation probl
     \EndProcedure
   \end{algorithmic}
 \end{algorithm}
-
-This algorithm takes $O(\epsilon^{-1} \log (1 / \delta) \cdot (\log m + \log n))$ space and provides, for any token $j$, an estimate $\hat{f}_j$ satisfying $f_a \leq \hat{f}_a \leq \epsilon || f_{-a} ||$ with probability at least $1 - \delta$.
 
 \pagebreak
 
@@ -248,7 +249,66 @@ Some observations:
 In other words, a \emph{locality sensitive hash} (LSH) is a hash family where similar items are more likely to collide.
 Note that the definition makes sense only if $r_1 < r_2$ and $p_1 > p_2$.
 
-WIP.
-1. ANN, PLEB, how to solve them
+\subsection{$\epsilon$-Approximate Nearest Neighbour Problem}
+
+\begin{definition}[$\epsilon$-Approximate Nearest Neighbour Problem]
+  Given a set $P$ of points in $\reals^d$, construct a data structure, that given any point $q \in \reals^d$, returns a point $p \in P$ such that $d(p, q) \leq c \min_{p' \in P} d(p', q)$.
+\end{definition}
+
+We can reduce this problem to a simpler one called the $\epsilon$-Point Location in Equal Balls problem ($\epsilon$-PLEB).
+
+\begin{definition}[$\epsilon$-Point Location in Equal Balls]
+  Given a set $P$ of points in $\reals^d$ and radii $r_1, r_2$, construct a data structure, that given any point $q \in \reals^d$:
+
+  \begin{enumerate}
+    \item If there is a point $p \in P$ such that $d(p, q) \leq r_1$, returns \textbf{YES} and any point $p' \in P$ with $d(p', q) \leq r_2$.
+    \item If there is no point $p \in P$ such that $d(p, q) \leq r_2$, returns \textbf{NO}.
+  \end{enumerate}
+\end{definition}
+
+\begin{lemma}[ANN to PLEB]
+  Suppose there is a data structure for $(r, (1 + \epsilon) r)-PLEB$ with space $S$ and query time $T$ for any radius $r$.
+  Then, there is an algorithm for $(1 + \epsilon)^2$-ANN with space $O(S \log_{1 + \epsilon} \frac{D_{max}}{D_{min}})$ and query time $O(T \log \log_{1 + \epsilon} \frac{D_{max}}{D_{min}})$, where $D_{max}$ and $D_{min}$ denote the maximum and minimum distance between points respectively.
+\end{lemma}
+
+\begin{proof}
+  Search over the radii using $(r, (1 + \epsilon) r)$-PLEB:
+  \begin{align}
+    \frac{D_{min}}{2}, (1+ \epsilon) \frac{D_{min}}{2}, (1 + \epsilon)^2 \frac{D_{min}}{2}, \ldots, \approx D_{max}
+  \end{align}
+  and binary search for the minimum radius $r$ so that the algorithm returns \textbf{YES} for a single query point $p$.
+  Convince yourself that the point returned is a $(1 + \epsilon)^2$-approximate nearest neighbour to $p$.
+\end{proof}
+
+In fact, there is a more efficient reduction to reduce $(1 + \epsilon)$-ANN to $(r, (1 + \epsilon) r)$-PLEB.
+
+Finally, we can reduce $(r, (1 + \epsilon) r)$-PLEB to $(r, (1 + \epsilon) r)$-LSH.
+
+\begin{lemma}[PLEB to LSB]
+  Suppose there is a $(r_1, r_2, p_1, p_2)$-LSH $\mathcal{H} = \set{h \colon U \to S}$.
+  Then, there is an algorithm for $(r_1, r_2)$-PLEB which uses
+  \begin{itemize}
+    \item $O(dn + n^{1 + \rho})$ space, and
+    \item $O(n^\rho)$ query time, measured in hash evaluations,
+  \end{itemize}
+  where $\rho = \frac{\ln 1 / p_1}{\ln 1 / p_2}$.
+  This algorithm succeeds with constant probability.
+\end{lemma}
+
+\begin{proof}
+  The algorithm is as follows:
+  Let $k$ and $\ell$ be parameters (which we will set later). Define a new hash family $\mathcal{G}=\left\{g: U \rightarrow S^k\right\}$. Each hash function $g \in \mathcal{G}$ takes the form $g(p)=\left(h_1(p), h_2(p), \ldots, h_k(p)\right)$, where each hash function $h_i$ is in $\mathcal{H}$.
+
+  First, preprocessing:
+  \begin{enumerate}
+    \item Choose hash functions $g_1, \ldots, g_{\ell}$ from $\mathcal{G}$.
+    \item For each $p$ in the given set of points $P$, store $p$ in each of the buckets specified by $g_1(p), \ldots, g_{\ell}(p)$.
+    \item Discard all empty buckets.
+  \end{enumerate}
+
+  Now, when queried with the point $q$, we search through the buckets $g_1(q), \ldots, g_{\ell}(q)$, and stop after the first $2 \ell$ points. If any of these points $p$ has $d(p, q) \leq r_2$, return $p$ with \textbf{YES}; otherwise, return \textbf{NO}.
+
+  Convince yourself that this algorithm achieves the desired guarantees.
+\end{proof}
 
 \end{document}
