@@ -139,6 +139,7 @@ We can use the median of multiple independent estimators to reduce the probabili
   \end{algorithmic}
 \end{algorithm}
 
+This trick can only be used when the success probability of the original estimator is more than 50\%.
 We commonly combine both the Mean and the Median tricks to form the Median of Means trick.
 The typical space blow-up of such a technique is $O(\epsilon^{-2} \log (1 / \delta))$.
 
@@ -146,11 +147,77 @@ A slightly different version of the Mean Trick is the Min Trick, where we take t
 This is useful when there is only one-sided error -- think of the median as a two-sided error version of the min trick.
 An example of this is the \emph{Count-Min-Sketch} data structure.
 
+\pagebreak
+
 \section{Sketches}
 
-1. combining sketches, linear sketches
-2. Misra-Gries
-3. Count-Min-Sketch and Count-Sketch
+\begin{definition}[Sketches and Linear Sketches]
+  A data structure $S$ is a \emph{sketch} if there is a space-efficient combining algorithm $\text{COMB}$ such that for any two streams $s_1$ and $s_2$, we have $S(s_1 \cdot s_2) = \text{COMB}(S(s_1), S(s_2))$.
+  A sketch is \emph{linear} if $S(s_1 \cdot s_2) = S(s_1) + S(s_2)$.
+\end{definition}
+
+\subsection{Misra-Gries}
+
+The \emph{Misra-Gries} algorithm solves the heavy hitters problem:
+\begin{itemize}
+  \item If $x$ is a heavy hitter, then $x$ must be in the output.
+  \item If $x$ is not a heavy hitter, then $x$ may or may not be in the output.
+\end{itemize}
+
+\begin{algorithm}
+  \caption{Misra-Gries heavy hitters algorithm}
+  \begin{algorithmic}[1]
+    \Procedure{MisraGries}{stream $s$}
+    \State Let $C$ be an empty hash table
+    \For{i = 1, \ldots, $m$}
+    \If {$a_i \in C$}
+    \State $C[a_i] \leftarrow C[a_i] + 1$
+    \ElsIf {$|C| < k - 1$}
+    \State $C[a_i] \leftarrow 1$
+    \Else
+    \For{$j \in C$}
+    \State $C[j] \leftarrow C[j] - 1$
+    \If {$C[j] = 0$} \State Delete $C[j]$ \EndIf
+    \EndFor
+    \EndIf
+    \EndFor
+    \State \Return $\text{Keys}(C)$
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+\begin{lemma}[Misra-Gries Analysis]
+  The Misra-Gries algorithm with parameter $k$ uses one pass and $O(k(\log m + \log n))$ bits of space and provides, for any token $j$, an estimate $\hat{f}_j$ satisfying
+  \begin{align}
+    f_j - \frac{m - \hat{m}}{k} \le \hat{f}_j \le f_j
+  \end{align}
+\end{lemma}
+
+\subsection{Count-Min-Sketch}
+
+The \emph{Count-Min-Sketch} data structure solves the frequency estimation problem.
+
+\begin{algorithm}
+  \caption{Count-Min-Sketch frequency estimation algorithm}
+  \begin{algorithmic}[1]
+    \Require $C[1 \ldots t][1 \ldots k] \leftarrow \vec{0}$, where $k = 2 / \epsilon$ and $t = \lceil{\log_2(1 / \delta)}\rceil$
+    \Require Choose $t$ independent hash functions $h_1, \ldots, h_t \colon [n] \to [k]$, each from a $2$-universal family
+    \Procedure{Process}{token $(j, c)$}
+    \For {each token $(j, c)$ in $s$}
+    \For {$i = 1, \ldots, t$}
+    \State $C[i][h_i(j)] \leftarrow C[i][h_i(j)] + c$
+    \EndFor
+    \EndFor
+    \EndProcedure
+    \Procedure{Output}{query $a$}
+    \State \Return $\hat{f}_a = \min_{i = 1, \ldots, t} C[i][h_i(a)]$
+    \EndProcedure
+  \end{algorithmic}
+\end{algorithm}
+
+This algorithm takes $O(\epsilon^{-1} \log (1 / \delta) \cdot (\log m + \log n))$ space and provides, for any token $j$, an estimate $\hat{f}_j$ satisfying $f_a \leq \hat{f}_a \leq \epsilon || f_{-a} ||$ with probability at least $1 - \delta$.
+
+\pagebreak
 
 \section{Dimensions and Distances}
 
