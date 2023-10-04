@@ -10,7 +10,9 @@
 \maketitle
 \hrule
 
-\section{Probability and Bounds}
+\section{Probability and Hashing}
+
+\subsection{Probability}
 
 We start by stating some crucial probability results that will be used throughout the course.
 
@@ -72,14 +74,19 @@ We start by stating some crucial probability results that will be used throughou
   \end{align}
 \end{lemma}
 
+\subsection{Hashing}
+
 \begin{definition}[$k$-Universal Hash]
   A hash family $\mathcal{H} = \set{h \colon \mathcal{U} \to S}$ is \emph{$k$-universal} if for any distinct $k$ elements $x_1, \ldots, x_k \in \mathcal{U}$ and any $k$ elements $y_1, \ldots, y_k \in S$, we have
   \begin{align}
     \Pr_{h \in_R \mathcal{H}}[h(x_1) = y_1 \land \ldots \land h(x_k) = y_k] = \frac{1}{|S|^k}
   \end{align}
-  Such a hash family is also called a \emph{$k$-wise independent hash family}.
-  There are constructions of $k$-universal hash families from $[n]$ to $[n]$ that take $O(k \log n)$ space.
+Such a hash family is also called a \emph{$k$-wise independent hash family}.
 \end{definition}
+
+\begin{lemma}[Construction of $k$-Universal Hash Family]
+  There is a construction of a $k$-universal hash family from $[n]$ to $[n]$ that takes $O(k \log n)$ space.
+\end{lemma}
 
 \pagebreak
 
