@@ -133,6 +133,7 @@ We can use the median of multiple independent estimators to reduce the probabili
 \end{algorithm}
 
 We commonly combine both the Mean and the Median tricks to form the Median of Means trick.
+The typical space blow-up of such a technique is $O(\epsilon^{-2} \log (1 / \delta))$.
 
 A slightly different version of the Mean Trick is the Min Trick, where we take the minimum instead of the median.
 This is useful when there is only one-sided error -- think of the median as a two-sided error version of the min trick.
