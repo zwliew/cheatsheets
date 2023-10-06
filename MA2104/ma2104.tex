@@ -156,6 +156,10 @@ A \emph{closed ball} is similarly defined, but with $\norm{q - p} \leq r$ instea
 
 \section{Limits and Continuity}
 
+We begin by extending the definitions of limits and continuity to vector fields.
+
+\subsection{Limits}
+
 \begin{definition}[Limit]
   Consider a function $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$.
   We write
@@ -199,6 +203,8 @@ $(4)$ is proved by using $(3)$ and the fact that $\norm{\bvec{v}} = \sqrt{\bvec{
 \end{theorem}
 This is proved by observing that $f_i = \bvec{f} \cdot \bvec{e}_i$, and applying the algebraic properties of limits.
 
+\subsection{Continuity}
+
 \begin{definition}[Continuity]
   Consider a function $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$ and let $a \in X$.
   $\bvec{f}$ is \emph{continuous at $\bvec{a}$} if either $\bvec{a}$ is an isolated point of $X$ or if
@@ -213,7 +219,11 @@ Observe that many of the properties of limits also hold for continuity.
   If $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$ is continuous at $\bvec{a}$ and $\bvec{g} \colon Y \subseteq \reals^m \to \reals^p$ is continuous at $\bvec{f}(\bvec{a})$, then $\bvec{g} \circ \bvec{f}$ is continuous at $\bvec{a}$.
 \end{theorem}
 
-\section{Derivative}
+\section{Derivatives}
+
+Now, we extend the definition of derivatives to vector fields.
+
+\subsection{Partial Derivatives}
 
 \begin{definition}[Directional Derivative]
   Consider a scalar field $f \colon X \subseteq \reals^n \to \reals$ and let $\bvec{a} \in X$.
@@ -227,9 +237,25 @@ Observe that many of the properties of limits also hold for continuity.
 \begin{definition}[Partial Derivative]
   Consider a scalar field $f \colon X \subseteq \reals^n \to \reals$ and let $\bvec{a} \in X$.
   The \emph{partial derivative of $f$ with respect to $x_i$ at $\bvec{a}$} is
-  the directional derivative of $f$ at $\bvec{a}$ in the direction of $\bvec{e}_i$.
-  It is also denoted by $f_{x_i}(\bvec{a})$ or $D_{x_i}f(\bvec{a})$.
+  the directional derivative of $f$ at $\bvec{a}$ in the direction of $\bvec{e}_i$ and is denoted by $\dfrac{\partial f}{\partial x_i}$, $f_{x_i}(\bvec{a})$, or $D_{x_i}f(\bvec{a})$.
 \end{definition}
+
+\begin{definition}[Smoothness of a Function]
+  Let $f \colon X \subseteq \reals^n \to \reals$ be a scalar field whose partial derivatives up to order $k$ exist and are continuous.
+  Then, $f$ is said to be \emph{of class $C^k$}.
+  If $f$ is of class $C^k$ for all $k \geq 1$, then $f$ is said to be \emph{of class $C^\infty$} or \emph{smooth}.
+\end{definition}
+
+\begin{theorem}[Order of Continuous Partial Derivatives Does not Matter]
+  Let $f \colon X \subseteq \reals^n \to \reals$ be a scalar field of class $C^k$.
+  Then the order in which we compute any $k$th-order partial derivative does not matter.
+  That is, for any $i_1, \ldots, i_k \in \{ 1, \ldots, n \}$, we have
+  \begin{align}
+    \frac{\partial^k f}{\partial x_{i_1} \cdots \partial x_{i_k}} = \frac{\partial^k f}{\partial x_{\sigma(i_1)} \cdots \partial x_{\sigma(i_k)}}
+  \end{align}
+\end{theorem}
+
+\subsection{Total derivatives}
 
 The definitions of differentiability for scalar fields generalize naturally to vector fields, so I will simply state the ones for vector fields.
 
@@ -259,7 +285,7 @@ We will see that if a derivative exists at $\bvec{a}$, then it must be equal to 
   \end{align}
   $\bvec{f}$ is also said to be \emph{differentiable at $\bvec{a}$}.
 \end{definition}
-If $\bvec{f}$ is differentiable at $\bvec{a}$, then the function $\bvec{h}(\bvec{x}) = \bvec{f}(\bvec{a}) + D\bvec{f}(\bvec{a})(\bvec{x} - \bvec{a})$ is a good linear approximation of $\bvec{f}$ near $\bvec{a}$.
+If $\bvec{f}$ is differentiable at $\bvec{a}$, then the function $\bvec{h}(\bvec{x}) = \bvec{f}(\bvec{a}) + D\bvec{f}(\bvec{a})(\bvec{x} - \bvec{a})$ is the \emph{tangent hyperplane} of $\bvec{f}$ at $\bvec{a}$ and is a good linear approximation of $\bvec{f}$ near $\bvec{a}$.
 
 The results for scalar fields generalize naturally to vector fields too.
 
@@ -275,5 +301,103 @@ The results for scalar fields generalize naturally to vector fields too.
   Consider a vector field $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$.
   $\bvec{f}$ is differentiable at $\bvec{a}$ if and only if each component function $f_i$ is differentiable at $\bvec{a}$.
 \end{theorem}
+
+Some familiar algebraic properties of derivatives also hold for vector fields.
+
+\begin{theorem}[Linearity of Differentiation]
+  If $\bvec{f}, \bvec{g} \colon X \subseteq \reals^n \to \reals^m$ are differentiable at $\bvec{a}$ and $c$ is a scalar, then
+  \begin{enumerate}
+    \item $D(c\bvec{f})(\bvec{a}) = cD\bvec{f}(\bvec{a})$
+    \item $D(\bvec{f} + \bvec{g})(\bvec{a}) = D\bvec{f}(\bvec{a}) + D\bvec{g}(\bvec{a})$
+  \end{enumerate}
+\end{theorem}
+
+For scalar-valued functions, product and quotient properties hold too.
+
+\begin{theorem}[Product and Quotient of Derivatives]
+  If $f, g \colon X \subseteq \reals^n \to \reals$ are differentiable at $\bvec{a}$, then
+  \begin{enumerate}
+    \item $D(fg)(\bvec{a}) = g(\bvec{a})Df(\bvec{a}) + f(\bvec{a})Dg(\bvec{a})$
+    \item $D\left( \dfrac{f}{g} \right)(\bvec{a}) = \dfrac{g(\bvec{a})Df(\bvec{a}) - f(\bvec{a})Dg(\bvec{a})}{g(\bvec{a})^2}$
+  \end{enumerate}
+\end{theorem}
+
+\section{Maxima, Minima, and Saddle Points}
+
+Calculus is largely useful in solving optimization problems involving the extrema of scalar fields.
+
+\begin{definition}[Stationary Point]
+  A point $\bvec{a}$ is a \emph{stationary point} of a differentiable scalar field $f$ if $\nabla f(\bvec{a}) = \bvec{0}$.
+\end{definition}
+
+\begin{definition}[Critical Point]
+  A point $\bvec{a}$ is a \emph{critical point} of a differentiable scalar field $f$ if it is stationary or if $\nabla f(\bvec{a})$ does not exist.
+\end{definition}
+
+\begin{definition}[Extrema]
+  Let $f \colon X \subseteq \reals^n \to \reals$ be a differentable scalar field.
+  A point $\bvec{a}$ is a \emph{local/relative minimum} of $f$ if there is some neighbourhood $N$ of $\bvec{a}$ such that $f(\bvec{a}) \leq f(\bvec{x})$ for all $\bvec{x} \in N$.
+  Similarly, $\bvec{a}$ is a \emph{local/relative maximum} of $f$ if there is some neighbourhood $N$ of $\bvec{a}$ such that $f(\bvec{a}) \geq f(\bvec{x})$ for all $\bvec{x} \in N$.
+  If $\bvec{a}$ is either a local minimum or a local maximum, then it is an \emph{extremum} of $f$.
+\end{definition}
+
+\begin{theorem}[Extremum Implies Stationary]
+  Let $f \colon X \subseteq \reals^n \to \reals$ be a differentiable scalar field.
+  If $\bvec{a} \in X$ is a local extremum of $f$, then it is stationary.
+  That is, $\nabla f(\bvec{a}) = \bvec{0}$.
+\end{theorem}
+Note that the converse is not true, which is the case for saddle points.
+
+\begin{definition}[Saddle Point]
+  Let $f \colon X \subseteq \reals^n \to \reals$ be a differentiable scalar field.
+  A stationary point $\bvec{a}$ is a \emph{saddle point} if $\bvec{a}$ is not a local extremum of $f$.
+  That is, every neighbourhood of $\bvec{a}$ contains points $\bvec{x}$ such that $f(\bvec{x}) < f(\bvec{a})$ and others such that $f(\bvec{x}) > f(\bvec{a})$.
+\end{definition}
+
+\subsection{Second Derivative Test}
+
+To determine the nature of a critical point, we can use the \emph{second partial derivative test}.
+
+\begin{definition}[Hessian Matrix]
+  Consider a differentiable scalar field $f \colon X \subseteq \reals^n \to \reals$.
+  The \emph{Hessian matrix} of $f$ is
+  \begin{align}
+    Hf = \begin{bmatrix}
+           f_{x_1 x_1} & \cdots & f_{x_1 x_n}
+           \\
+           \vdots      & \ddots & \vdots
+           \\
+           f_{x_n x_1} & \cdots & f_{x_n x_n}
+         \end{bmatrix}
+  \end{align}
+\end{definition}
+
+\begin{theorem}[Second Partial Derivative Test]
+  Let $f \colon X \subseteq \reals^n \to \reals$ be a differentiable scalar field.
+  Given a stationary point $\bvec{a} \in X$ of $f$, consider the sequence of leading principal minors $d_k$ of $Hf(\bvec{a})$ where
+  \begin{align}
+    d_k = \begin{vmatrix} f_{x_1 x_1}(\bvec{a}) & \cdots & f_{x_1 x_k}(\bvec(a))
+                \\
+                \vdots                & \ddots & \vdots
+                \\
+                f_{x_k x_1}(\bvec{a}) & \cdots & f_{x_k x_k}(\bvec{a})
+          \end{vmatrix}
+  \end{align}
+  for all $1 \leq k \leq n$.
+  Then, the following cases hold:
+  \begin{enumerate}
+    \item If $d_k > 0$ for all $k$, then $\bvec{a}$ is a local minimum of $f$.
+    \item If $d_k > 0$ for even $k$ and $d_k < 0$ for odd $k$, then $\bvec{a}$ is a local maximum of $f$.
+    \item Otherwise, $\bvec{a}$ is a saddle point of $f$.
+  \end{enumerate}
+  If $\det Hf(\bvec{a}) = 0$, we say that $\bvec{a}$ is \emph{degenerate}.
+\end{theorem}
+The cases above can also be expressed in terms of the eigenvalues of $Hf(\bvec{a})$:
+\begin{enumerate}
+  \item If all eigenvalues are positive (equivalently, the Hessian is positive definite), then $\bvec{a}$ is a local minimum of $f$.
+  \item If all eigenvalues are negative (equivalently, the Hessian is negative definite), then $\bvec{a}$ is a local maximum of $f$.
+  \item Otherwise, if $\det Hf(\bvec{a}) \neq 0$, then $\bvec{a}$ is a saddle point of $f$.
+\end{enumerate}
+
 
 \end{document}
