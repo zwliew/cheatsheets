@@ -1,0 +1,279 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{MA2104 - Multivariable Calculus}
+\author{Liew Zhao Wei}
+\date{Semester 1, 2023-2024}
+
+\begin{document}
+\maketitle
+\hrule
+
+\section{Vectors}
+
+Multivariable calculus is the study of \emph{scalar fields} and \emph{vector fields}.
+
+\begin{definition}[Scalar Field]
+  A \emph{scalar field} is a map $f \colon X \subseteq \reals^n \to \reals$.
+  It is also called a \emph{scalar-valued} function.
+\end{definition}
+
+\begin{definition}[Vector Field]
+  A \emph{vector field} is a map $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$.
+  It is also called a \emph{vector-valued} function.
+\end{definition}
+
+\section{Coordinate Systems}
+
+Cylindrical and spherical coordinates are both natural extensions of the polar coordinates in $\reals^2$, but in slightly different ways -- cylindrical coordinates tack on a $z$-coordinate, while spherical coordinates tack on an angle $\rho$ from the positive $z$-axis.
+
+\subsection{Cylindrical Coordinates}
+
+\emph{Cylindrical coordinates} are useful for describing objects with an axis of symmetry.
+
+\begin{definition}[Cylindrical Coordinate Conversions]
+  We can convert between cylindrical and cartesian coordinates like so:
+
+  Cylindrical to Cartesian: $
+    \begin{cases}
+      x  = r\cos\theta
+      \\
+      y  = r\sin\theta
+      \\
+      z = z
+    \end{cases}
+  $
+  Cartesian to Cylindrical: $
+    \begin{cases}
+      r^2 = x^2 + y^2
+      \\
+      \tan{\theta}  = y / x
+      \\
+      z = z
+    \end{cases}
+  $
+\end{definition}
+We typically impose the constraints $r \geq 0$ and $0 \leq \theta < 2\pi$ to ensure that all points on $\reals^3$, except those on the $z$-axis, are uniquely represented.
+
+\subsection{Spherical Coordinates}
+
+\emph{Spherical coordinates} are useful for describing objects with a centre of symmetry.
+
+\begin{definition}[Spherical Coordinate Conversions]
+  We can convert between sphericla and cartesian coordinates like so:
+
+  Spherical to Cartesian: $
+    \begin{cases}
+      x  = \rho\sin\varphi\cos\theta
+      \\
+      y  = \rho\sin\varphi\sin\theta
+      \\
+      z = \rho\cos\varphi
+    \end{cases}
+  $
+  Cartesian to Spherical: $
+    \begin{cases}
+      \rho^2 = x^2 + y^2 + z^2
+      \\
+      \tan{\theta}  = y / x
+      \\
+      \cos{\varphi} = \sqrt{x^2 + y^2} / z
+    \end{cases}
+  $
+\end{definition}
+We typically impose the constraints $\rho \geq 0$, $0 \leq \theta < 2\pi$ and $0 \leq \varphi \leq \pi$ to ensure that all points on $\reals^3$, except the origin, are uniquely represented.
+
+\subsection{Hyperspherical Coordinates}
+
+We can even generalize spherical coordinates to higher dimensions in the form of \emph{hyperspherical coordinates}.
+The idea is to tack on more angles to the spherical coordinates, so that we can describe objects with more axes of symmetry.
+
+\begin{definition}[Hyperspherical Coordinate Conversions]
+  Spherical to Cartesian: $
+    \begin{cases}
+      x_1 = \rho \sin \varphi_1 \cdots \sin \varphi_{n-2} \cos \varphi_{n-1}
+      \\
+      x_2 = \rho \sin \varphi_1 \cdots \sin \varphi_{n-2} \sin \varphi_{n-1}
+      \\
+      x_3 = \rho \sin \varphi_1 \cdots \sin \varphi_{n-3} \cos \varphi_{n-2}
+      \\
+      x_4 = \rho \sin \varphi_1 \cdots \sin \varphi_{n-4} \cos \varphi_{n-3}
+      \\
+      \vdots
+      \\
+      x_n = \rho \cos \varphi_1
+    \end{cases}
+  $
+\end{definition}
+Notice the similarity with spherical coordinates.
+
+Just like for spherical coordinates, we typically impose the constraints
+\begin{align*}
+  0 \leq  & \rho
+  \\
+  0  \leq & \varphi_i \leq \pi     & \text{ for $i = 1, \ldots, n - 2$}
+  \\
+  0  \leq & \varphi_{n - 1} < 2\pi
+\end{align*}
+to ensure that all points on $\reals^n$, except the origin, are uniquely represented.
+
+\section{Basic Topology}
+
+We begin with some basic topological definitions and results that we'll use later on.
+
+\begin{definition}[Neighbourhood]
+  A \emph{neighbourhood} of a point $p$ is a set $N_r(p)$ consisting of all points $q$ such that $\norm{q - p} < r$ for some $r > 0$.
+\end{definition}
+An \emph{open ball} with center $p \in \reals^n$ and radius $r$ is a neighbourhood $N_r(p)$ in $\reals^n$.
+A \emph{closed ball} is similarly defined, but with $\norm{q - p} \leq r$ instead.
+
+\begin{definition}[Limit point]
+  A point $p$ is a \emph{limit point} of a set $S$ if every neighbourhood of $p$ contians a point $q \in X$ such that $q \neq p$.
+  Such a point is also called an \emph{accumulation point}.
+\end{definition}
+
+\begin{definition}[Isolated point]
+  An \emph{isolated point} of a set $S$ is a point $p \in S$ such that $p$ is not a limit point of $S$.
+  That is, there is some neighbourhood of $p$ that contains no other points of $S$.
+\end{definition}
+
+\begin{definition}[Interior point]
+  An \emph{interior point} of a set $S$ is a point $p \in S$ such that there is some neighbourhood of $p$ that is contained in $S$.
+\end{definition}
+
+\begin{definition}[Open set]
+  A set $S$ is \emph{open} if every point of $S$ is an interior point of $S$.
+\end{definition}
+
+\begin{definition}[Closed set]
+  A set $S$ is \emph{closed} if it contains all of its limit points.
+\end{definition}
+
+\begin{theorem}[Complement of open set is closed]
+  A set is open if and only if its complement is closed.
+\end{theorem}
+
+\section{Limits and Continuity}
+
+\begin{definition}[Limit]
+  Consider a function $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$.
+  We write
+  \begin{align}
+    \lim_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x}) = \bvec{L}
+  \end{align}
+  to mean that given any $\epsilon > 0$, there is a $\delta > 0$ such that if $0 < \norm{\bvec{x} - \bvec{a}} < \delta$, then $\norm{\bvec{f}(\bvec{x}) - \bvec{L}} < \epsilon$.
+\end{definition}
+Intuitively, this means that $\bvec{f}(\bvec{x})$ can be made arbitrarily close to $\bvec{L}$ by taking $\bvec{x}$ sufficiently close to $\bvec{a}$.
+The geometric interpretation is that given an open ball $B_\epsilon$ centred at $\bvec{L}$, there is an open ball $B_\delta$ centred at $\bvec{a}$ such that $\bvec{f}(\bvec{x})$ is contained in $B_\epsilon$ whenever $\bvec{x}$ is contained in $B_\delta$.
+
+The usual theorems concerning limits of sums, products, and quotients hold for scalar fields.
+For vector fields, we have natural extensions of these theorems, but without quotients.
+\begin{theorem}[Algebraic Properties of Limits]
+  Suppose that $\lim\limits_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x}) = \bvec{L}$ and $\lim\limits_{\bvec{x} \to \bvec{a}} \bvec{g}(\bvec{x}) = \bvec{M}$.
+  Then
+  \begin{enumerate}
+    \item $\lim\limits_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x}) + \bvec{g}(\bvec{x}) = \bvec{L} + \bvec{M}$
+    \item $\lim\limits_{\bvec{x} \to \bvec{a}} c\bvec{f}(\bvec{x}) = c\bvec{L}$ for any scalar $c$
+    \item $\lim\limits_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x}) \cdot \bvec{g}(\bvec{x}) = \bvec{L} \cdot \bvec{M}$
+    \item $\lim\limits_{\bvec{x} \to \bvec{a}} \norm{\bvec{f}(\bvec{x})} = \norm{\bvec{L}}$
+  \end{enumerate}
+\end{theorem}
+$(3)$ is proved by rewriting
+\begin{align*}
+  \bvec{f}(\bvec{x}) \cdot \bvec{g}(\bvec{x}) - \bvec{L} \cdot \bvec{M} = (\bvec{f}(\bvec{x}) - \bvec{L}) \cdot (\bvec{g}(\bvec{x}) - \bvec{M}) + \bvec{L} \cdot (\bvec{g}(\bvec{x}) - \bvec{M}) + \bvec{M} \cdot (\bvec{f}(\bvec{x}) - \bvec{L})
+\end{align*}
+$(4)$ is proved by using $(3)$ and the fact that $\norm{\bvec{v}} = \sqrt{\bvec{v} \cdot \bvec{v}}$.
+
+\begin{theorem}[Uniqueness of Limits]
+  If $\lim_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x})$ exists, then it is unique.
+\end{theorem}
+
+\begin{theorem}[Limit Exists Iff Limit of Components Exist]
+  Consider a function $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$.
+  Then $\lim\limits_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x})$ exists if and only if $\lim_{\bvec{x} \to \bvec{a}} f_i(\bvec{x})$ exists for each $i = 1, \ldots, m$.
+  In this case,
+  \begin{align}
+    \lim_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x}) = \left( \lim_{\bvec{x} \to \bvec{a}} f_1(\bvec{x}), \ldots, \lim_{\bvec{x} \to \bvec{a}} f_m(\bvec{x}) \right)
+  \end{align}
+\end{theorem}
+This is proved by observing that $f_i = \bvec{f} \cdot \bvec{e}_i$, and applying the algebraic properties of limits.
+
+\begin{definition}[Continuity]
+  Consider a function $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$ and let $a \in X$.
+  $\bvec{f}$ is \emph{continuous at $\bvec{a}$} if either $\bvec{a}$ is an isolated point of $X$ or if
+  \begin{align}
+    \lim_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x}) = \bvec{f}(\bvec{a})
+  \end{align}
+  If $\bvec{f}$ is continuous at every point of $X$, then we simly say that $\bvec{f}$ is \emph{continuous}.
+\end{definition}
+Observe that many of the properties of limits also hold for continuity.
+
+\begin{theorem}[Continuity of Composite Functions]
+  If $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$ is continuous at $\bvec{a}$ and $\bvec{g} \colon Y \subseteq \reals^m \to \reals^p$ is continuous at $\bvec{f}(\bvec{a})$, then $\bvec{g} \circ \bvec{f}$ is continuous at $\bvec{a}$.
+\end{theorem}
+
+\section{Derivative}
+
+\begin{definition}[Directional Derivative]
+  Consider a scalar field $f \colon X \subseteq \reals^n \to \reals$ and let $\bvec{a} \in X$.
+  If $\bvec{v}$ is a unit vector, then the \emph{directional derivative of $f$ at $\bvec{a}$ in the direction of $\bvec{v}$} is
+  \begin{align}
+    D_{\bvec{v}}f(\bvec{a}) = \lim_{h \to 0} \frac{f(\bvec{a} + h\bvec{v}) - f(\bvec{a})}{h}
+  \end{align}
+  if the limit exists.
+\end{definition}
+
+\begin{definition}[Partial Derivative]
+  Consider a scalar field $f \colon X \subseteq \reals^n \to \reals$ and let $\bvec{a} \in X$.
+  The \emph{partial derivative of $f$ with respect to $x_i$ at $\bvec{a}$} is
+  the directional derivative of $f$ at $\bvec{a}$ in the direction of $\bvec{e}_i$.
+  It is also denoted by $f_{x_i}(\bvec{a})$ or $D_{x_i}f(\bvec{a})$.
+\end{definition}
+
+The definitions of differentiability for scalar fields generalize naturally to vector fields, so I will simply state the ones for vector fields.
+
+\begin{definition}[Jacobian Matrix]
+  Consider a vector field $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$.
+  Define $D\bvec{f}$ to be
+  \begin{align}
+    D\bvec{f} = \begin{bmatrix}
+                  \dfrac{\partial f_1}{\partial x_1} & \cdots & \dfrac{\partial f_1}{\partial x_n}
+                  \\
+                  \vdots                             & \ddots & \vdots
+                  \\
+                  \dfrac{\partial f_m}{\partial x_1} & \cdots & \dfrac{\partial f_m}{\partial x_n}
+                \end{bmatrix}
+  \end{align}
+  $D\bvec{f}$ is called the \emph{Jacobian matrix} of $\bvec{f}$.
+  The $i$th row of $D\bvec{f}$ is the gradient vector $\nabla f_i$.
+\end{definition}
+Observe that $D\bvec{f}$ is a linear map from $\reals^n$ to $\reals^m$.
+We will see that if a derivative exists at $\bvec{a}$, then it must be equal to $D\bvec{f}(\bvec{a})$.
+
+\begin{definition}[Differentiability]
+  Consider a vector field $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$ and let $\bvec{a} \in X$.
+  $\bvec{f}$ is \emph{differentiable at $\bvec{a}$} if the linear map $D\bvec{f}(\bvec{a})$ exists and
+  \begin{align}
+    \lim_{\bvec{x} \to \bvec{a}} \frac{\norm{\bvec{f}(\bvec{x}) - (\bvec{f}(\bvec{a}) + D\bvec{f}(\bvec{a})(\bvec{x} - \bvec{a}))}}{\norm{\bvec{x} - \bvec{a}}} = 0
+  \end{align}
+  $\bvec{f}$ is also said to be \emph{differentiable at $\bvec{a}$}.
+\end{definition}
+If $\bvec{f}$ is differentiable at $\bvec{a}$, then the function $\bvec{h}(\bvec{x}) = \bvec{f}(\bvec{a}) + D\bvec{f}(\bvec{a})(\bvec{x} - \bvec{a})$ is a good linear approximation of $\bvec{f}$ near $\bvec{a}$.
+
+The results for scalar fields generalize naturally to vector fields too.
+
+\begin{theorem}[Differentiability Implies Continuity]
+  If $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$ is differentiable at $\bvec{a}$, then it is also continuous at $\bvec{a}$.
+\end{theorem}
+
+\begin{theorem}[Continuity and Existence of Partial Derivatives Imply Differentiability]
+  If $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$ is continuous at $\bvec{a}$ and if all the partial derivatives of $\bvec{f}$ exist in some neighbourhood of $\bvec{a}$, then $\bvec{f}$ is differentiable at $\bvec{a}$.
+\end{theorem}
+
+\begin{theorem}[Differentiable Iff Components are Differentiable]
+  Consider a vector field $\bvec{f} \colon X \subseteq \reals^n \to \reals^m$.
+  $\bvec{f}$ is differentiable at $\bvec{a}$ if and only if each component function $f_i$ is differentiable at $\bvec{a}$.
+\end{theorem}
+
+\end{document}
