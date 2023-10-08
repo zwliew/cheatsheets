@@ -322,6 +322,25 @@ For scalar-valued functions, product and quotient properties hold too.
   \end{enumerate}
 \end{theorem}
 
+\subsection{Chain Rule}
+
+We use the chain rule so much that it deserves its own section.
+
+\begin{theorem}[Chain Rule]
+  Consider the vector fields $\bvec{f} \colon X \subseteq \reals^m \to \reals^p$ and $\bvec{g} \colon Y \subseteq \reals^n \to \reals^m$.
+  If $\bvec{g}$ is differentiable at $\bvec{x} \in Y$ and $\bvec{f}$ is differentiable at $\bvec{g}(\bvec{x})$, then $\bvec{f} \circ \bvec{g}$ is differentiable at $\bvec{x}$ and
+  \begin{align}
+    D(\bvec{f} \circ \bvec{g})(\bvec{x}) = D\bvec{f}(\bvec{g}(\bvec{x})) D\bvec{g}(\bvec{x})
+  \end{align}
+\end{theorem}
+The chain rule is also used in implicit differentiation under a condition stipulated by the following theorem.
+
+\begin{theorem}[Implicit Function Theorem]
+  Consider the scalar field $F \colon X \subseteq \reals^n \to \reals$ of class $C^1$.
+  Let $\bvec{a}$ be a point of the level set $S = \setpred{\bvec{x} \in \reals^n}{f(\bvec{x} = c}$.
+  If $F_{x_n}(\bvec{a}) \neq 0$, then there is a neighbourhood $U$ of $(a_1, \ldots, a_{n - 1}) \in \reals^{n - 1}$, a neighbourhood $V$ of $a_n \in \reals$, and a function $f \colon U \subseteq \reals^{n - 1} \to V$ of class $C^1$ such that if $(x_1, \ldots, x_{n - 1}) \in U$ and $x_n \in V$ satisfy $F(x_1, \ldots, x_{n - 1}, x_n) = c$, then $x_n = f(x_1, \ldots, x_{n - 1})$.
+\end{theorem}
+
 \section{Maxima, Minima, and Saddle Points}
 
 Calculus is largely useful in solving optimization problems involving the extrema of scalar fields.
@@ -374,9 +393,9 @@ To determine the nature of a critical point, we can use the \emph{second partial
 
 \begin{theorem}[Second Partial Derivative Test]
   Let $f \colon X \subseteq \reals^n \to \reals$ be a differentiable scalar field.
-  Given a stationary point $\bvec{a} \in X$ of $f$, consider the sequence of leading principal minors $d_k$ of $Hf(\bvec{a})$ where
+  Given a stationary point $\bvec{a} \in X$ of $f$, consider the sequence of leading principal minors $d_k$ of the Hessian matrix $Hf(\bvec{a})$ where
   \begin{align}
-    d_k = \begin{vmatrix} f_{x_1 x_1}(\bvec{a}) & \cdots & f_{x_1 x_k}(\bvec(a))
+    d_k = \begin{vmatrix} f_{x_1 x_1}(\bvec{a}) & \cdots & f_{x_1 x_k}(\bvec{a})
                 \\
                 \vdots                & \ddots & \vdots
                 \\
@@ -398,6 +417,21 @@ The cases above can also be expressed in terms of the eigenvalues of $Hf(\bvec{a
   \item If all eigenvalues are negative (equivalently, the Hessian is negative definite), then $\bvec{a}$ is a local maximum of $f$.
   \item Otherwise, if $\det Hf(\bvec{a}) \neq 0$, then $\bvec{a}$ is a saddle point of $f$.
 \end{enumerate}
+
+\subsection{Langrange's Multipliers}
+
+Lagrange's Multipliers come in handy when solving extremum problems with constraints.
+The method stems from the following theorem.
+
+\begin{theorem}[Lagrange's Multipliers]
+  Let $f, g \colon X \subseteq \reals^n \to \reals$ be scalar fields of class $C^1$.
+  Let $S = \setpred{x \in X}{g(\bvec{x}) = c}$ denote the level set of $g$ at height $c$.
+  Then if $f$ restricted to $S$ has an extremum at point $\bvec{a} \in S$ such that $\nabla g(\bvec{a}) \neq \bvec{0}$, then
+  \begin{align}
+    \nabla f(\bvec{a}) = \lambda \nabla g(\bvec{a})
+  \end{align}
+  for some scalar $\lambda$.
+\end{theorem}
 
 
 \end{document}
