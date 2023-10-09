@@ -1,0 +1,194 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{MA2108 - Mathematical Analysis I}
+\author{Liew Zhao Wei}
+\date{Semester 1, 2023-2024}
+
+\begin{document}
+\maketitle
+\hrule
+
+\section{Preface}
+
+Here are just some quick scribbles of theorems that are used in the course.
+More complete notes will be written in the future.
+
+\section{Real Numbers}
+
+\begin{theorem}[Triangle Inequality]
+  For any real numbers $a$ and $b$, we have
+  \begin{align}
+    \abs{\abs{a} - \abs{b}} \leq \abs{a \pm b} \leq \abs{a} + \abs{b}
+  \end{align}
+\end{theorem}
+
+\section{Sequences}
+
+\begin{theorem}[Convergence Implie Boundedness]
+  Every convergent sequence is bounded.
+\end{theorem}
+
+\begin{theorem}[Algebraic Properties of Limits]
+  Limits preserve addition, subtraction, multiplication, and division.
+\end{theorem}
+
+We will later see that limits also preserve square roots and absolute values.
+
+\begin{theorem}[Squeeze Theorem]
+  Suppose $x_n$ and $y_n$ converge to $a$.
+  If there is a natural number $K$ such that $x_n \leq y_n \leq z_n$ for all natural numbers $n \geq K$, then $y_n \to a$.
+\end{theorem}
+
+\begin{theorem}
+  If $\abs{x_n} \to 0$, then $x_n \to 0$.
+\end{theorem}
+
+\begin{theorem}[Bernoulli's Inequality]
+  For every real number $r \geq 1$ and $x \geq -1$, $(1 + x)^r \geq 1 + rx$.
+\end{theorem}
+
+\begin{theorem}
+  For any \textbf{fixed} $-1 < b < 1$, $b^n \to 0$.
+\end{theorem}
+
+\begin{example}
+  $\dfrac{1}{2^n} \to 0$ and $\left(\dfrac{2}{3}\right)^n \to 0$
+\end{example}
+
+\begin{theorem}
+  For a fixed $c > 0$, $c^{1/n} \to 1$.
+\end{theorem}
+
+\begin{theorem}
+  If $x_n \to x$, then $\abs{x_n} \to \abs{x}$.
+\end{theorem}
+
+\begin{theorem}
+  If $x_n \to x$, then $\sqrt{x_n} \to \sqrt{x}$.
+\end{theorem}
+
+\begin{theorem}
+  $n^{1/n} \to 1$.
+\end{theorem}
+
+\subsection{Cauchy Convergence Criterion}
+
+\begin{definition}[Cauchy Sequence]
+  A sequence $\set{x_n}$ is \emph{Cauchy} if for every $\epsilon > 0$, there is an integer $N$ such that $\abs{s_n - s_m} < \epsilon$ whenever $n, k \geq N$.
+\end{definition}
+
+\begin{example}
+  The sequence $x_n = \dfrac{1}{n}$ is Cauchy, but $x_n = (-1)^n$ is not.
+\end{example}
+
+\begin{theorem}[Cauchy Implies Boundedness]
+  Any Cauchy sequence is bounded.
+\end{theorem}
+
+\begin{theorem}[Cauchy and Convergent Subsequence Implies Convergence]
+  If $\set{x_n}$ is Cauchy and has a convergent subsequence, then $\set{x_n}$ converges.
+\end{theorem}
+
+\begin{theorem}[Cauchy Convergence Criterion]
+  A sequence $\set{x_n}$ in $\reals^k$ is Cauchy if and only if it converges.
+\end{theorem}
+
+\section{Series}
+
+Analysis was mainly motivated by the study of infinite series, which are sums of infinitely many terms.
+
+\begin{definition}[Convergence of Series]
+  A series $\sum_{n=1}^\infty x_n$ \emph{converges} if the sequence of partial sums $\set{s_n}$ converges.
+\end{definition}
+
+\begin{example}
+  $\sum\limits_{i = 1}^\infty 2^{-\abs{i}}$ converges to $3$.
+  $\sum\limits_{n = 1}^\infty \dfrac{1}{n(n + 1)}$ converges to $1$.
+\end{example}
+
+\begin{theorem}[Convergence of Geometric Series]
+  If $\abs{r} < 1$, then $\sum\limits_{n = 0}^\infty r^n$ converges to $\dfrac{1}{1 - r}$.
+\end{theorem}
+
+\begin{theorem}
+  Let $\set{x_n}$ be a sequence and let $M \in \nats$.
+  $\sum\limits_{n = 1}^\infty x_n$ converges if and only if $\sum\limits_{n = M}^\infty x_n$ converges.
+\end{theorem}
+
+\begin{definition}[Cauchy Series]
+  A series $\sum x_n$ is \emph{Cauchy} if the sequence of partial sums $\set{s_n}$ is Cauchy.
+\end{definition}
+
+\begin{theorem}[Cauchy Convergence Criterion for Series]
+  A series $\sum x_n$ converges if and only if it is Cauchy.
+\end{theorem}
+
+\begin{theorem}
+  A series $\sum x_n$ is Cauchy if and only if for every $\epsilon > 0$, there is an integer $N$ such that $\abs{\sum\limits_{k = n + 1}^m x_k} < \epsilon$ whenever $n, m \geq N$.
+\end{theorem}
+
+\begin{theorem}[$n$th Term Test]
+  If a series $\sum x_n$ converges, then $\lim\limits_{n \to \infty} x_n = 0$.
+\end{theorem}
+
+\begin{theorem}
+  If $\abs{r} \geq 1$, then $\sum\limits_{n = 0}^\infty r^n$ diverges.
+\end{theorem}
+
+\begin{corollary}
+  IThe series $\sum\limits{n = 0}^\infty \alpha(r)^n$ converges if and only if $\abs{r} < 1$.
+\end{corollary}
+
+The converse of the $n$th term test is not true.
+
+\begin{theorem}[Divergence of Harmonic Series]
+  The \emph{harmonic series} $\sum\limits_{n = 1}^\infty \dfrac{1}{n}$ diverges.
+\end{theorem}
+
+\begin{theorem}[Comparison Test]
+  Suppose that there is a natural number $K \in \nats$ such that $0 \leq x_n \leq y_n$ for all $n \geq K$.
+  Then,
+  \begin{enumerate}
+    \item If $\sum y_n$ converges, then so does $\sum x_n$.
+    \item If $\sum x_n$ diverges, then so does $\sum y_n$.
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Convergence Criterion for $p$-series]
+  The $p$-series $\sum\limits_{n = 1}^\infty \dfrac{1}{n^p}$ converges if and only if $p > 1$.
+\end{theorem}
+
+\begin{definition}[Eventually Positive Series]
+  A series $\sum x_n$ is \emph{eventually positive} if there is a natural number $N$ such that $x_n > 0$ for all $n \geq N$.
+\end{definition}
+
+\begin{theorem}[Limit Comparison Test]
+  Consider two eventually positive series $\sum x_n$ and $\sum y_n$ where the limit
+  \begin{align}
+    \rho = \lim_{n \to \infty} \frac{x_n}{y_n}
+  \end{align}
+  exists.
+  Then,
+  \begin{enumerate}
+    \item If $\rho > 0$, then the two series either both converge or both diverge.
+    \item If $\rho = 0$ and $\sum y_n$ converges, then $\sum x_n$ converges.
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Ratio Test]
+  Consider an eventually positive series $\sum a_n$ where the limit
+  \begin{align}
+    \rho = \lim_{n \to \infty} \frac{a_{n + 1}}{a_n}
+  \end{align}
+  exists.
+  Then,
+  \begin{enumerate}
+    \item If $\rho < 1$, then $\sum a_n$ converges.
+    \item If $\rho > 1$, then $\sum a_n$ diverges.
+    \item Otherwise, the test is inconclusive.
+  \end{enumerate}
+\end{theorem}
+
+\end{document}
