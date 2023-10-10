@@ -73,6 +73,47 @@ We will later see that limits also preserve square roots and absolute values.
   $n^{1/n} \to 1$.
 \end{theorem}
 
+\begin{theorem}[Limits Preserve Inequalities]
+  Suppose $x_n \to x$ and $y_n \to y$.
+  \item If $x_n \geq y_n$ for all $n \in \nats$, then $x \geq y$.
+\end{theorem}
+
+\begin{corollary}
+  By Theorem 3.12,
+  \begin{enumerate}
+    \item If $x_n \geq 0$ for all $n \in \nats$, then $\lim\limits_{n \to \infty} x_n \geq 0$.
+    \item If $a, b \in \reals$ and $a \leq x_n \leq b$ for all $n \in \nats$, then $a \leq \lim\limits_{n \to \infty} x_n \leq b$.
+  \end{enumerate}
+\end{corollary}
+
+\begin{theorem}
+  $\left( 1 + \frac{1}{n} \right)^n \to e$
+\end{theorem}
+
+\begin{theorem}[Monotone Convergence Theorem]
+  If $(x_n)$ is monotone and bounded, then $x_n$ converges to:
+  \begin{enumerate}
+    \item $\sup \set{x_n}$ if $(x_n)$ is increasing
+    \item $\inf \set{x_n}$ if $(x_n)$ is decreasing
+  \end{enumerate}
+\end{theorem}
+
+\begin{remark}
+  If $(y_k) = (x_{n_k})$ is a subsequence of $(x_n)$, then $n_k \geq k$.
+\end{remark}
+
+\begin{theorem}[Sequence Converges Implies Subsequences Converge]
+  If $(x_n)$ converges to $x$, then any subsequence $(x_{n_k})$ also converges to $x$.
+\end{theorem}
+
+\begin{theorem}[Monotone Subsequence Theorem]
+  Every sequence has a monotone subsequence.
+\end{theorem}
+
+\begin{theorem}[Bolzano-Weierstrass Theorem]
+  Every bounded sequence has a convergent subsequence.
+\end{theorem}
+
 \subsection{Cauchy Convergence Criterion}
 
 \begin{definition}[Cauchy Sequence]
@@ -84,7 +125,7 @@ We will later see that limits also preserve square roots and absolute values.
 \end{example}
 
 \begin{theorem}[Cauchy Implies Boundedness]
-  Any Cauchy sequence is bounded.
+  Every Cauchy sequence is bounded.
 \end{theorem}
 
 \begin{theorem}[Cauchy and Convergent Subsequence Implies Convergence]
@@ -93,6 +134,26 @@ We will later see that limits also preserve square roots and absolute values.
 
 \begin{theorem}[Cauchy Convergence Criterion]
   A sequence $\set{x_n}$ in $\reals^k$ is Cauchy if and only if it converges.
+\end{theorem}
+
+\begin{definition}[Contractive Sequence]
+  A sequence $\set{x_n}$ is \emph{contractive} if there is a constant $0 \leq C < 1$ such that $\abs{x_{n + 2} - x_{n + 1}} \leq C \abs{x_{n + 1} - x_{n}}$ for all $n \in \nats$.
+\end{definition}
+
+\begin{theorem}[Contractive Sequences are Cauchy]
+  Every contractive sequence is Cauchy.
+\end{theorem}
+
+\begin{theorem}[Increasing and Unbounded Sequences are Properly Divergent]
+  If a sequence $\set{x_n}$ is increasing and not bounded above, then $x_n \to \infty$.
+\end{theorem}
+
+\begin{definition}[Properly Divergent Sequence]
+  A sequence $\set{x_n}$ is \emph{properly divergent} if either $x_n \to \infty$ or $x_n \to -\infty$.
+\end{definition}
+
+\begin{theorem}
+  If $k < \ell$ and $1 < a < b$, then $n^k << n^\ell << a^n << b^n << n!$.
 \end{theorem}
 
 \section{Series}
@@ -133,19 +194,19 @@ Analysis was mainly motivated by the study of infinite series, which are sums of
   If a series $\sum x_n$ converges, then $\lim\limits_{n \to \infty} x_n = 0$.
 \end{theorem}
 
-\begin{theorem}
-  If $\abs{r} \geq 1$, then $\sum\limits_{n = 0}^\infty r^n$ diverges.
-\end{theorem}
-
-\begin{corollary}
-  IThe series $\sum\limits{n = 0}^\infty \alpha(r)^n$ converges if and only if $\abs{r} < 1$.
-\end{corollary}
-
 The converse of the $n$th term test is not true.
 
 \begin{theorem}[Divergence of Harmonic Series]
   The \emph{harmonic series} $\sum\limits_{n = 1}^\infty \dfrac{1}{n}$ diverges.
 \end{theorem}
+
+\begin{theorem}
+  If $\abs{r} \geq 1$, then $\sum\limits_{n = 0}^\infty r^n$ diverges.
+\end{theorem}
+
+\begin{corollary}
+  The series $\sum\limits{n = 0}^\infty \alpha(r)^n$ converges if and only if $\abs{r} < 1$.
+\end{corollary}
 
 \begin{theorem}[Comparison Test]
   Suppose that there is a natural number $K \in \nats$ such that $0 \leq x_n \leq y_n$ for all $n \geq K$.
@@ -158,6 +219,14 @@ The converse of the $n$th term test is not true.
 
 \begin{theorem}[Convergence Criterion for $p$-series]
   The $p$-series $\sum\limits_{n = 1}^\infty \dfrac{1}{n^p}$ converges if and only if $p > 1$.
+\end{theorem}
+
+\begin{definition}[Eventually Non-negative Series]
+  A series $\sum x_n$ is \emph{eventually non-negative} if there is a natural number $N$ such that $x_n \geq 0$ for all $n \geq N$.
+\end{definition}
+
+\begin{theorem}
+  If $\sum x_n$ is eventually non-negative, then it converges if and only if $\set{s_n}$ is bounded above.
 \end{theorem}
 
 \begin{definition}[Eventually Positive Series]
