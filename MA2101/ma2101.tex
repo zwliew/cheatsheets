@@ -1,0 +1,250 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{MA2101 - Linear Algebra II}
+\author{Liew Zhao Wei}
+\date{Semester 1, 2023-2024}
+
+\begin{document}
+\maketitle
+\hrule
+
+\section{Linear maps}
+
+\subsection{Isomorphism and invertibility}
+
+\begin{theorem}[Inverse and invertible]
+  A linear map $S \in \mathcal{L}(W, V)$ is an \emph{inverse} of a linear map $T \in \mathcal{L}(V, W)$ if $ST = I_V$ and $TS = I_W$.
+  $T$ is said to be \emph{invertible} if it has an inverse.
+\end{theorem}
+
+\begin{remark}[Inverses are unique]
+  An invertible linear map has a unique inverse.
+\end{remark}
+
+\begin{theorem}[Invertiblity is equivalent to bijectivity]
+  A linear map is invertible if and only if it is bijective.
+\end{theorem}
+
+\begin{definition}[Isomorphism]
+  An \emph{isomorphism} is an invertible linear map.
+  Two vector spaces are \emph{isomorphic} if there is an isomorphism from one to the other.
+\end{definition}
+
+\begin{theorem}[Isomorphic vector spaces have the same dimension]
+  Two finite-dimensional vector spaces are isomorphic if and only if they have the same dimension.
+\end{theorem}
+
+\begin{theorem}[$\mathcal{L}(V, W)$ is isomorphic to $M_{m \times n}(\field)$]
+  Let $V$ and $W$ be finite-dimensional vector spaces with $\dim V = n$ and $\dim W = m$.
+  Then, $\mathcal{M}$ is an isomorphism between $\mathcal{L}(V, W)$ and $\field_{m \times n}$.
+\end{theorem}
+
+\begin{corollary}[$\dim \mathcal{L}(V, W) = (\dim V)(\dim W)$]
+  Let $V$ and $W$ be finite-dimensional vector spaces.
+  Then, $\dim \mathcal{L}(V, W) = (\dim V)(\dim W)$.
+\end{corollary}
+
+\begin{definition}[Linear operator, $\mathcal{L}(V)$]
+  A linear map from a vector space $V$ to itself is called a \emph{linear operator} and is denoted by $\mathcal{L}(V)$.
+\end{definition}
+
+\begin{theorem}[Injectivity is equivalent to surjectivity]
+  Let $T \in \mathcal{L}(V)$ be a linear operator on a finite-dimensional vector space $V$.
+  Then, $T$ is injective if and only if it is surjective.
+\end{theorem}
+
+\subsection{Duality}
+
+\begin{definition}[Linear functional]
+  A \emph{linear functional} $T \in \mathcal{L}(V, \field)$ is a linear map from a vector space to its underlying field.
+\end{definition}
+
+\begin{example}[Examples of linear functionals]
+  We present some common examples of linear functionals.
+  \begin{enumerate}
+    \item Let $(c_1, \ldots, c_n) \in \field^n$.
+          Then, the map $f(x_1, \ldots, x_n) = c_1x_1 + \cdots + c_nx_n$ is a linear functional on $\field^n$.
+    \item The \emph{trace} of an $n \times n$ matrix $A$, defined as $\tr A = \sum_{i = 1}^n a_{ii}$, is a linear functional on $\field_{n \times n}$.
+    \item Let $[a, b]$ be a closed interval in $\reals$.
+          Then, the map $L(f) = \int_a^b f(x) \,dx$ is a linear functional on the space of continuous real-valued functions on $[a, b]$, denoted $C([a, b])$.
+  \end{enumerate}
+\end{example}
+
+\begin{definition}[Dual space]
+  The \emph{dual space} of a vector space $V$, denoted $V^*$, is the vector space of all linear functionals on $V$.
+  That is, $V^* = \mathcal{L}(V, \field)$.
+\end{definition}
+
+\begin{theorem}[$\dim V^* = \dim V$]
+  Let $V$ be a finite-dimensional vector space.
+  Then, $\dim V^* = \dim V$.
+\end{theorem}
+
+\subsection{Matrix transpose}
+
+\begin{definition}[Transpose of a matrix, $A^t$]
+  Let $A$ be an $m \times n$ matrix.
+  The \emph{transpose} of $A$ is the $n \times m$ matrix $A^t$ defined by $A_{ij}^t = A_{ji}$.
+  That is, the rows and columns of $A$ are interchanged.
+\end{definition}
+
+\begin{theorem}[Transpose of matrix products]
+  Let $A$ be an $m \times n$ matrix and $B$ be an $n \times p$ matrix.
+  Then, $(AB)^t = B^tA^t$.
+\end{theorem}
+
+(Skipping some definitions here regarding the dual basis and going straight to more pertinent results -- will revisit it later.)
+
+\begin{definition}[Row rank, column rank]
+  Let $A \in \field^{m \times n}$ be an $m \times n$ matrix.
+  \begin{itemize}
+    \item The \emph{row rank} of $A$ is the dimension of the span of the rows of $A$ in $\field^{1, n}$.
+    \item The \emph{column rank} of $A$ is the dimension of the span of the columns of $A$ in $\field^{m, 1}$.
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}[$\dim R(T)$ equals to column rank of $\mathcal{M}(T)$]
+  Let $V$ and $W$ be finite-dimensional vector spaces and $T \in \mathcal{L}(V, W)$.
+  Then, $\dim R(T)$ equals the column rank of $\mathcal{M}(T)$.
+\end{theorem}
+
+\begin{theorem}[Row rank equals column rank]
+  Let $A \in \field^{m \times n}$ be an $m \times n$ matrix.
+  Then, the row rank of $A$ is equal to the column rank of $A$.
+\end{theorem}
+
+Since the row rank and column rank are equal, we can simply refer to the rank of a matrix.
+
+\begin{definition}[Rank]
+  The \emph{rank} of a matrix $A$, denoted $\rank A$, is the column rank of $A$.
+\end{definition}
+
+\section{Trace and Determinant}
+
+Trace and determinants are primarily used to establish the properties of eigenvalues in the next section.
+
+\begin{definition}[Characteristic polynomial]
+  Let $T$ be an operator on a complex vector space.
+  If $T$ has distinct eigenvalues $\lambda_1, \ldots, \lambda_m$ with multiplicities $d_1, \ldots, d_m$, then the \emph{characteristic polynomial} of $T$ is defined as
+  \begin{align}
+    p_T(z) = (z - \lambda_1)^{d_1} \cdots (z - \lambda_m)^{d_m}
+  \end{align}
+\end{definition}
+
+\subsection{Trace}
+
+\begin{definition}[Trace of an operator]
+  The trace of an operator $T$, denoted $\tr T$, is defined as follows:
+  \begin{itemize}
+    \item If $\field = \complex$, then $\tr T$ is the sum of the eigenvalues of $T$, counted with multiplicity.
+    \item If $\field = \reals$, then $\tr T$ is the sum of the eigenvalues of $T_\complex$, counted with multiplicity.
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}[Relation between trace to characteristic polynomial]
+  For any operator $T \in \mathcal{L}(V)$ with $n = \dim V$, $\tr T$ is equal to the negative of the coefficient of $z^{n - 1}$ in the characteristic polynomial of $T$.
+\end{theorem}
+
+\begin{definition}[Trace of a matrix]
+  The \emph{trace} of an $n \times n$ matrix $A$, denoted $\trace A$, is the sum of the diagonal entries of $A$.
+  That is, $\tr A = \sum_{i = 1}^n a_{ii}$.
+\end{definition}
+
+We will show that the trace of an operator is equal to the trace of any of its matrix representation.
+
+\begin{lemma}[Trace is cyclic]
+  For any two square matrices $A$ and $B$ of the same size,
+  \begin{align}
+    \tr AB = \tr BA
+  \end{align}
+\end{lemma}
+
+\begin{lemma}[Trace of matrix is oblivious to basis]
+  Suppose $T$ is a linear operator.
+  For any two bases $\mathcal{B}$ and $\mathcal{C}$ of a finite-dimensional vector space,
+  \begin{align}
+    \tr \mathcal{M}_\mathcal{B}(T) = \tr \mathcal{M}_\mathcal{C}(T)
+  \end{align}
+\end{lemma}
+
+\begin{theorem}[Trace of linear operator and its matrix are equal]
+  For any operator $T$,
+  \begin{align}
+    \trace T = \tr \mathcal{M}(T)
+  \end{align}
+\end{theorem}
+
+\begin{corollary}[Trace is additive]
+  For any two operators $S$ and $T$,
+  \begin{align}
+    \tr (S + T) = \tr S + \tr T
+  \end{align}
+\end{corollary}
+
+\begin{theorem}[$ST - TS \neq I$]
+  For any two operators $S$ and $T$,
+  \begin{align}
+    ST - TS \neq I
+  \end{align}
+\end{theorem}
+
+\subsection{Determinant}
+
+\begin{definition}[Determinant of an operator]
+  The determinant of an operator $T$, denoted $\det T$, is defined as follows:
+  \begin{itemize}
+    \item If $\field = \complex$, then $\det T$ is the product of the eigenvalues of $T$, counted with multiplicity.
+    \item If $\field = \reals$, then $\det T$ is the product of the eigenvalues of $T_\complex$, counted with multiplicity.
+  \end{itemize}
+\end{definition}
+
+Similar to the trace, the determinant is closely related to the characteristic polynomial.
+
+\begin{theorem}[Relation between determinant and characteristic polynomial]
+  For any operator $T \in \mathcal{L}(V)$ with $n = \dim V$, $\det T$ is equal to $(-1)^n$ times the constant term of the characteristic polynomial of $T$.
+\end{theorem}
+
+\begin{remark}
+  Combining the trace and determinant, we can rewrite the characteristic polynomial as
+  \begin{align}
+    p_T(t) = z^n - (\tr T)z^{n - 1} + \cdots + (-1)^n \det T
+  \end{align}
+\end{remark}
+
+\begin{theorem}[Invertible iff nonzero determinant]
+  An operator $T$ is invertible if and only if $\det T \neq 0$.
+\end{theorem}
+
+\begin{theorem}[Invertible iff nonzero determinant]
+  A square matrix $A$ is invertible if and only if $\det A \neq 0$.
+\end{theorem}
+
+\section{Eigenvalues and Eigenvectors}
+
+\begin{definition}[Matrix similarity]
+  Two order-$n$ square matrices $A$ and $B$ are \emph{similar} if there is an invertible matrix $P$ such that
+  \begin{align}
+    B = P^{-1}AP
+  \end{align}
+  Similar matrices represent the same linear map under two different bases.
+\end{definition}
+
+\begin{remark}[Similarity equivalence]
+  Similarity is an equivalence relation on the set of all order-$n$ square matrices.
+\end{remark}
+
+\begin{definition}[Characteristic polynomial equals $\det (zI - T)$]
+  The characteristic polynomial of an operator $T$ is equal to $\det (zI - T)$.
+\end{definition}
+
+\begin{remark}
+  Similar matrices have the same characteristic polynomial.
+\end{remark}
+
+\begin{theorem}[Multiplicies sum to $\dim V$]
+  For any operator $T$ on a complex vector space $V$, the sum of the multiplicities of the eigenvalues of $T$ is equal to $\dim V$.
+\end{theorem}
+
+\end{document}
