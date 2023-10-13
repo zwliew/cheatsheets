@@ -10,6 +10,46 @@
 \maketitle
 \hrule
 
+\section{Preface}
+
+This is a set of (incomplete) notes for a course on basic group theory.
+
+\section{Groups}
+
+We start by introducing groups.
+
+\begin{definition}[Group]
+  A \emph{group} is a set $G$ together with a law of composition that satisfies the following properties:
+  \begin{itemize}
+    \item \emph{Identity}: There is an element $e \in G$ such that for all $a \in G$, $ae = ea = a$.
+    \item \emph{Associativity}: For all $a, b, c \in G$, $(ab)c = a(bc)$.
+    \item \emph{Inverses}: For all $a \in G$, there exists $b \in G$ such that $ab = ba = e$.
+  \end{itemize}
+\end{definition}
+
+\begin{definition}[Abelian group]
+  A group $G$ is \emph{abelian} if its law of composition is commutative, that is, for all $a, b \in G$, $ab = ba$.
+\end{definition}
+
+\begin{remark}[Identity and inverse are unique]
+  The identity and inverse of an element in a group are unique.
+  We denote the identity by $e$, and the inverse of $a$ by $a^{-1}$.
+\end{remark}
+
+\begin{example}[Examples and non-examples of groups]
+  Some examples of groups include:
+  \begin{itemize}
+    \item $\reals, \complex, \rationals, \integers$, and $\integers / n \integers$ are groups under addition.
+    \item Removing the zero element, $\reals*, \complex*$, and $\rationals^*$ are groups under addition
+    \item $\nats$ is not a group because inverses do not exist for any non-zero element.
+  \end{itemize}
+\end{example}
+
+\begin{example}[General/special linear group]
+  The \emph{general linear group} and \emph{special linear group} are groups of invertible matrices over a ring $R$ under matrix multiplication, denoted $\GL_n R$ and $\SL_n R$ respectively.
+  $\GL_n R$ has non-zero determinant, while $\SL_n R$ has determinant 1.
+\end{example}
+
 \section{Symmetric Groups}
 
 \subsection{Symmetric Groups}
@@ -98,9 +138,9 @@ However, the determinant of a matrix is typically defined in terms of its sign, 
 
 \begin{definition}
   Let $\mathbf{x} = (x_1, x_2, \ldots, x_n)$ be $n$ variables.
-  
+
   Define $P(\mathbf{x}) = P(x_1, \ldots, x_n) = \prod\limits_{1 \le i < j \le n}(x_i - x_j)$.
-  
+
   Then, for each permutation $f \in S_n$, define $P_f(x_1, \ldots, x_n) = P(x_{f(1)}, x_{f(2)}, \ldots, x_{f(n)}) = \prod\limits_{1 \le i < j \le n}(x_{f(i)} - x_{f(j)})$.
 \end{definition}
 
@@ -137,11 +177,11 @@ Cayley's Theorem gives a way of realizing an abstract group as a subgroup of a m
 \begin{definition}[Coset]
   Let $H$ be a subgroup of $G$ and $g \in G$ be an element of $G$. Then, a \textbf{left coset} is the subset
   $$
-  gH = \{gh \mid h \in H\}
+    gH = \{gh \mid h \in H\}
   $$
   A \textbf{right coset} is the subset
   $$
-  Hg = \{hg \mid h \in H\}.
+    Hg = \{hg \mid h \in H\}.
   $$
 \end{definition}
 

@@ -223,6 +223,66 @@ Similar to the trace, the determinant is closely related to the characteristic p
 
 \section{Eigenvalues and Eigenvectors}
 
+\begin{definition}[Invariant subspace]
+  A subspace $U \subseteq V$ is \emph{invariant} under a linear operator $T$ if $T(U) \subseteq U$.
+\end{definition}
+
+\begin{example}[Examples of trivially invariant subspaces]
+  For any linear operator $T \in \mathcal{L}(V)$, the following subspaces are invariant under $T$:
+  \begin{itemize}
+    \item $\set{0}$
+    \item $V$
+    \item $\ker T$
+    \item $R(T)$
+  \end{itemize}
+\end{example}
+
+Of particular interest are the invariant subspaces of dimension $1$.
+
+\begin{definition}[Eigenvalue and eigenvector]
+  A scalar $\lambda \in \field$ is an \emph{eigenvalue} of a linear operator $T \in \mathcal{L}(V)$ if there exists a nonzero vector $v \in V$ such that $Tv = \lambda v$.
+  The vector $v$ is called an \emph{eigenvector} of $T$ corresponding to $\lambda$.
+\end{definition}
+
+\begin{remark}[Equivalent definition of eigenvector]
+  A non-zero vector $v \in V$ is an eigenvector of $T$ corresponding to $\lambda$ if and only if $v \in \ker (T - \lambda I)$.
+\end{remark}
+
+With that remark, we arrive at the following equivalences for eigenvalues.
+
+\begin{theorem}[Equivalent conditions for eigenvalues]
+  Let $V$ be finite-dimensional, $T \in \mathcal{L}(V)$, and $\lambda \in \field$.
+  Then, the following are equivalent:
+  \begin{enumerate}
+    \item $\lambda$ is an eigenvalue of $T$.
+    \item $T - \lambda I$ is not injective.
+    \item $T - \lambda I$ is not surjective.
+    \item $T - \lambda I$ is not invertible.
+  \end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Eigenvectors corresponding to distinct eigenvalues are linearly independent]
+  Let $T \in \mathcal{L}(V)$.
+  Every list of eigenvectors of $T$ corresponding to distinct eigenvalues is linearly independent.
+\end{theorem}
+
+\begin{theorem}[Number of eigenvalues is at most $\dim V$]
+  Any linear operator on a finite-dimensional vector space $V$ has at most $\dim V$ distinct eigenvalues.
+\end{theorem}
+
+\begin{definition}[$T^m$]
+  Let $T \in \mathcal{L}(V)$ and $m \in \nats$.
+  \begin{itemize}
+    \item $T^0$ is defined as the identity operator $I$ on $V$.
+    \item $T^m \in \mathcal{L}(V)$ is defined as $T^m = T \circ T^{m - 1}$.
+    \item If $T$ is invertible, then $T^{-m} \in \mathcal{L}(V)$ is defined as $T^{-m} = (T^{-1})^m$.
+  \end{itemize}
+\end{definition}
+
+\begin{remark}
+  $T^m T^n = T^{m + n}$ and $(T^m)^n = T^{mn}$.
+\end{remark}
+
 \begin{definition}[Matrix similarity]
   Two order-$n$ square matrices $A$ and $B$ are \emph{similar} if there is an invertible matrix $P$ such that
   \begin{align}
