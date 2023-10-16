@@ -30,6 +30,18 @@ We should know the following Taylor series expansions by heart:
   \cos x     & = \sum\limits_{n = 0}^\infty (-1)^n \frac{x^{2n}}{(2n)!}
 \end{align*}
 
+\subsection{Combinatorics}
+
+Here are some useful combinatorial identities.
+
+\[
+  \text{Binomial theorem: } (x + y)^n = \sum\limits_{k = 0}^n \binom{n}{k} x^k y^{n - k}
+\]
+
+\[
+  i \binom{n}{i} = n \binom{n - 1}{i - 1}
+\]
+
 \section{Axioms of Probability}
 
 TODO.
@@ -140,18 +152,20 @@ We motivate this with the age old example of a coin toss.
   A \emph{Bernoulli} random variable is a special case of a binomial random variable with $n = 1$.
 \end{remark}
 
+When $n = 1$, we can easily compute that $\Exp[X] = p$ and $\Var(X) = p(1 - p)$.
+By the additivity of expectation and variance, it is also easy to compute the expectation and variance for general $n$.
 \begin{theorem}[Properties of binomial random variables]
   Let $X \sim \Bin(n, p)$.
   Then
   \begin{enumerate}
-    \item $\Exp[X^k] = np \Exp[(Y + 1)^{k - 1}]$ where $Y \sim \Bin(n - 1, p)$
     \item $\Exp[X] = np$
     \item $\Var(X) = np(1 - p)$
+    \item $\Exp[X^k] = np \Exp[(Y + 1)^{k - 1}]$ where $Y \sim \Bin(n - 1, p)$
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-  The proof is by some algebraic manipulation of the definition of $\Exp[X^k]$ and using the identity
+  A proof of $\Exp[X^k]$ is done with some algebraic manipulation of the definition of $\Exp[X^k]$ and using the identity
   \[
     i \binom{n}{i} = n \binom{n - 1}{i - 1}
   \]
@@ -183,6 +197,7 @@ Besides the binomial random variable, another important discrete random variable
     \Pr(X = i) = e^{-\lambda} \frac{\lambda^i}{i!}, \quad i = 0, 1, 2, \ldots.
   \]
 \end{definition}
+Observe that the $i$th term is $e^{-\lambda}$ times the $i$th term of the Taylor series expansion of $e^\lambda$.
 
 \begin{remark}
   By the Taylor series expansion of $e^x$, we have
@@ -224,6 +239,7 @@ The Poisson random variable is useful for approximating the binomial random vari
     \item $\Var(X) = \lambda$
   \end{enumerate}
 \end{theorem}
+These properties should be intuitive by comparing Poisson random variables with binomial random variables, but with large $n$.
 
 We have shown that the Poisson distribution approximates the binomial distribution when $n$ is large and $p$ is small.
 In fact, we do not need the events be independent or to occur with equal probability.
@@ -250,14 +266,16 @@ This is explained in what we call the \emph{Poisson paradigm}.
 One other use of the Poisson distribution is in \emph{poisson processes}.
 
 \begin{theorem}[Poisson process]
-  Let $\lambda > 0$.
-  Suppose events occur at random points in time where
+  Suppose events occur at random points in time, and let $N(t)$ denote the number of events that occur in an interval of length $t$.
+  $N(t)$ is a \emph{Poisson process} having rate $\lambda > 0$ if
   \begin{enumerate}
-    \item The probability that exactly $1$ event occurs in an interval of length $h$ is approximately $\lambda h + o(h)$, where $o(h)$ stands for any function $f(h)$ such that $\lim\limits_{h \to 0} f(h) / h = 0$.
-    \item The probability that more than $1$ event occurs in an interval of length $h$ is $o(h)$.
-    \item The number of events occurring in disjoint intervals are independent.
+    \item The process begins at time $0$, that is, $N(0) = 0$.
+    \item $\Pr(N(h) = 1) = \lambda h + o(h)$
+    \item $\Pr(N(h) \geq 2) = o(h)$
+    \item The number of events occurring in disjoint time intervals are independent (otherwise called the independent increment assumption).
+    \item The distribution of the number of events occurring in a time interval of length $t$ depends only on the length of the interval and not on its location (otherwise called the stationary increment assumption).
   \end{enumerate}
-  Then, the number of events occurring in an interval of length $t$, denoted by $N(t)$, is a Poisson random variable with parameter $\lambda t$.
+  $N(t)$ has a Poisson distribution with mean $\lambda t$.
 \end{theorem}
 
 \begin{example}[Examples of poisson processes]
@@ -272,10 +290,94 @@ One other use of the Poisson distribution is in \emph{poisson processes}.
 
 \subsection{Geometric random variable}
 
+Imagine tossing a coin repeatedly until we get a head.
+Let $X$ be the number of tosses required.
+Then $X$ is a \emph{geometric} random variable.
+
+\begin{definition}[Geometric random variable]
+  A random variable $X$ is said to be \emph{geometric} with parameter $p$ if $X$ has the following probability mass function:
+  \[
+    \Pr(X = i) = (1 - p)^{i - 1} p, \quad i = 1, 2, \ldots.
+  \]
+\end{definition}
+
+\begin{remark}
+  By the geometric series, we have
+  \[
+    \sum\limits_{i = 1}^\infty \Pr(X = i) = p \sum\limits_{i = 1}^\infty (1 - p)^{i - 1} = 1
+  \]
+\end{remark}
+
+\begin{proposition}[Properties of geometric r.v.]
+  Let $X$ be a geometric random variable with parameter $p$.
+  Then
+  \begin{enumerate}
+    \item $\Exp[X] = 1/p$
+    \item $\Var(X) = (1 - p)/p^2$
+  \end{enumerate}
+\end{proposition}
+The expectation should be unsurprising.
+The variance should also be somewhat intuitive since
+\begin{enumerate}
+  \item When $p$ is small, $X$ is approximately an exponential random variable with $\lambda = p$ and so $\Var(X) \approx 1/p^2$.
+  \item When $p$ is large, $\Var(X) \approx 0$.
+\end{enumerate}
+
+\begin{remark}
+  The exponential distribution is the continuous analogue of the geometric distribution.
+\end{remark}
+
 \subsection{Negative binomial random variable}
+
+Suppose we toss a coin repeatedly until we get $r$ heads.
+Let $X$ be the number of tosses required.
+Then $X$ is a \emph{negative binomial} random variable.
+
+\begin{definition}[Negative binomial random variable]
+  A random variable $X$ is said to be \emph{negative binomial} with parameters $r$ and $p$ if $X$ has the following probability mass function:
+  \[
+    \Pr(X = i) = \binom{i - 1}{r - 1} p^r (1 - p)^{i - r}, \quad i = r, r + 1, \ldots.
+  \]
+\end{definition}
+
+\begin{remark}
+  A geometric random variable is a special case of a negative binomial random variable with $r = 1$.
+\end{remark}
+
+The following properties should not be surprising since the negative binomial random variable is a sum of $r$ independent geometric random variables.
+
+\begin{proposition}[Properties of negative binomial r.v.]
+  Let $X$ be a negative binomial random variable with parameters $r$ and $p$.
+  Then
+  \begin{enumerate}
+    \item $\Exp[X] = r/p$
+    \item $\Var(X) = r(1 - p)/p^2$
+  \end{enumerate}
+\end{proposition}
+
 
 \subsection{Hypergeometric random variable}
 
+Suppose we randomly choose $n$ balls from an urn containing $m$ white balls and $N - m$ black balls without replacement.
+Let $X$ be the number of white balls chosen.
+Then $X$ is a \emph{hypergeometric} random variable.
+
+\begin{definition}[Hypergeometric random variable]
+  A random variable $X$ is said to be \emph{hypergeometric} with parameters $n$, $N$, and $m$ if $X$ has the following probability mass function:
+  \[
+    \Pr(X = i) = \frac{\binom{m}{i} \binom{N - m}{n - i}}{\binom{N}{n}}, \quad i = 0, 1, \ldots, n.
+  \]
+\end{definition}
+
+\begin{proposition}[Properties of hypergeometric r.v.]
+  Let $X$ be a hypergeometric random variable with parameters $n$, $N$, and $m$.
+  Let $p = m/N$.
+  Then
+  \begin{enumerate}
+    \item $\Exp[X] = np$
+    \item $\Var(X) = np(1 - p) \left(1 - \dfrac{n - 1}{N - 1} \right)$
+  \end{enumerate}
+\end{proposition}
 
 \section{Continuous random variables}
 
