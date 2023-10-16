@@ -1,0 +1,294 @@
+\documentclass{article}
+
+\usepackage{../zwliew}
+
+\title{MA2116 - Probability}
+\author{Liew Zhao Wei}
+\date{Semester 1, 2023-2024}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+  This is a set of incomplete notes for an introductory course on probability.
+\end{abstract}
+
+\hrule
+
+\section{Preliminaries}
+
+\subsection{Taylor series expansions}
+
+We should know the following Taylor series expansions by heart:
+\begin{align*}
+  e^x        & = \sum\limits_{n = 0}^\infty \frac{x^n}{n!}
+  \\
+  \ln(1 + x) & = \sum\limits_{n = 1}^\infty (-1)^{n + 1} \frac{x^n}{n}
+  \\
+  \sin x     & = \sum\limits_{n = 0}^\infty (-1)^n \frac{x^{2n + 1}}{(2n + 1)!}
+  \\
+  \cos x     & = \sum\limits_{n = 0}^\infty (-1)^n \frac{x^{2n}}{(2n)!}
+\end{align*}
+
+\section{Axioms of Probability}
+
+TODO.
+
+\section{Discrete random variables}
+
+\subsection{Expectation}
+
+When given a random variable, we are often interested in its \emph{average} value.
+This is captured by the notion of \emph{expectation}.
+
+\begin{definition}[Expected value of a discrete r.v.]
+  Let $X$ be a discrete random variable.
+  Then the \emph{expected value}, or \emph{expectation}, of $X$, denoted by $\Exp[X]$, is defined as
+  \[
+    \Exp[X] = \sum_{x \in \Omega_X} x \Pr(X = x).
+  \]
+\end{definition}
+
+\begin{proposition}[Expectation of a function of a discrete r.v.]
+  Let $X$ be a discrete random variable and $g$ be real-valued a function.
+  Then
+  \[
+    \Exp[g(X)] = \sum_{x \in \Omega_X} g(x) \Pr(X = x).
+  \]
+\end{proposition}
+
+\begin{corollary}
+  Let $X$ be a random variable and $a, b \in \reals$.
+  Then
+  \[
+    \Exp[a X + b] = a \Exp[X] + b.
+  \]
+\end{corollary}
+
+One important property of expectations of (general) random variables is that it is \emph{linear}.
+
+\begin{theorem}{Linearity of expectation}
+  Let $X_1, X_2, \ldots, X_n$ be random variables (not necessarily discrete).
+  Then
+  \[
+    \Exp\left[\sum\limits_{i = 1}^n X_i\right] = \sum\limits_{i = 1}^n \Exp[X_i].
+  \]
+\end{theorem}
+
+\subsection{Variance}
+
+Expectation alone doesn't reveal much about the distribution of a random variable.
+For example, compare these two slot machines:
+\begin{enumerate}
+  \item The first slot machine gives you \$100 with probability $1$.
+  \item The second slot machine gives you \$10000 with probability $0.01$ and \$0 with probability $0.99$.
+\end{enumerate}
+The expected payout of both slot machines is \$100, but the chances of winning are very different.
+This difference is captured by the notion of \emph{variance}.
+
+\begin{definition}[Variance of a discrete r.v.]
+  Let $X$ be a discrete random variable.
+  Then the \emph{variance} of $X$, denoted by $\Var(X)$, is defined as
+  \[
+    \Var(X) = \Exp[(X - \Exp[X])^2].
+  \]
+\end{definition}
+
+\begin{remark}[Alternative formula]
+  The variance can also be computed using the following formula:
+  \[
+    \Var(X) = \Exp[X^2] - \Exp[X]^2.
+  \]
+\end{remark}
+
+\begin{remark}
+  Since variance is non-negative, we have
+  \[
+    \Exp[X^2] \geq \Exp[X]^2.
+  \]
+  This can be used to prove the \emph{friendship paradox}.
+\end{remark}
+
+\begin{proposition}[Variance of linear combination]
+  Let $X$ be a discrete random variable and $a, b \in \reals$.
+  Then
+  \[
+    \Var(a X + b) = a^2 \Var(X).
+  \]
+\end{proposition}
+
+\subsection{Bernoulli and binomial random variables}
+
+Perhaps the most basic and well-known random variable is the \emph{binomial} random variable and its little brother, the \emph{Bernoulli} random variable.
+We motivate this with the age old example of a coin toss.
+
+\begin{example}[Coin toss]
+  Suppose we toss a coin $n$ times that comes up heads with probability $p$ and tails with probability $1 - p$.
+  Let $X$ be the number of heads that appear.
+  Then $X$ is a \emph{binomial} random variable with parameters $n$ and $p$.
+  It takes values in $\{0, 1, \ldots, n\}$.
+\end{example}
+
+\begin{definition}[Binomial random variable]
+  A random variable $X$ is said to be \emph{binomial} with parameters $n$ and $p$, denoted by $X \sim \Bin(n, p)$, if $X$ has the following probability mass function:
+  \[
+    \Pr(X = i) = \binom{n}{i} p^i (1 - p)^{n - i}, \quad i = 0, 1, \ldots, n.
+  \]
+\end{definition}
+
+\begin{remark}[Bernoulli random variable]
+  A \emph{Bernoulli} random variable is a special case of a binomial random variable with $n = 1$.
+\end{remark}
+
+\begin{theorem}[Properties of binomial random variables]
+  Let $X \sim \Bin(n, p)$.
+  Then
+  \begin{enumerate}
+    \item $\Exp[X^k] = np \Exp[(Y + 1)^{k - 1}]$ where $Y \sim \Bin(n - 1, p)$
+    \item $\Exp[X] = np$
+    \item $\Var(X) = np(1 - p)$
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  The proof is by some algebraic manipulation of the definition of $\Exp[X^k]$ and using the identity
+  \[
+    i \binom{n}{i} = n \binom{n - 1}{i - 1}
+  \]
+\end{proof}
+
+The following relationship is useful for computing the distribution function of a binomial random variable.
+It can also be used to find the maximum of the probability mass function.
+
+\begin{proposition}[Relationship between $\Pr(X = k + 1)$ and $\Pr(X = k)$]
+  Let $X \sim \Bin(n, p)$. Then
+  \[
+    \Pr(X = k + 1) = \frac{p}{1 - p} \frac{n - k}{k + 1} \Pr(X = k).
+  \]
+\end{proposition}
+
+\begin{corollary}[Condition for monotonic increase]
+  Let $X \sim \Bin(n, p)$.
+  Then, as $k$ goes from $0$ to $n$, $\Pr(X = k)$ first increases monotonically and then decreases monotonically.
+  In fact, $\Pr(X = k) \geq \Pr(X = k + 1)$ if and only if $k \leq (n + 1)p$.
+\end{corollary}
+
+\subsection{Poisson random variable}
+
+Besides the binomial random variable, another important discrete random variable is the \emph{Poisson} random variable.
+
+\begin{definition}[Poisson random variable]
+  A random variable $X$ is said to be \emph{Poisson} with parameter $\lambda > 0$, denoted by $X \sim \Pois(\lambda)$, if $X$ has the following probability mass function:
+  \[
+    \Pr(X = i) = e^{-\lambda} \frac{\lambda^i}{i!}, \quad i = 0, 1, 2, \ldots.
+  \]
+\end{definition}
+
+\begin{remark}
+  By the Taylor series expansion of $e^x$, we have
+  \[
+    \sum_{i = 0}^\infty \Pr(X = i) = e^{-\lambda} \sum_{i = 0}^\infty \frac{\lambda^i}{i!} = e^{-\lambda} e^\lambda = 1.
+  \]
+\end{remark}
+
+The Poisson random variable is useful for approximating the binomial random variable when $n$ is large and $p$ is small enough so that $\lambda = np$ is of moderate size.
+
+\begin{example}[Examples that can be approximated by a Poisson r.v.]
+  We can think of each of these examples as a long series of independent trial, each with a small chance of success.
+  Thus, we can approximate the number of successes by a Poisson random variable.
+  \begin{enumerate}
+    \item The number of misprints on a page of a book.
+    \item The number of people in a community who survive to age 100.
+    \item The number of wrong telephone numbers dialed in a day.
+    \item The number of packages of biscuits sold in a store in a day.
+    \item The customers centering a post office on a given day.
+  \end{enumerate}
+\end{example}
+
+\begin{remark}
+  This approximation works decently even with $n$ as small as $10$ and $p$ as large as $0.1$.
+  For example, with $X \sim \Bin(10, 0.1)$ and $Y \sim \Pois(1)$, we have
+  \[
+    \Pr(X \leq 1) \approx 0.7361
+  \]
+  \[
+    \Pr(Y \leq 1) \approx 0.7358
+  \]
+\end{remark}
+
+\begin{theorem}[Properties of Poisson r.v.]
+  Let $X \sim \Pois(\lambda)$.
+  Then
+  \begin{enumerate}
+    \item $\Exp[X] = \lambda$
+    \item $\Var(X) = \lambda$
+  \end{enumerate}
+\end{theorem}
+
+We have shown that the Poisson distribution approximates the binomial distribution when $n$ is large and $p$ is small.
+In fact, we do not need the events be independent or to occur with equal probability.
+We just need the probability of the events to be small and the events to be at most weakly dependent.
+This is explained in what we call the \emph{Poisson paradigm}.
+
+\begin{definition}[Weak dependence]
+  Events $E$ and $F$ are weakly dependent if $\Pr(E) \approx \Pr(E \mid F)$.
+\end{definition}
+
+\begin{theorem}[Poisson Paradigm]
+  Consider $n$ events where the $i$th event occurs with probability $p_i$.
+  If all the $p_i$ are small and the trials are either independent or at most weakly dependent, then the number of events that occur approximately has a Poisson distribution with mean $\lambda = \sum_{i = 1}^n p_i$.
+\end{theorem}
+
+\begin{proposition}[Relationship between $\Pr(X = k + 1)$ and $\Pr(X = k)$]
+  Let $X \sim \Pois(\lambda)$.
+  Then
+  \[
+    \Pr(X = k + 1) = \frac{\lambda}{k + 1} \Pr(X = k).
+  \]
+\end{proposition}
+
+One other use of the Poisson distribution is in \emph{poisson processes}.
+
+\begin{theorem}[Poisson process]
+  Let $\lambda > 0$.
+  Suppose events occur at random points in time where
+  \begin{enumerate}
+    \item The probability that exactly $1$ event occurs in an interval of length $h$ is approximately $\lambda h + o(h)$, where $o(h)$ stands for any function $f(h)$ such that $\lim\limits_{h \to 0} f(h) / h = 0$.
+    \item The probability that more than $1$ event occurs in an interval of length $h$ is $o(h)$.
+    \item The number of events occurring in disjoint intervals are independent.
+  \end{enumerate}
+  Then, the number of events occurring in an interval of length $t$, denoted by $N(t)$, is a Poisson random variable with parameter $\lambda t$.
+\end{theorem}
+
+\begin{example}[Examples of poisson processes]
+  Poisson processes can approximate phonemona like:
+  \begin{enumerate}
+    \item The number of earthquakes occurring in a fixed time span.
+    \item The number of wars per year.
+    \item The number of electrons emitted from a heated cathode during a fixed time period.
+    \item The number of deaths, in a given period of time, of the policyholders of a life insurance company.
+  \end{enumerate}
+\end{example}
+
+\subsection{Geometric random variable}
+
+\subsection{Negative binomial random variable}
+
+\subsection{Hypergeometric random variable}
+
+
+\section{Continuous random variables}
+
+TODO.
+
+\section{Jointly distributed random variables}
+
+TODO.
+
+\section{References}
+
+\begin{enumerate}
+  \item A First Course in Probability (10th edition) by Sheldon Ross
+\end{enumerate}
+
+\end{document}
