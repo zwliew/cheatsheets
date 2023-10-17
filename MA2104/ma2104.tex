@@ -10,7 +10,7 @@
 \maketitle
 \hrule
 
-\section{Vectors}
+\section{Introduction}
 
 Multivariable calculus is the study of \emph{scalar fields} and \emph{vector fields}.
 
@@ -118,6 +118,58 @@ Just like for spherical coordinates, we typically impose the constraints
 \end{align*}
 to ensure that all points on $\reals^n$, except the origin, are uniquely represented.
 
+\section{Quadric Surfaces}
+
+There are some common quadric surfaces that we should know.
+
+\begin{definition}[Ellipsoid]
+  An \emph{ellipsoid} is a surface of the form
+  \[
+    \frac{x^2}{a^2} + \frac{y^2}{b^2} + \frac{z^2}{c^2} = 1
+  \]
+  where $a, b, c > 0$.
+\end{definition}
+
+\begin{definition}[Elliptic paraboloid]
+  An \emph{elliptic paraboloid} is a surface of the form
+  \[
+    \frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z}{c}
+  \]
+  where $a, b > 0$.
+\end{definition}
+
+\begin{definition}[Hyperbolic paraboloid]
+  A \emph{hyperbolic paraboloid} is a surface of the form
+  \[
+    \frac{x^2}{a^2} - \frac{y^2}{b^2} = \frac{z}{c}
+  \]
+  where $a, b > 0$.
+\end{definition}
+
+\begin{definition}[Elliptic cone]
+  An \emph{elliptic cone} is a surface of the form
+  \[
+    \frac{x^2}{a^2} + \frac{y^2}{b^2} = \frac{z^2}{c^2}
+  \]
+  where $a, b, c > 0$.
+\end{definition}
+
+\begin{definition}[Hyperboloid of one sheet]
+  A \emph{hyperboloid of one sheet} is a surface of the form
+  \[
+    \frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = 1
+  \]
+  where $a, b, c > 0$.
+\end{definition}
+
+\begin{definition}[Hyperboloid of two sheets]
+  A \emph{hyperboloid of two sheets} is a surface of the form
+  \[
+    \frac{x^2}{a^2} + \frac{y^2}{b^2} - \frac{z^2}{c^2} = -1
+  \]
+  where $a, b, c > 0$.
+\end{definition}
+
 \section{Basic Topology}
 
 We begin with some basic topological definitions and results that we'll use later on.
@@ -183,11 +235,14 @@ For vector fields, we have natural extensions of these theorems, but without quo
     \item $\lim\limits_{\bvec{x} \to \bvec{a}} \norm{\bvec{f}(\bvec{x})} = \norm{\bvec{L}}$
   \end{enumerate}
 \end{theorem}
-$(3)$ is proved by rewriting
-\begin{align*}
-  \bvec{f}(\bvec{x}) \cdot \bvec{g}(\bvec{x}) - \bvec{L} \cdot \bvec{M} = (\bvec{f}(\bvec{x}) - \bvec{L}) \cdot (\bvec{g}(\bvec{x}) - \bvec{M}) + \bvec{L} \cdot (\bvec{g}(\bvec{x}) - \bvec{M}) + \bvec{M} \cdot (\bvec{f}(\bvec{x}) - \bvec{L})
-\end{align*}
-$(4)$ is proved by using $(3)$ and the fact that $\norm{\bvec{v}} = \sqrt{\bvec{v} \cdot \bvec{v}}$.
+
+\begin{proof}
+  $(3)$ is proved by rewriting
+  \begin{align*}
+    \bvec{f}(\bvec{x}) \cdot \bvec{g}(\bvec{x}) - \bvec{L} \cdot \bvec{M} = (\bvec{f}(\bvec{x}) - \bvec{L}) \cdot (\bvec{g}(\bvec{x}) - \bvec{M}) + \bvec{L} \cdot (\bvec{g}(\bvec{x}) - \bvec{M}) + \bvec{M} \cdot (\bvec{f}(\bvec{x}) - \bvec{L})
+  \end{align*}
+  $(4)$ is proved by using $(3)$ and the fact that $\norm{\bvec{v}} = \sqrt{\bvec{v} \cdot \bvec{v}}$.
+\end{proof}
 
 \begin{theorem}[Uniqueness of Limits]
   If $\lim_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x})$ exists, then it is unique.
@@ -201,7 +256,10 @@ $(4)$ is proved by using $(3)$ and the fact that $\norm{\bvec{v}} = \sqrt{\bvec{
     \lim_{\bvec{x} \to \bvec{a}} \bvec{f}(\bvec{x}) = \left( \lim_{\bvec{x} \to \bvec{a}} f_1(\bvec{x}), \ldots, \lim_{\bvec{x} \to \bvec{a}} f_m(\bvec{x}) \right)
   \end{align}
 \end{theorem}
-This is proved by observing that $f_i = \bvec{f} \cdot \bvec{e}_i$, and applying the algebraic properties of limits.
+
+\begin{proof}
+  This is proved by observing that $f_i = \bvec{f} \cdot \bvec{e}_i$, and applying the algebraic properties of limits.
+\end{proof}
 
 \subsection{Continuity}
 
@@ -324,7 +382,7 @@ For scalar-valued functions, product and quotient properties hold too.
 
 \subsection{Chain Rule}
 
-We use the chain rule so much that it deserves its own section.
+The chain rule is one of the most important and widely used results in calculus.
 
 \begin{theorem}[Chain Rule]
   Consider the vector fields $\bvec{f} \colon X \subseteq \reals^m \to \reals^p$ and $\bvec{g} \colon Y \subseteq \reals^n \to \reals^m$.
@@ -433,5 +491,115 @@ The method stems from the following theorem.
   for some scalar $\lambda$.
 \end{theorem}
 
+\subsection{Double Integrals}
+
+We aim to generalize the notion of the definite integral to functions of multiple variables.
+
+\section{Triple Integrals}
+
+Just as we defined single and double integrals, we can define triple integrals for functions over three variables.
+Much of the machinery here is analogous to the case of double integrals.
+
+\subsection{Triple Integral over a Box}
+
+We first consider a \emph{closed box} $B$ on $\reals^3$ whose faces are parallel to the coordinate planes.
+That is,
+\[
+  B = [a, b] \times [c, d] \times [p, q] = \setpred{(x, y, z) \in \reals^3}{a \leq x \leq b, c \leq y \leq d, p \leq z \leq q}
+\]
+We can partition $B$ into sub-boxes $B_{ijk} = [x_{i - 1}, x_i] \times [y_{j - 1}, y_j] \times [z_{k - 1}, z_k]$ where $a = x_0 < x_1 < \cdots < x_n = b$, $c = y_0 < y_1 < \cdots < y_n = d$, and $p = z_0 < z_1 < \cdots < z_n = q$.
+Then, we can define the \emph{Riemann sum} of $f$ on $B$ corresponding to the partition and the triple integral of $f$ on $B$ as follows.
+
+\begin{definition}[Triple Riemann sum]
+  The \emph{Riemann sum} of $f$ on a closed box $B$ corresponding to the partition $\mathcal{P} = \set{B_{ijk}}$ is
+  \[
+    S = \sum_{i, j, k = 1}^n f(\bvec{c}_{ijk}) \Delta V_{ijk}
+  \]
+  where $\Delta V_{ijk} = \Delta x_i \Delta y_j \Delta z_k$ is the volume of $B_{ijk}$ and $\bvec{c}_{ijk}$ is a sample point in $B_{ijk}$.
+\end{definition}
+
+\begin{definition}[Triple Integral over a box]
+  The \emph{triple integral} of $f$ on $B$ is given by
+  \[
+    \iiint_B f \, dV = \lim_{\text{all } \Delta x_i, \Delta y_j, \Delta z_k \to 0} \sum_{i, j, k = 1}^n f(\bvec{c}_{ijk}) \Delta x_i \Delta y_j \Delta z_k
+  \]
+\end{definition}
+We can think of $f$ as a generalized density function and the Riemann sum $S$ as a sum of approximate masses of subboxes of $B$. Then, $\iiint_B f \, dV$ is the total mass of the box $B$.
+
+Since these definitions are natural extensions of those for double integrals, it should not be surprising that the following theorems extend nicely too.
+
+\begin{theorem}
+  If $f$ is bounded on $B$ and the set of discontinuities of $f$ on $B$ has volume zero, then $\iiint_B f \, dV$ exists.
+\end{theorem}
+
+\begin{theorem}[Fubini's theorem for triple integrals]
+  Let $f$ be bounded on $B = [a, b] \times [c, d] \times [p, q]$ and assume that set $S$ of discontinuities of $f$ has zero volume.
+  If every line parallel to the coordinate axes meets $S$ in at most finitely many points, then
+  \[
+    \iiint_B f \, dV = \int_a^b \int_c^d \int_p^q f(x, y, z) \, dz \, dy \, dx = \ldots = \int_p^q \int_c^d \int_a^b f(x, y, z) \, dx \, dy \, dz
+  \]
+  where the order of integration can be swapped freely.
+\end{theorem}
+
+\subsection{Triple Integrals over General Regions}
+
+We now consider the case of an arbitrary region $W$.
+The method of attack is similar to the case of double integrals: we first define the integral over an elementary region and then extend the definition to general regions by subdividing them into elementary regions.
+
+Suppose that $W$ is an elementary region in $\reals^3$ and $f$ is a continuous function on $W$.
+Similar to the case of double integrals, we define the \emph{extension} of $f$ by
+\[
+  f^{\text{ext}}(x, y, z) = \begin{cases}
+    f(x, y, z) & \text{if $(x, y, z) \in W$}
+    \\
+    0          & \text{otherwise}
+  \end{cases}
+\]
+Since $f^{\text{ext}}$ is integrable on any box that contains $W$, we can define the integral of $f$ on $W$ as follows.
+
+\begin{definition}[Triple Integral over a region]
+  Let $W$ be an elementary region and $f$ be continuous on $W$.
+  The \emph{triple integral} of $f$ on $W$ is
+  \[
+    \iiint_W f \, dV = \iiint_B f^{\text{ext}} \, dV
+  \]
+  where $B$ is any box containing $W$.
+\end{definition}
+Again, the following theorem is similarly true for triple integrals, allowing us to compute triple integrals on general regions using iterated integrals.
+\begin{theorem}
+  Let $W$ be an elementary region and $f$ be continuous on $W$.
+  \begin{enumerate}
+    \item If $W$ is of type $1$, then
+          \[
+            \iiint_W f \, dV = \iint_D \left( \int_{z_1(x, y)}^{z_2(x, y)} f(x, y, z) \, dz \right) \, dA
+          \]
+    \item If $W$ is of type $2$, then
+          \[
+            \iiint_W f \, dV = \iint_D \left( \int_{z_1(x, y)}^{z_2(x, y)} f(x, y, z) \, dz \right) \, dA
+          \]
+    \item If $W$ is of type $3$, then
+          \[
+            \iiint_W f \, dV = \iint_D \left( \int_{z_1(x, y)}^{z_2(x, y)} f(x, y, z) \, dz \right) \, dA
+          \]
+  \end{enumerate}
+  where $D$ is the projection of $W$ onto the respective planes.
+\end{theorem}
+
+\subsection{Change of Variables}
+
+\section{Line Integrals}
+
+TODO.
+
+\section{Surface Integrals}
+
+TODO.
+
+\section{references}
+
+\begin{enumerate}
+  \item Stewart Calculus (9th edition)
+  \item Colley Vector Calculus (4th edition)
+\end{enumerate}
 
 \end{document}
