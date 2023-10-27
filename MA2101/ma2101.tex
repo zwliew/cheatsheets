@@ -10,6 +10,59 @@
 \maketitle
 \hrule
 
+\section{Vector spaces}
+
+\subsection{Subspaces}
+
+\begin{definition}[Subspace]
+  A subset $U$ of $V$ is a \emph{subspace} of $V$ if it is also a vector space using the same operations as $V$.
+\end{definition}
+It is troublesome to prove all the axioms of a vector space for a subset.
+It turns out that we only need to prove that the following conditions hold.
+
+\begin{theorem}[Conditions for a subspace]
+  $U$ is a subspace of $V$ if and only if the following conditions hold:
+  \begin{enumerate}
+    \item $0 \in U$ (i.e. additive identity exists)
+    \item If $u, v \in U$, then $u + v \in U$. (i.e. closed under addition)
+    \item If $u \in U$, then $c \in \field$, $cu \in U$. (i.e. closed under scalar multiplication)
+  \end{enumerate}
+\end{theorem}
+
+The notion of a direct sum (and hence, a sum) is important in the study of linear maps.
+
+\begin{definition}[Sum of subsets]
+  Let $U_1, \ldots, U_m$ be subsets of $V$.
+  The sum of $U_1, \ldots, U_m$, denoted $U_1 + \cdots + U_m$, is defined as
+  \[
+    U_1 + \cdots + U_m = \setpred{u_1 + \cdots + u_m}{u_i \in U_i}
+  \]
+  That is, it is the set of all possible sums of elements from $U_1, \ldots, U_m$.
+\end{definition}
+
+\begin{theorem}[Sum of subspaces is smallest containing subspace]
+  Let $U_1, \ldots, U_m$ be subspaces of $V$.
+  Then, $U_1 + \cdots + U_m$ is the smallest subspace of $V$ containing $U_1, \ldots, U_m$.
+\end{theorem}
+
+\begin{definition}[Direct sum]
+  Let $U_1, \ldots, U_m$ be subspaces of $V$.
+  The sum $U_1 + \cdots + U_m$ is a \emph{direct sum} if each element of $U_1 + \cdots + U_m$ can be written in exactly one way as $u_1 + \cdots + u_m$ with $u_i \in U_i$.
+  The direct sum is denoted as $U_1 \oplus \cdots \oplus U_m$.
+\end{definition}
+It is clear that sums of subspaces are analogous to unions of subsets, while direct sums of subspaces are analogous to disjoint unions of subsets.
+
+\begin{theorem}[Condition for a direct sum]
+  Let $U_1, \ldots, U_m$ be subspaces of $V$.
+  Then, $U_1 + \cdots + U_m$ is a direct sum if and only if the only solution to $u_1 + \cdots + u_m = 0$ with $u_i \in U_i$ is $u_1 = \cdots = u_m = 0$.
+\end{theorem}
+With this, there is a simple condition for the sum of two subspaces to be a direct sum.
+
+\begin{theorem}[Direct sum of two subspaces]
+  Let $U$ and $W$ be subspaces of $V$.
+  Then, $U + W$ is a direct sum if and only if $U \cap W = \set{0}$.
+\end{theorem}
+
 \section{Linear maps}
 
 \subsection{Isomorphism and invertibility}

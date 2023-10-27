@@ -84,7 +84,7 @@ This is captured by the notion of \emph{expectation}.
 
 We also have the following intuitive results for the expectated value of a discrete random variable.
 
-\begin{proposition}[Expectation of a function of a discrete r.v.]
+\begin{proposition}[Law of the unconscious statistician]
   Let $X$ be a discrete random variable and $g$ be real-valued a function.
   Then
   \[
@@ -115,6 +115,16 @@ One important property of expectations of (general) random variables is that it 
   Then
   \[
     \Exp\left[\sum\limits_{i = 1}^n X_i\right] = \sum\limits_{i = 1}^n \Exp[X_i].
+  \]
+\end{theorem}
+
+Another useful result to use is the \emph{law of total expectation}.
+
+\begin{theorem}[Law of total expectation]
+  Let $X$ be a discrete random variable and $Y$ be a discrete random variable that depends on $X$.
+  Then
+  \[
+    \Exp[Y] = \Exp[\Exp[Y \mid X]] = \sum_{x \in \Omega_X} \Exp[Y \mid X = x] \Pr(X = x).
   \]
 \end{theorem}
 
@@ -456,7 +466,7 @@ This is intuitive since we can imagine partitioning the domain of $x$ into small
 
 Just as in the discrete case, we have the following results for continuous random variables.
 
-\begin{proposition}[Expectation of a function of a continuous r.v.]
+\begin{proposition}[Law of the unconscious statistician]
   Let $X$ be a continuous random variable and $g$ be real-valued a function.
   Then
   \[
@@ -479,6 +489,16 @@ Just as in the discrete case, we have the following results for continuous rando
     \Exp[Y] = \int_{0}^\infty \Pr(Y > y) \, dy.
   \]
 \end{lemma}
+
+By a similar proof, the \emph{law of total expectation} holds for continuous random variables.
+
+\begin{theorem}[Law of total expectation]
+  Let $X$ be a continuous random variable and $Y$ be a continuous random variable that depends on $X$.
+  Then
+  \[
+    \Exp[Y] = \Exp[\Exp[Y \mid X]] = \int_{-\infty}^\infty \Exp[Y \mid X = x] f(x) \, dx.
+  \]
+\end{theorem}
 
 \subsection{Variance}
 
@@ -663,6 +683,7 @@ In fact, it is the only continuous distribution that is memoryless.
   Let $X$ be an exponential random variable with parameter $\lambda$.
   Then
   \begin{enumerate}
+    \item $\Exp[X^n] = \frac{n}{\lambda} \Exp[X^{n - 1}]$
     \item $\Exp[X] = 1/\lambda$
     \item $\Var(X) = 1/\lambda^2$
   \end{enumerate}
