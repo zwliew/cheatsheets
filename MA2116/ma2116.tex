@@ -826,9 +826,90 @@ There are some techniques we can use.
   \]
 \end{theorem}
 
-\section{Jointly distributed random variables}
+\section{Jointly Distributed Random Variables}
 
-TODO.
+We are often interested in probability statements concerning multiple random variables.
+Let's define some terms for this.
+
+\begin{definition}[Joint cumulative probability distribution function]
+  Let $X$ and $Y$ be random variables.
+  The \emph{joint cumulative probability distribution function} of $X$ and $Y$ is defined as
+  \[
+    F(a, b) = \Pr(X \leq a, Y \leq b)
+  \]
+\end{definition}
+Any joint probabiltiy statement can be answered in terms of $F$.
+For example,
+\[
+  \Pr(a_1 \leq X \leq a_2, b_1 \leq Y \leq b_2) = F(a_2, b_2) + F(a_1, b_1) - F(a_1, b_2) - F(a_2, b_1)
+\]
+
+When $X$ and $Y$ are discrete random variables, it is convenient to define their \emph{joint probability mass function}.
+
+\begin{definition}[Joint probability mass function]
+  Let $X$ and $Y$ be discrete random variables.
+  The \emph{joint probability mass function} of $X$ and $Y$ is defined as
+  \[
+    p(x, y) = \Pr(X = x, Y = y)
+  \]
+\end{definition}
+The probability mass function of $X$ is then given by
+\[
+  p_X(x) = \sum_j p(x, y_j)
+\]
+
+Similarly, when $X$ and $Y$ are continuous, we can define their \emph{joint probability density function}.
+
+\begin{definition}[Jointly continuous]
+  Let $X$ and $Y$ be continuous random variables.
+  Then $X$ and $Y$ are said to be \emph{jointly continuous} if there exists a function $f(x, y)$ such that for any set $C$ of pairs $(x, y)$,
+  \[
+    \Pr((X, Y) \in C) = \iint_C f(x, y) \, dx \, dy
+  \]
+  $f$ is called the \emph{joint probability density function} of $X$ and $Y$.
+\end{definition}
+
+\begin{remark}
+  In particular, we have
+  \[
+    F(a, b) = \int_{-\infty}^b \int_{-\infty}^a f(x, y) \, dx \, dy
+  \]
+  \[
+    f(a, b) = \frac{\partial^2}{\partial a \partial b} F(a, b)
+  \]
+\end{remark}
+
+\begin{remark}
+  Based on the derived equation below, we can also interpret $f(a, b)$ as the probability that $(X, Y)$ lies near $(a, b)$.
+  \[
+    \Pr(a \leq X \leq a + \Delta a, b \leq Y \leq b + \Delta b) \approx f(a, b) \Delta a \Delta b
+  \]
+\end{remark}
+
+\begin{remark}
+  The probability density function of $X$ is given by
+  \[
+    \Pr(X \in A) = \int_A \int_{-\infty}^\infty f(x, y) \, dy \, dx = \int_A f_X(x) \, dx
+  \]
+\end{remark}
+
+Generalizing these definitions to $n$ random variables, we have the following definitions.
+
+\begin{definition}[Definitions for $n$ joint r.v.s]
+  Let $X_1, X_2, \ldots, X_n$ be random variables.
+  The joint cumulative probability distribution function is
+  \[
+    F(a_1, a_2, \ldots, a_n) = \Pr(X_1 \leq a_1, X_2 \leq a_2, \ldots, X_n \leq a_n)
+  \]
+  They are \emph{jointly continuous} if there exists a function $f(x_1, x_2, \ldots, x_n)$ such that for any set $C$ of pairs $(x_1, x_2, \ldots, x_n)$,
+  \[
+    \Pr((X_1, X_2, \ldots, X_n) \in C) = \iint \cdots \int_C f(x_1, x_2, \ldots, x_n) \, dx_1 \, dx_2 \, \ldots \, dx_n
+  \]
+\end{definition}
+
+\begin{example}
+  The multinomial distribution is a joint distribution.
+\end{example}
 
 \section{References}
 
